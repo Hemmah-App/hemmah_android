@@ -3,6 +3,7 @@ package com.google.hemmah;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,13 +11,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.hemmah.Utils.SharedPrefUtils;
 
 public class LoginActivity extends AppCompatActivity {
     private Button logInButton;
     private TextView registerTV;
     private TextInputLayout emailTextInput;
     private TextInputLayout passwordTextInput;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:id="@+id/item1"
+    android:title="@string/video_item1_nav"
+    android:icon="@drawable/ic_video"
+    />
+    <item
+        android:id="@+id/item2"
+        android:title="@string/video_item2_nav"
+        android:icon="@drawable/ic_baseline_handshake_24"
+
+        />
+    <item
+        android:id="@+id/item3"
+        android:title="@string/video_item3_nav"
+        android:icon="@drawable/ic_baseline_settings_24"
+
+        />
+
+
+
+</menu>
