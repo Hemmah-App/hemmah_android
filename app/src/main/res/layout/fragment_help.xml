@@ -43,7 +43,7 @@
         app:boxBackgroundColor="@color/transparent"
         >
         <EditText
-            android:lines="15"
+            android:lines="12"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </com.google.android.material.textfield.TextInputLayout>
