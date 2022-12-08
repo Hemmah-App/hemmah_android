@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".VideoFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/button_background_color"
+        android:text="@string/callforhelp_frag_bt"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/downguideline"
+        app:layout_constraintEnd_toEndOf="@id/rightguideline"
+        app:layout_constraintStart_toStartOf="@id/leftguideline"
+        app:layout_constraintTop_toTopOf="@id/topguideline" />
 
-</FrameLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/topguideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.146875" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/rightguideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8472222" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/leftguideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15277778" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/downguideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.778125" />
+
+
+    />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
