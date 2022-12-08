@@ -10,12 +10,12 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    TextInputLayout firstNameTextInput;
-    TextInputLayout lastNameTextInput;
-    TextInputLayout userNameTextInput;
-    TextInputLayout emailTextInput;
-    TextInputLayout passwordTextInput;
-    Button createAccount;
+    private TextInputLayout firstNameTextInput;
+    private TextInputLayout lastNameTextInput;
+    private TextInputLayout userNameTextInput;
+    private TextInputLayout emailTextInput;
+    private TextInputLayout passwordTextInput;
+    private Button createAccount;
 
 
     @Override
