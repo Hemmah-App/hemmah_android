@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">همة</string>
+    <string name="emailHint">الايميل</string>
+    <string name="passwordHint">كلمة المرور</string>
+    <string name="signIn_Button">تسجيل دخول</string>
+    <string name="orSignUp_TV">أو انشاء حساب</string>
+</resources>
