@@ -5,4 +5,11 @@
     <string name="signIn_Button">Log in</string>
     <string name="orSignUp_TV">or sign up</string>
     <string name="logIn_TV">Log In</string>
+    <string name="createACCOUNT_TV">Create Account</string>
+    <string name="firstName_ET">First Name</string>
+    <string name="lastName_ET">Last Name</string>
+    <string name="userName_ET">User Name</string>
+    <string name="email_ET">Email</string>
+    <string name="password_ET">Password</string>
+    <string name="createAccount_BT">Create Account</string>
 </resources>

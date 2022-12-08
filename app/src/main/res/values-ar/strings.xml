@@ -5,4 +5,13 @@
     <string name="passwordHint">كلمة المرور</string>
     <string name="signIn_Button">تسجيل دخول</string>
     <string name="orSignUp_TV">أو انشاء حساب</string>
+    <string name="logIn_TV">تسجيل الدخول</string>
+    <string name="createACCOUNT_TV">انشاء حساب</string>
+    <string name="firstName_ET">الاسم الأول</string>
+    <string name="lastName_ET">اسم العائلة</string>
+    <string name="userName_ET">اسم المستخدم</string>
+    <string name="email_ET">الايميل</string>
+    <string name="password_ET">كلمة المرور</string>
+    <string name="createAccount_BT">انشاء حساب</string>
+
 </resources>
