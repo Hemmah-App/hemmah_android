@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Hemmah</string>
+    <string name="emailHint">Email</string>
+    <string name="passwordHint">Password</string>
+    <string name="signIn_Button">Log in</string>
+    <string name="orSignUp_TV">or sign up</string>
+    <string name="logIn_TV">Log In</string>
 </resources>
