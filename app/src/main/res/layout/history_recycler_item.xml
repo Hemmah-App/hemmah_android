@@ -53,16 +53,5 @@
             android:layout_margin="12dp"
             />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/choose_date_textView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="12dp"
-            android:background="@drawable/button_background_color"
-            android:text="Remove"
-            android:textAllCaps="false"
-            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
