@@ -3,6 +3,16 @@ package com.google.hemmah.model;
 import com.google.gson.annotations.SerializedName;
 
 public class User{
+	public User(String firstName, String lastName, String password, String phoneNumber, String address, String userType, String userName, String email) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.password = password;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.userType = userType;
+		this.userName = userName;
+		this.email = email;
+	}
 
 	@SerializedName("firstName")
 	private String firstName;
