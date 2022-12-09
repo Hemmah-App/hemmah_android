@@ -2,6 +2,8 @@ package com.google.hemmah;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initViews();
+        Context context = this;
         createAccountVolunteer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,13 +57,15 @@ public class RegisterActivity extends AppCompatActivity {
                     phoneNumber = phoneNumberTextInput.getEditText().getText().toString();
                     user = new User(firstName,lastName,password,phoneNumber,"vol",userName,email);
                     postUser(user);
+                    Intent intent = new Intent(context , VolunteerActivity.class);
+                    startActivity(intent);
                 };
             }
         });
 
         createAccountDisabled.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)     {
                 if (valid()){
                     firstName = firstNameTextInput.getEditText().getText().toString();
                     lastName = lastNameTextInput.getEditText().getText().toString();
@@ -70,6 +75,8 @@ public class RegisterActivity extends AppCompatActivity {
                     phoneNumber = phoneNumberTextInput.getEditText().getText().toString();
                     user = new User(firstName,lastName,password,phoneNumber,"dis",userName,email);
                     postUser(user);
+                    Intent intent = new Intent(context , DisabledActivity.class);
+                    startActivity(intent);
                 };
             }
         });
@@ -82,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
         emailTextInput = findViewById(R.id.email_Layout);
         passwordTextInput = findViewById(R.id.password_Layout);
         createAccountVolunteer = findViewById(R.id.button_create_account_as_volunteer);
-        createAccountVolunteer = findViewById(R.id.button_create_account_as_disabled);
+        createAccountDisabled = findViewById(R.id.button_create_account_as_disabled);
         phoneNumberTextInput = findViewById(R.id.user_phone_Layout);
     }
 
@@ -127,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
         return valid;
     }
 
-public void postUser(User user){
+    public void postUser(User user){
     Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).
          addConverterFactory(GsonConverterFactory.create()).build();
     WebServices apiInterFace = retrofit.create(WebServices.class);
@@ -144,6 +151,4 @@ public void postUser(User user){
         }
     });
 }
-
-
 }

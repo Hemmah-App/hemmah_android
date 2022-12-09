@@ -3,14 +3,13 @@ package com.google.hemmah;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.hemmah.model.User;
+import com.google.hemmah.model.Post;
 
 
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 //we make a custom adapter extending RecyclerView.Adapter
 //And Custom PostHolder that extends RecyclerView.PostHolder
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostHolder> {
-    private ArrayList<User> dataSample = new ArrayList<>(); //model
+    private ArrayList<Post> posts = new ArrayList<>(); //model
 
     @NonNull
     @Override
@@ -37,12 +36,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostHolder> 
 
     @Override
     public int getItemCount() {
-        return dataSample.size();
+        return posts.size();
     }
 
     //pass the data sample to the list attribute of the adapter
-    public void setList(ArrayList<User> list) {
-        this.dataSample = list;
+    public void setList(ArrayList<Post> list) {
+        this.posts = list;
         notifyDataSetChanged();
 
     }
@@ -52,18 +51,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostHolder> 
         TextInputLayout title_TextInputLayout;
         TextInputLayout description_TextInputLayout;
         TextView date_TextView;
-        Button okButtonListRecycler;
+
         public PostHolder(@NonNull View itemView) {
             super(itemView);
             //instantiates the view with its id
             title_TextInputLayout = itemView.findViewById(R.id.title_text_layout);
             description_TextInputLayout = itemView.findViewById(R.id.description_text_layout);
             date_TextView = itemView.findViewById(R.id.choose_date_textView);
-            okButtonListRecycler = itemView.findViewById(R.id.ok_button_list_recycler);
-
         }
     }
-
-
 }
 

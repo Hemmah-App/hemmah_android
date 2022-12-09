@@ -16,7 +16,7 @@
         android:text="@string/createACCOUNT_TV"
         android:textSize="28sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/blue"
         />
 
     <androidx.constraintlayout.widget.Guideline
@@ -117,18 +117,39 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/password_ET" />
+                        android:hint="@string/password_ET"
+                        android:inputType="textPassword"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
 
-
-                <Button
-                    android:id="@+id/button_create_account"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/button_background_color"
-                    android:text="@string/createAccount_BT"
-                    android:textAllCaps="false" />
+                    android:layout_height="wrap_content">
+                    <Button
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:id="@+id/button_create_account_as_volunteer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/button_background_color"
+                        android:text="@string/createAccount_BT"
+                        android:textAllCaps="false"
+                        android:layout_marginLeft="12dp"
+                        />
+
+                    <Button
+                        android:id="@+id/button_create_account_as_disabled"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/button_background_color"
+                        android:text="Create Disabled"
+                        android:textAllCaps="false" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
