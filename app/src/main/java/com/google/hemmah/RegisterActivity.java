@@ -27,7 +27,8 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout emailTextInput;
     private TextInputLayout passwordTextInput;
     private TextInputLayout phoneNumberTextInput;
-    private Button createAccount;
+    private Button createAccountVolunteer;
+    private Button createAccountDisabled;
     private User user;
     private String firstName;
     private String lastName;
@@ -41,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initViews();
-        createAccount.setOnClickListener(new View.OnClickListener() {
+        createAccountVolunteer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (valid()){
@@ -51,12 +52,27 @@ public class RegisterActivity extends AppCompatActivity {
                     email = emailTextInput.getEditText().getText().toString();
                     password = passwordTextInput.getEditText().getText().toString();
                     phoneNumber = phoneNumberTextInput.getEditText().getText().toString();
-                    user = new User(firstName,lastName,password,phoneNumber,"",userName,email);
+                    user = new User(firstName,lastName,password,phoneNumber,"vol",userName,email);
                     postUser(user);
                 };
             }
         });
 
+        createAccountDisabled.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (valid()){
+                    firstName = firstNameTextInput.getEditText().getText().toString();
+                    lastName = lastNameTextInput.getEditText().getText().toString();
+                    userName = userNameTextInput.getEditText().getText().toString();
+                    email = emailTextInput.getEditText().getText().toString();
+                    password = passwordTextInput.getEditText().getText().toString();
+                    phoneNumber = phoneNumberTextInput.getEditText().getText().toString();
+                    user = new User(firstName,lastName,password,phoneNumber,"dis",userName,email);
+                    postUser(user);
+                };
+            }
+        });
     }
 
     private void initViews() {
@@ -65,7 +81,8 @@ public class RegisterActivity extends AppCompatActivity {
         userNameTextInput = findViewById(R.id.user_name_Layout);
         emailTextInput = findViewById(R.id.email_Layout);
         passwordTextInput = findViewById(R.id.password_Layout);
-        createAccount = findViewById(R.id.button_create_account);
+        createAccountVolunteer = findViewById(R.id.button_create_account_as_volunteer);
+        createAccountVolunteer = findViewById(R.id.button_create_account_as_disabled);
         phoneNumberTextInput = findViewById(R.id.user_phone_Layout);
     }
 
@@ -111,7 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 public void postUser(User user){
- Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).
+    Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).
          addConverterFactory(GsonConverterFactory.create()).build();
     WebServices apiInterFace = retrofit.create(WebServices.class);
     Call<String> call = apiInterFace.sendUser(user);
@@ -119,7 +136,6 @@ public void postUser(User user){
         @Override
         public void onResponse(Call<String> call, Response<String> response) {
             Toast.makeText(getApplicationContext(),response.body(),Toast.LENGTH_SHORT).show();
-
         }
 
         @Override
