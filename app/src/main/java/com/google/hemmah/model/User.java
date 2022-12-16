@@ -1,61 +1,90 @@
 package com.google.hemmah.model;
 
-import com.google.gson.annotations.SerializedName;
+public class User {
+	private String userName;
+	private String email;
+	private String password;
+	private String phoneNumber;
+	private String firstName;
+	private String lastName;
+	private String userType;
 
-public class User{
-	public User(String firstName, String lastName, String password, String phoneNumber,  String userType, String userName, String email) {
-		this.firstName = firstName;
-		this.lastName = lastName;
+	public User(String userName, String email, String password, String phoneNumber, String firstName, String lastName, String userType) {
+		this.userName = userName;
+		this.email = email;
 		this.password = password;
 		this.phoneNumber = phoneNumber;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.userType = userType;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"userName='" + userName + '\'' +
+				", email='" + email + '\'' +
+				", password='" + password + '\'' +
+				", phoneNumber='" + phoneNumber + '\'' +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", userType='" + userType + '\'' +
+				'}';
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
-	@SerializedName("firstName")
-	private String firstName;
-
-	@SerializedName("lastName")
-	private String lastName;
-
-	@SerializedName("password")
-	private String password;
-
-	@SerializedName("phoneNumber")
-	private String phoneNumber;
-
-	@SerializedName("address")
-	private String address;
-
-	@SerializedName("userType")
-	private String userType;
-
-	@SerializedName("userName")
-	private String userName;
-
-
-
-	public String getFirstName(){
-		return firstName;
+	public String getEmail() {
+		return email;
 	}
 
-	public String getLastName(){
-		return lastName;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getPassword(){
+	public String getPassword() {
 		return password;
 	}
 
-	public String getPhoneNumber(){
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public String getUserType(){
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getUserType() {
 		return userType;
 	}
 
-	public String getUserName(){
-		return userName;
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
 }

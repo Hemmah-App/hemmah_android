@@ -1,15 +1,21 @@
 package com.google.hemmah;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
+import android.content.pm.PackageManager;
 import android.icu.util.Calendar;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +24,24 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.hemmah.api.WebServices;
 import com.google.hemmah.model.Post;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import android.location.Location;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class HelpFragment extends Fragment {
@@ -61,28 +76,29 @@ public class HelpFragment extends Fragment {
                 post = new Post(titleLayout.getEditText().getText().toString(),
                         descriptionLayout.getEditText().getText().toString(),
                         chooseDateTextView.getText().toString());
-                createNewPost();
+//                createNewPost();
             }
         });
+
     }
 
-    private void createNewPost() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.1.7:8080/").
-                addConverterFactory(GsonConverterFactory.create()).build();
-        WebServices apiInterFace = retrofit.create(WebServices.class);
-        Call<String> call = apiInterFace.createPost(post);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                Toast.makeText(requireContext(),response.body(),Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(requireContext(),t.getMessage(),Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    private void createNewPost() {
+//        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.1.7:8080/").
+//                addConverterFactory(GsonConverterFactory.create()).build();
+//        WebServices apiInterFace = retrofit.create(WebServices.class);
+//        Call<String> call = apiInterFace.createPost(post);
+//        call.enqueue(new Callback<String>() {
+//            @Override
+//            public void onResponse(Call<String> call, Response<String> response) {
+//                Toast.makeText(requireContext(),response.body(),Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<String> call, Throwable t) {
+//                Toast.makeText(requireContext(),t.getMessage(),Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     private void initViews(View view) {
         chooseDateTextView = view.findViewById(R.id.help_choose_date_textView);
@@ -108,4 +124,8 @@ public class HelpFragment extends Fragment {
                 calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
     }
+
+
 }
+
+

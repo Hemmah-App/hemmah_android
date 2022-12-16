@@ -1,7 +1,11 @@
 package com.google.hemmah;
 
+//import static org.webrtc.ContextUtils.getApplicationContext;
+
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
@@ -18,18 +22,34 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import org.jitsi.meet.sdk.JitsiMeetActivity;
-import org.jitsi.meet.sdk.JitsiMeetConferenceOptions;
-import org.jitsi.meet.sdk.JitsiMeet;
+//import com.facebook.react.modules.core.PermissionListener;
+//
+//import org.jitsi.meet.sdk.JitsiMeetActivity;
+//import org.jitsi.meet.sdk.JitsiMeetActivityDelegate;
+//import org.jitsi.meet.sdk.JitsiMeetActivityInterface;
+//import org.jitsi.meet.sdk.JitsiMeetConferenceOptions;
+//import org.jitsi.meet.sdk.JitsiMeet;
+//import org.jitsi.meet.sdk.JitsiMeetView;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class VideoFragment extends Fragment {
 
-    private Context context;
     private Button callForHelpButton;
-    private final String ROOM_NAME = "TestRoom";
+    private final String ROOM_NAME = "Hemmah";
+//    private JitsiMeetView view;
+
+//    @Override
+//    public void onActivityResult(
+//            int requestCode,
+//            int resultCode,
+//            Intent data) {
+//        JitsiMeetActivityDelegate.onActivityResult(
+//                (Activity) requireContext(), requestCode, resultCode, data);
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,22 +58,28 @@ public class VideoFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_video, container, false);
 
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        callForHelpButton = view.findViewById(R.id.callforhelp_BT);
-        callForHelpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                JitsiMeetConferenceOptions  options = new JitsiMeetConferenceOptions.Builder().setRoom(ROOM_NAME).build();
-                JitsiMeetActivity.launch(requireContext(), options);
-                Toast.makeText(getContext(),JitsiMeet.getCurrentConference(),Toast.LENGTH_SHORT).show();
 
-
-            }
-        });
     }
-
+}
+//
+//    @Override
+//    public int checkPermission(String s, int i, int i1) {
+//        return 0;
+//    }
+//
+//    @Override
+//    public int checkSelfPermission(String s) {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void requestPermissions(String[] strings, int i, PermissionListener permissionListener) {
+//
+//    }
 
 //    public boolean hasCameraPermission(){
 //        return ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
@@ -85,4 +111,3 @@ public class VideoFragment extends Fragment {
 
 
 
-}

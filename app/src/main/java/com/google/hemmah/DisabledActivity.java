@@ -30,6 +30,7 @@ private BottomNavigationView mBottomNavigationView;
                 else
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragments_frame, new SettingFragment()).commit();
                 return  true;
+
             }
         });
 
