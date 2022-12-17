@@ -1,4 +1,4 @@
-package com.google.hemmah;
+package com.google.hemmah.ui;
 
 import android.os.Bundle;
 
@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.hemmah.R;
 
 public class SettingFragment extends Fragment {
 

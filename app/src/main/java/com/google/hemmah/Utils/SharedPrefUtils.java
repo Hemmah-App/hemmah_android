@@ -15,8 +15,7 @@ public class SharedPrefUtils {
     }
 
     public static String loadToken(SharedPreferences sharedPreferences, String constant) {
-        String token;
-        token = sharedPreferences.getString(constant, "");
-        return token;
+        //returns the stored data(token)
+        return sharedPreferences.getString(constant, "");
     }
 }

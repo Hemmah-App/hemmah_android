@@ -1,17 +1,15 @@
-package com.google.hemmah;
+package com.google.hemmah.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.hemmah.Utils.SharedPrefUtils;
+import com.google.hemmah.R;
 
 public class LoginActivity extends AppCompatActivity {
     private Button logInButton;

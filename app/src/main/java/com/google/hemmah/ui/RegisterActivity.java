@@ -1,4 +1,4 @@
-package com.google.hemmah;
+package com.google.hemmah.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,18 +9,17 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.hemmah.R;
 import com.google.hemmah.api.ApiClient;
 import com.google.hemmah.api.WebServices;
-//import com.google.hemmah.model.TestModel;
+import com.google.hemmah.ui.disabled.DisabledActivity;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-
 public class RegisterActivity extends AppCompatActivity {
 
     public static final String BASE_URL = "http://192.168.1.7:8080/";
@@ -38,9 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String phoneNumber;
     private String firstName;
     private String lastName;
-
     Map<String, Object> userMap = new HashMap<String, Object>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

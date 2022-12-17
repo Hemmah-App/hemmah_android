@@ -1,4 +1,4 @@
-package com.google.hemmah;
+package com.google.hemmah.ui.disabled;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.hemmah.R;
 import com.google.hemmah.api.WebServices;
 import com.google.hemmah.model.Post;
 

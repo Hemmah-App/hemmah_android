@@ -1,4 +1,4 @@
-package com.google.hemmah;
+package com.google.hemmah.ui.volunteer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +8,8 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.hemmah.R;
+import com.google.hemmah.ui.SettingsFragment;
 
 public class VolunteerActivity extends AppCompatActivity {
 

@@ -1,10 +1,12 @@
-package com.google.hemmah;
+package com.google.hemmah.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.google.hemmah.R;
 
 public class SplashActivity extends AppCompatActivity {
 

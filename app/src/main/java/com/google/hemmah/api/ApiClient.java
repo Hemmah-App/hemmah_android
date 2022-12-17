@@ -1,6 +1,6 @@
 package com.google.hemmah.api;
 
-import com.google.hemmah.RegisterActivity;
+import com.google.hemmah.ui.RegisterActivity;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
