@@ -20,10 +20,10 @@ import retrofit2.http.Path;
 
 public interface WebServices {
 
-    @FormUrlEncoded
+
     @POST("signup")
-    public Call<HashMap<String, String>> userLogin(@Body Map<String, Object> user);
+     Call<HashMap<String, String>> userLogin(@Body Map<String, Object> user);
 
     @POST("post")
-    public Call<String> createPost(@Body Post post);
+     Call<String> createPost(@Body Post post);
 }

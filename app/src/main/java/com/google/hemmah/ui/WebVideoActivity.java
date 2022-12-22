@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Base64;
+import android.webkit.PermissionRequest;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -14,6 +16,7 @@ import com.google.hemmah.R;
 import java.io.InputStream;
 
 public class WebVideoActivity extends AppCompatActivity {
+
     private WebView mWebView;
     private WebSettings mWebSettings;
     private static final String BASE_URL_DISABLED =
@@ -39,14 +42,21 @@ public class WebVideoActivity extends AppCompatActivity {
         mWebView.getSettings().setJavaScriptEnabled(true);
 
         mWebView.setWebViewClient(new WebViewClient() {
+
             @Override
             public void onPageFinished(WebView view, String url) {
+                //calling the method which injects the css code
                 customizeCss();
                 super.onPageFinished(view, url);
+
             }
         });
+
+
         mWebView.loadUrl(BASE_URL_DISABLED);
     }
+
+
 
 
 
@@ -74,3 +84,4 @@ public class WebVideoActivity extends AppCompatActivity {
         }
     }
 }
+
