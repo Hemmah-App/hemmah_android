@@ -106,7 +106,8 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="phone number" />
+                        android:hint="@string/phone_number_hint"
+                        android:inputType="phone"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -132,7 +133,7 @@
                     android:layout_margin="10dp"
                     app:boxBackgroundColor="@color/transparent"
                     app:boxBackgroundMode="outline"
-                    app:endIconMode="clear_text"
+                    app:hintAnimationEnabled="true"
                     app:passwordToggleEnabled="true"
                     app:startIconDrawable="@drawable/passwordicon">
 

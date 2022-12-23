@@ -97,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
     public Boolean valid() {
         Boolean valid = true;
         if (Validator.isEmpty(firstNameTextInput)) {
-            firstNameTextInput.setError("Please enter firstname");
+            firstNameTextInput.setError("Please enter a firstname");
             valid = false;
         }
         else
@@ -106,7 +106,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         if (Validator.isEmpty(lastNameTextInput)) {
-            lastNameTextInput.setError("Please enter lastname");
+            lastNameTextInput.setError("Please enter a lastname");
             valid = false;
         }
         else
@@ -115,10 +115,10 @@ public class RegisterActivity extends AppCompatActivity {
         }
         //username
         if (Validator.isEmpty(userNameTextInput)) {
-            userNameTextInput.setError("Please enter username ");
+            userNameTextInput.setError("Please enter a username ");
             valid = false;
         }
-        else if(!Validator.isUserName(userNameTextInput))
+        else if(!Validator.isValidRegex(userNameTextInput,Validator.usernameRegex))
         {
             userNameTextInput.setError("username is invalid");
             valid = false;
@@ -129,10 +129,10 @@ public class RegisterActivity extends AppCompatActivity {
         }
         //email
         if (Validator.isEmpty(emailTextInput)) {
-            emailTextInput.setError("Please enter email");
+            emailTextInput.setError("Please enter an email");
             valid = false;
         }
-        else if(!Validator.isEmail(emailTextInput)){
+        else if(!Validator.isValidRegex(emailTextInput,Validator.emailRegex)){
             //check if it not matches the email's regex
             emailTextInput.setError("Email is invalid");
             valid = false;
@@ -147,8 +147,8 @@ public class RegisterActivity extends AppCompatActivity {
             valid = false;
             //check if it not matches the password's regex
         }
-        else if(!Validator.isPassword(passwordTextInput)){
-            passwordTextInput.setError("password is invalid");
+        else if(!Validator.isValidRegex(passwordTextInput,Validator.passwordRegex)){
+            passwordTextInput.setError("Password is invalid");
             valid = false;
         }
         else
@@ -157,7 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         //phonenumber
         if (Validator.isEmpty(phoneNumberTextInput)) {
-            phoneNumberTextInput.setError("Enter a phone number");
+            phoneNumberTextInput.setError("Please enter a phonenumber");
             valid = false;
         }
         else
@@ -201,6 +201,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
+                Toast.makeText(RegisterActivity.this, "Failed to connect", Toast.LENGTH_SHORT).show();
                 Log.d("signup_response", t.getMessage());
             }
         });

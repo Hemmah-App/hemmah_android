@@ -18,6 +18,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="callforhelp_frag_bt">Call For Help</string>
+    <string name="phone_number_hint">phone number</string>
     <string-array name="planets_array">
         <item>vol</item>
         <item>dis</item>
