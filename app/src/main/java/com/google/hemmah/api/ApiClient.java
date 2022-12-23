@@ -1,5 +1,7 @@
 package com.google.hemmah.api;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.hemmah.ui.RegisterActivity;
 
 import retrofit2.Retrofit;
@@ -10,8 +12,11 @@ public class ApiClient {
     public static Retrofit getRetrofit(){
         if(retrofit == null)
         {
+            Gson gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
             retrofit = new Retrofit.Builder().baseUrl(RegisterActivity.BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
         }
         return retrofit;

@@ -15,9 +15,11 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.hemmah.R;
 import com.google.hemmah.Utils.SharedPrefUtils;
+import com.google.hemmah.Utils.Validator;
 import com.google.hemmah.api.ApiClient;
 import com.google.hemmah.api.WebServices;
-import com.google.hemmah.ui.disabled.DisabledActivity;;
+import com.google.hemmah.ui.disabled.DisabledActivity;
+import com.google.hemmah.ui.volunteer.VolunteerActivity;;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +44,6 @@ public class RegisterActivity extends AppCompatActivity {
     private Button createAccountDisabled;
     private SharedPreferences mSharedPreferences;
     private String token;
-    private Response<HashMap<String, String>> mResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +56,9 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (valid()) {
                     //passing volunteer's  data to a map in order to post it
-                    Map volunteerMap = populateUser("vol");
+                    Map<String, Object> volunteerMap = populateUser("vol");
                     //posting the volunteerMap to the server
-                    signUp(volunteerMap);
+                    signUp(volunteerMap, VolunteerActivity.class);
                 }
             }
         });
@@ -66,9 +67,9 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (valid()) {
                     //passing disabled's data to a map in order to post it
-                    Map disabledMap = populateUser("dis");
+                    Map<String, Object> disabledMap = populateUser("dis");
                     //posting the disabledMap to the server
-                    signUp(disabledMap);
+                    signUp(disabledMap,DisabledActivity.class);
                 }
             }
         });
@@ -95,40 +96,72 @@ public class RegisterActivity extends AppCompatActivity {
 
     public Boolean valid() {
         Boolean valid = true;
-        if (firstNameTextInput.getEditText().getText().toString().isEmpty()) {
-            firstNameTextInput.setError("Valid data");
+        if (Validator.isEmpty(firstNameTextInput)) {
+            firstNameTextInput.setError("Please enter firstname");
             valid = false;
-        } else {
+        }
+        else
+        {
             firstNameTextInput.setError(null);
         }
-        if (lastNameTextInput.getEditText().getText().toString().isEmpty()) {
-            lastNameTextInput.setError("Valid data");
+
+        if (Validator.isEmpty(lastNameTextInput)) {
+            lastNameTextInput.setError("Please enter lastname");
             valid = false;
-        } else {
+        }
+        else
+        {
             lastNameTextInput.setError(null);
         }
-        if (userNameTextInput.getEditText().getText().toString().isEmpty()) {
-            userNameTextInput.setError("Valid data");
+        //username
+        if (Validator.isEmpty(userNameTextInput)) {
+            userNameTextInput.setError("Please enter username ");
             valid = false;
-        } else {
+        }
+        else if(!Validator.isUserName(userNameTextInput))
+        {
+            userNameTextInput.setError("username is invalid");
+            valid = false;
+        }
+        else
+        {
             userNameTextInput.setError(null);
         }
-        if (emailTextInput.getEditText().getText().toString().isEmpty()) {
-            emailTextInput.setError("Valid data");
+        //email
+        if (Validator.isEmpty(emailTextInput)) {
+            emailTextInput.setError("Please enter email");
             valid = false;
-        } else {
+        }
+        else if(!Validator.isEmail(emailTextInput)){
+            //check if it not matches the email's regex
+            emailTextInput.setError("Email is invalid");
+            valid = false;
+        }
+        else
+        {
             emailTextInput.setError(null);
         }
-        if (passwordTextInput.getEditText().getText().toString().isEmpty()) {
-            passwordTextInput.setError("Valid data");
+        //password
+        if (Validator.isEmpty(passwordTextInput)) {
+            passwordTextInput.setError("Please enter password");
             valid = false;
-        } else {
+            //check if it not matches the password's regex
+        }
+        else if(!Validator.isPassword(passwordTextInput)){
+            passwordTextInput.setError("password is invalid");
+            valid = false;
+        }
+        else
+        {
             passwordTextInput.setError(null);
         }
-        if (phoneNumberTextInput.getEditText().getText().toString().isEmpty()) {
-            phoneNumberTextInput.setError("Valid data");
+        //phonenumber
+        if (Validator.isEmpty(phoneNumberTextInput)) {
+            phoneNumberTextInput.setError("Enter a phone number");
             valid = false;
-        } else {
+        }
+        else
+        {
             phoneNumberTextInput.setError(null);
         }
         return valid;
@@ -145,17 +178,20 @@ public class RegisterActivity extends AppCompatActivity {
         phoneNumberTextInput = (TextInputLayout) findViewById(R.id.user_phone_Layout);
     }
 
-    public void signUp(Map userMap) {
+    public void signUp(Map userMap,Class intentedClass) {
         Retrofit retrofit = ApiClient.getRetrofit();
         WebServices webServices = retrofit.create(WebServices.class);
-        Call<HashMap<String, String>> call = webServices.userLogin(userMap);
+        Call<HashMap<String, String>> call = webServices.userSignUp(userMap);
         call.enqueue(new Callback<HashMap<String, String>>() {
             @Override
             public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                 if (response.code() == 200) {
+                    //store response body into the token var
                     token = response.body().toString();
+                    //store the token in a shared preferences file
                     SharedPrefUtils.saveToShared(mSharedPreferences, SharedPrefUtils.TOKEN_KEY, token);
-                    Intent intent = new Intent(RegisterActivity.this, DisabledActivity.class);
+                    //got to the needed activity volunteer or disabled
+                    Intent intent = new Intent(RegisterActivity.this,intentedClass);
                     startActivity(intent);
                     Toast.makeText(RegisterActivity.this, "You Have been Signed Up Successfully", Toast.LENGTH_SHORT).show();
                 } else if (response.code() == 400)
@@ -165,7 +201,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
-                Log.d("response", t.getMessage());
+                Log.d("signup_response", t.getMessage());
             }
         });
     }
