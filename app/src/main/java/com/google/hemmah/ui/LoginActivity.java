@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +38,10 @@ public class LoginActivity extends AppCompatActivity {
     private TextView registerTV;
     private TextInputLayout emailTextInput;
     private TextInputLayout passwordTextInput;
+    private ProgressBar logInProgressBar;
     private String emailTokenKey;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,25 +50,27 @@ public class LoginActivity extends AppCompatActivity {
         registerTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext() , RegisterActivity.class);
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(intent);
             }
         });
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (valid()){
-                    Map<String,Object> userMap = populateUser();
+                if (valid()) {
+                    //setting the progress bad to be visible
+                    logInProgressBar.setVisibility(View.VISIBLE);
+                    Map<String, Object> userMap = populateUser();
                     //assigning the email for a var in order to save it in the sharedpref as the token key for each email
                     emailTokenKey = (String) userMap.get("email");
                     userLogin(userMap, VolunteerActivity.class);
                     //sharedpref object points to the file
                     SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
                     //getting the token back from the sharedpref
-                    String token = SharedPrefUtils.loadFromShared(sharedPreferences,emailTokenKey);
+                    String token = SharedPrefUtils.loadFromShared(sharedPreferences, emailTokenKey);
                     //showing the token in a message
-                    Toast.makeText(getApplicationContext(),token,Toast.LENGTH_SHORT).show();
-                };
+                    Toast.makeText(getApplicationContext(), token, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -72,12 +78,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void initViews() {
+        logInProgressBar =  findViewById(R.id.login_Pb);
+        registerTV = findViewById(R.id.orSignUp_Tv);
         emailTextInput = findViewById(R.id.textInputLayout_email);
         passwordTextInput = findViewById(R.id.textInputLayout_pass);
         logInButton = findViewById(R.id.buttonLogin);
-        registerTV = findViewById(R.id.orSignUp_Tv);
-    }
 
+    }
 
 
     private Map<String, Object> populateUser() {
@@ -88,28 +95,17 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-
-
     private boolean valid() {
         boolean valid = true;
         //email
         if (Validator.isEmpty(emailTextInput)) {
             emailTextInput.setError("Please enter an email");
             valid = false;
-        }
-        else if(!Validator.isValidRegex(emailTextInput,Validator.emailRegex)){
+        } else if (!Validator.isValidRegex(emailTextInput, Validator.emailRegex)) {
             //check if it not matches the email's regex
             emailTextInput.setError("Email is invalid");
             valid = false;
-        }
-        else
-        {
+        } else {
             emailTextInput.setError(null);
         }
         //password
@@ -117,35 +113,34 @@ public class LoginActivity extends AppCompatActivity {
             passwordTextInput.setError("Please enter a password");
             valid = false;
             //check if it not matches the password's regex
-        }
-        else if(!Validator.isValidRegex(passwordTextInput,Validator.passwordRegex)){
+        } else if (!Validator.isValidRegex(passwordTextInput, Validator.passwordRegex)) {
             passwordTextInput.setError("Password is invalid");
             valid = false;
-        }
-        else
-        {
+        } else {
             passwordTextInput.setError(null);
         }
         return valid;
     }
-    private void  userLogin(Map<String,Object> user, Class intendedClass){
+
+    private void userLogin(Map<String, Object> user, Class intendedClass) {
         Retrofit retrofit = ApiClient.getRetrofit();
         WebServices webServices = retrofit.create(WebServices.class);
         Call<String> call = webServices.userLogin(user);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                if(response.code() == 200)
-                {
-                    Intent intent = new Intent(getApplicationContext(),intendedClass);
+                if (response.code() == 200) {
+                    //setting the progress bar to be gone(invisible) on getting a response
+                    logInProgressBar.setVisibility(View.GONE);
+                    Intent intent = new Intent(getApplicationContext(), intendedClass);
                     startActivity(intent);
-                    Toast.makeText(getApplicationContext(),"You Have Successfully Logged In",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "You Have Successfully Logged In", Toast.LENGTH_SHORT).show();
 
-                }
-                else if(response.code() == 400)
-                {
+                } else if (response.code() == 400) {
+                    //setting the progress bar to be gone(invisible) on getting a response
+                    logInProgressBar.setVisibility(View.GONE);
                     try {
-                        Toast.makeText(getApplicationContext(), response.errorBody().string(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), response.errorBody().string(), Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -154,14 +149,13 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
+                //setting the progress bar to be gone(invisible) on getting fail response
+                logInProgressBar.setVisibility(View.GONE);
                 Toast.makeText(LoginActivity.this, "Failed to connect", Toast.LENGTH_SHORT).show();
-                Log.d("signin_response",t.getMessage());
+                Log.d("signin_response", t.getMessage());
             }
         });
     }
-
-
-
 
 
 }

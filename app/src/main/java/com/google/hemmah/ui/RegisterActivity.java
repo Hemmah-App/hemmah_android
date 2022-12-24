@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -41,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout firstNameTextInput;
     private TextInputLayout lastNameTextInput;
     private TextInputLayout passwordTextInput;
+    private ProgressBar logInProgressBar;
     private Button createAccountVolunteer;
     private Button createAccountDisabled;
     private SharedPreferences mSharedPreferences;
@@ -57,6 +59,8 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (valid()) {
+                    //setting the progress bad to be visible
+                    logInProgressBar.setVisibility(View.VISIBLE);
                     //passing volunteer's  data to a map in order to post it
                     Map<String, Object> volunteerMap = populateUser("vol");
                     //assigning the email for a var in order to save it in the sharedpref as the token key for each email
@@ -75,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
                     //assigning the email for a var in order to save it in the sharedpref as the token key for each email
                     emailTokenKey = (String) disabledMap.get("email");
                     //posting the disabledMap to the server
-                    signUp(disabledMap,DisabledActivity.class);
+                    signUp(disabledMap, DisabledActivity.class);
                 }
             }
         });
@@ -105,46 +109,35 @@ public class RegisterActivity extends AppCompatActivity {
         if (Validator.isEmpty(firstNameTextInput)) {
             firstNameTextInput.setError("Please enter a firstname");
             valid = false;
-        }
-        else
-        {
+        } else {
             firstNameTextInput.setError(null);
         }
 
         if (Validator.isEmpty(lastNameTextInput)) {
             lastNameTextInput.setError("Please enter a lastname");
             valid = false;
-        }
-        else
-        {
+        } else {
             lastNameTextInput.setError(null);
         }
         //username
         if (Validator.isEmpty(userNameTextInput)) {
             userNameTextInput.setError("Please enter a username ");
             valid = false;
-        }
-        else if(!Validator.isValidRegex(userNameTextInput,Validator.usernameRegex))
-        {
+        } else if (!Validator.isValidRegex(userNameTextInput, Validator.usernameRegex)) {
             userNameTextInput.setError("username is invalid");
             valid = false;
-        }
-        else
-        {
+        } else {
             userNameTextInput.setError(null);
         }
         //email
         if (Validator.isEmpty(emailTextInput)) {
             emailTextInput.setError("Please enter an email");
             valid = false;
-        }
-        else if(!Validator.isValidRegex(emailTextInput,Validator.emailRegex)){
+        } else if (!Validator.isValidRegex(emailTextInput, Validator.emailRegex)) {
             //check if it not matches the email's regex
             emailTextInput.setError("Email is invalid");
             valid = false;
-        }
-        else
-        {
+        } else {
             emailTextInput.setError(null);
         }
         //password
@@ -152,28 +145,24 @@ public class RegisterActivity extends AppCompatActivity {
             passwordTextInput.setError("Please enter a password");
             valid = false;
             //check if it not matches the password's regex
-        }
-        else if(!Validator.isValidRegex(passwordTextInput,Validator.passwordRegex)){
+        } else if (!Validator.isValidRegex(passwordTextInput, Validator.passwordRegex)) {
             passwordTextInput.setError("Password is invalid");
             valid = false;
-        }
-        else
-        {
+        } else {
             passwordTextInput.setError(null);
         }
         //phonenumber
         if (Validator.isEmpty(phoneNumberTextInput)) {
             phoneNumberTextInput.setError("Please enter a phonenumber");
             valid = false;
-        }
-        else
-        {
+        } else {
             phoneNumberTextInput.setError(null);
         }
         return valid;
     }
 
     public void initViews() {
+        logInProgressBar =  (ProgressBar) findViewById(R.id.register_Pb);
         firstNameTextInput = (TextInputLayout) findViewById(R.id.first_name_Layout);
         lastNameTextInput = (TextInputLayout) findViewById(R.id.last_name_Layout);
         userNameTextInput = (TextInputLayout) findViewById(R.id.user_name_Layout);
@@ -184,7 +173,7 @@ public class RegisterActivity extends AppCompatActivity {
         phoneNumberTextInput = (TextInputLayout) findViewById(R.id.user_phone_Layout);
     }
 
-    public void signUp(Map userMap,Class intentedClass) {
+    public void signUp(Map userMap, Class intentedClass) {
         Retrofit retrofit = ApiClient.getRetrofit();
         WebServices webServices = retrofit.create(WebServices.class);
         Call<HashMap<String, String>> call = webServices.userSignUp(userMap);
@@ -192,21 +181,26 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<HashMap<String, String>> call, @NonNull Response<HashMap<String, String>> response) {
                 if (response.code() == 200) {
+                    logInProgressBar.setVisibility(View.GONE);
                     //store response body into the token var
                     token = response.body().toString();
                     //store the token in a shared preferences file
-                    SharedPrefUtils.saveToShared(mSharedPreferences,emailTokenKey, token);
+                    SharedPrefUtils.saveToShared(mSharedPreferences, emailTokenKey, token);
                     //got to the needed activity volunteer or disabled
-                    Intent intent = new Intent(RegisterActivity.this,intentedClass);
+                    Intent intent = new Intent(RegisterActivity.this, intentedClass);
                     startActivity(intent);
                     Toast.makeText(RegisterActivity.this, "You Have been Signed Up Successfully", Toast.LENGTH_SHORT).show();
-                } else if (response.code() == 400)
+                } else if (response.code() == 400){
+                    logInProgressBar.setVisibility(View.GONE);
                     Toast.makeText(RegisterActivity.this, "username already used", Toast.LENGTH_SHORT).show();
+                }
+
 
             }
 
             @Override
             public void onFailure(@NonNull Call<HashMap<String, String>> call, @NonNull Throwable t) {
+                logInProgressBar.setVisibility(View.GONE);
                 Toast.makeText(RegisterActivity.this, "Failed to connect", Toast.LENGTH_SHORT).show();
                 Log.d("signup_response", t.getMessage());
             }
