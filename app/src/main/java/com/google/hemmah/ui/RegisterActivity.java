@@ -59,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (valid()) {
-                    //setting the progress bad to be visible
+                    //setting the progress bad to be visible when clicking on create volunteer button
                     logInProgressBar.setVisibility(View.VISIBLE);
                     //passing volunteer's  data to a map in order to post it
                     Map<String, Object> volunteerMap = populateUser("vol");
@@ -74,6 +74,8 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (valid()) {
+                    //setting the progress bad to be visible when clicking on create disabled button
+                    logInProgressBar.setVisibility(View.VISIBLE);
                     //passing disabled's data to a map in order to post it
                     Map<String, Object> disabledMap = populateUser("dis");
                     //assigning the email for a var in order to save it in the sharedpref as the token key for each email

@@ -181,12 +181,14 @@
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
         android:indeterminate="true"
-        android:indeterminateTint="@color/purple_500"
+        android:indeterminateTint="@color/blue"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3"
         app:trackThickness="8dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
