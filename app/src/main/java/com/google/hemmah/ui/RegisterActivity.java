@@ -2,6 +2,7 @@ package com.google.hemmah.ui;
 
 import static android.content.ContentValues.TAG;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -19,7 +20,7 @@ import com.google.hemmah.Utils.Validator;
 import com.google.hemmah.api.ApiClient;
 import com.google.hemmah.api.WebServices;
 import com.google.hemmah.ui.disabled.DisabledActivity;
-import com.google.hemmah.ui.volunteer.VolunteerActivity;;
+import com.google.hemmah.ui.volunteer.VolunteerActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button createAccountVolunteer;
     private Button createAccountDisabled;
     private SharedPreferences mSharedPreferences;
+    private String emailTokenKey;
     private String token;
 
     @Override
@@ -57,6 +59,8 @@ public class RegisterActivity extends AppCompatActivity {
                 if (valid()) {
                     //passing volunteer's  data to a map in order to post it
                     Map<String, Object> volunteerMap = populateUser("vol");
+                    //assigning the email for a var in order to save it in the sharedpref as the token key for each email
+                    emailTokenKey = (String) volunteerMap.get("email");
                     //posting the volunteerMap to the server
                     signUp(volunteerMap, VolunteerActivity.class);
                 }
@@ -68,6 +72,8 @@ public class RegisterActivity extends AppCompatActivity {
                 if (valid()) {
                     //passing disabled's data to a map in order to post it
                     Map<String, Object> disabledMap = populateUser("dis");
+                    //assigning the email for a var in order to save it in the sharedpref as the token key for each email
+                    emailTokenKey = (String) disabledMap.get("email");
                     //posting the disabledMap to the server
                     signUp(disabledMap,DisabledActivity.class);
                 }
@@ -95,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     public Boolean valid() {
-        Boolean valid = true;
+        boolean valid = true;
         if (Validator.isEmpty(firstNameTextInput)) {
             firstNameTextInput.setError("Please enter a firstname");
             valid = false;
@@ -143,7 +149,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         //password
         if (Validator.isEmpty(passwordTextInput)) {
-            passwordTextInput.setError("Please enter password");
+            passwordTextInput.setError("Please enter a password");
             valid = false;
             //check if it not matches the password's regex
         }
@@ -184,12 +190,12 @@ public class RegisterActivity extends AppCompatActivity {
         Call<HashMap<String, String>> call = webServices.userSignUp(userMap);
         call.enqueue(new Callback<HashMap<String, String>>() {
             @Override
-            public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
+            public void onResponse(@NonNull Call<HashMap<String, String>> call, @NonNull Response<HashMap<String, String>> response) {
                 if (response.code() == 200) {
                     //store response body into the token var
                     token = response.body().toString();
                     //store the token in a shared preferences file
-                    SharedPrefUtils.saveToShared(mSharedPreferences, SharedPrefUtils.TOKEN_KEY, token);
+                    SharedPrefUtils.saveToShared(mSharedPreferences,emailTokenKey, token);
                     //got to the needed activity volunteer or disabled
                     Intent intent = new Intent(RegisterActivity.this,intentedClass);
                     startActivity(intent);
@@ -200,7 +206,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
+            public void onFailure(@NonNull Call<HashMap<String, String>> call, @NonNull Throwable t) {
                 Toast.makeText(RegisterActivity.this, "Failed to connect", Toast.LENGTH_SHORT).show();
                 Log.d("signup_response", t.getMessage());
             }

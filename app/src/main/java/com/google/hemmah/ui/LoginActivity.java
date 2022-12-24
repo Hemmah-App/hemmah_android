@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView registerTV;
     private TextInputLayout emailTextInput;
     private TextInputLayout passwordTextInput;
-    private SharedPreferences mSharedPreferences ;
+    private String emailTokenKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +55,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (valid()){
                     Map<String,Object> userMap = populateUser();
+                    //assigning the email for a var in order to save it in the sharedpref as the token key for each email
+                    emailTokenKey = (String) userMap.get("email");
                     userLogin(userMap, VolunteerActivity.class);
                     //sharedpref object points to the file
-                    mSharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
                     //getting the token back from the sharedpref
-                    String token = SharedPrefUtils.loadFromShared(mSharedPreferences,SharedPrefUtils.TOKEN_KEY);
-                    //showing it in a message
+                    String token = SharedPrefUtils.loadFromShared(sharedPreferences,emailTokenKey);
+                    //showing the token in a message
                     Toast.makeText(getApplicationContext(),token,Toast.LENGTH_SHORT).show();
                 };
             }
@@ -98,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
         boolean valid = true;
         //email
         if (Validator.isEmpty(emailTextInput)) {
-            emailTextInput.setError("Please enter email");
+            emailTextInput.setError("Please enter an email");
             valid = false;
         }
         else if(!Validator.isValidRegex(emailTextInput,Validator.emailRegex)){
@@ -112,12 +114,12 @@ public class LoginActivity extends AppCompatActivity {
         }
         //password
         if (Validator.isEmpty(passwordTextInput)) {
-            passwordTextInput.setError("Please enter password");
+            passwordTextInput.setError("Please enter a password");
             valid = false;
             //check if it not matches the password's regex
         }
         else if(!Validator.isValidRegex(passwordTextInput,Validator.passwordRegex)){
-            passwordTextInput.setError("password is invalid");
+            passwordTextInput.setError("Password is invalid");
             valid = false;
         }
         else
