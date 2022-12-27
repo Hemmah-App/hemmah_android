@@ -3,7 +3,8 @@
     <string name="emailHint">Email</string>
     <string name="passwordHint">Password</string>
     <string name="signIn_Button">Log in</string>
-    <string name="orSignUp_TV">or sign up</string>
+    <string name="orSignUp_TV">Sign up</string>
+    <string name="dontHaveAccout">Don\'t have account?</string>
     <string name="logIn_TV">Log In</string>
     <string name="createACCOUNT_TV">Create Account</string>
     <string name="firstName_ET">First Name</string>
