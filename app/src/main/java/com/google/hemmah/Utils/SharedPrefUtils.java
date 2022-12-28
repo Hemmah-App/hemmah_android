@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 
 import com.google.hemmah.ui.RegisterActivity;
 
+import java.util.Map;
+
 public class SharedPrefUtils {
     public final static String FILE_NAME = "sharedPrefs";
     public static void saveToShared(SharedPreferences sharedPreferences, String key, String token) {
@@ -16,4 +18,9 @@ public class SharedPrefUtils {
         //returns the stored data(token)
         return sharedPreferences.getString(key, "");
     }
+    public static boolean haveToken(SharedPreferences sharedPreferences){
+        Map<String,Object> tokens = (Map<String,Object>)sharedPreferences.getAll();
+        return tokens.isEmpty();
+    }
+
 }

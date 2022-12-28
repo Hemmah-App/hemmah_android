@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.hemmah.R;
+import com.google.hemmah.Utils.ApiErrorHandler;
+import com.google.hemmah.Utils.ModelError;
 import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.Utils.Validator;
 import com.google.hemmah.api.ApiClient;
@@ -46,7 +49,6 @@ public class RegisterActivity extends AppCompatActivity {
     private Button createAccountVolunteer;
     private Button createAccountDisabled;
     private SharedPreferences mSharedPreferences;
-    private String emailTokenKey;
     private String token;
 
     @Override
@@ -54,17 +56,15 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initViews();
-        mSharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, 0);
+        mSharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
         createAccountVolunteer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (valid()) {
-                    //setting the progress bad to be visible when clicking on create volunteer button
+                    //setting the progress bar to be visible when clicking on create volunteer button
                     logInProgressBar.setVisibility(View.VISIBLE);
                     //passing volunteer's  data to a map in order to post it
                     Map<String, Object> volunteerMap = populateUser("vol");
-                    //assigning the email for a var in order to save it in the sharedpref as the token key for each email
-                    emailTokenKey = (String) volunteerMap.get("email");
                     //posting the volunteerMap to the server
                     signUp(volunteerMap, VolunteerActivity.class);
                 }
@@ -78,8 +78,6 @@ public class RegisterActivity extends AppCompatActivity {
                     logInProgressBar.setVisibility(View.VISIBLE);
                     //passing disabled's data to a map in order to post it
                     Map<String, Object> disabledMap = populateUser("dis");
-                    //assigning the email for a var in order to save it in the sharedpref as the token key for each email
-                    emailTokenKey = (String) disabledMap.get("email");
                     //posting the disabledMap to the server
                     signUp(disabledMap, DisabledActivity.class);
                 }
@@ -164,7 +162,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void initViews() {
-        logInProgressBar =  (ProgressBar) findViewById(R.id.register_Pb);
+        logInProgressBar = (ProgressBar) findViewById(R.id.register_Pb);
         firstNameTextInput = (TextInputLayout) findViewById(R.id.first_name_Layout);
         lastNameTextInput = (TextInputLayout) findViewById(R.id.last_name_Layout);
         userNameTextInput = (TextInputLayout) findViewById(R.id.user_name_Layout);
@@ -187,19 +185,19 @@ public class RegisterActivity extends AppCompatActivity {
                     //store response body into the token var
                     token = response.body().toString();
                     //store the token in a shared preferences file
-                    SharedPrefUtils.saveToShared(mSharedPreferences, emailTokenKey, token);
+                    SharedPrefUtils.saveToShared(mSharedPreferences, "token", token);
                     //got to the needed activity volunteer or disabled
                     Intent intent = new Intent(RegisterActivity.this, intentedClass);
                     startActivity(intent);
                     Toast.makeText(RegisterActivity.this, "You Have been Signed Up Successfully", Toast.LENGTH_SHORT).show();
-                } else if (response.code() == 400){
+                } else if (response.code() == 400) {
                     logInProgressBar.setVisibility(View.GONE);
-                    Toast.makeText(RegisterActivity.this, "username already used", Toast.LENGTH_SHORT).show();
+                    //parsing the error body from json to a string
+                    ModelError error = ApiErrorHandler.parseError(response, retrofit);
+                    //showing the error message in a toast message
+                    Toast.makeText(RegisterActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
-
             }
-
             @Override
             public void onFailure(@NonNull Call<HashMap<String, String>> call, @NonNull Throwable t) {
                 logInProgressBar.setVisibility(View.GONE);
@@ -215,8 +213,6 @@ public class RegisterActivity extends AppCompatActivity {
         client.topic("/all").subscribe(message -> {
             Log.i(TAG, "Received message: " + message.getPayload());
         });
-
-
         client.lifecycle().subscribe(lifecycleEvent -> {
             switch (lifecycleEvent.getType()) {
                 case OPENED:

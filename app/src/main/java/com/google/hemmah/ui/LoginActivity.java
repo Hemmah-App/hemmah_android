@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.facebook.common.util.SecureHashUtil;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.hemmah.R;
+import com.google.hemmah.Utils.ApiErrorHandler;
+import com.google.hemmah.Utils.ModelError;
 import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.Utils.Validator;
 import com.google.hemmah.api.ApiClient;
@@ -39,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout emailTextInput;
     private TextInputLayout passwordTextInput;
     private ProgressBar logInProgressBar;
-    private String emailTokenKey;
 
 
     @Override
@@ -61,13 +62,11 @@ public class LoginActivity extends AppCompatActivity {
                     //setting the progress bad to be visible
                     logInProgressBar.setVisibility(View.VISIBLE);
                     Map<String, Object> userMap = populateUser();
-                    //assigning the email for a var in order to save it in the sharedpref as the token key for each email
-                    emailTokenKey = (String) userMap.get("email");
                     userLogin(userMap, VolunteerActivity.class);
                     //sharedpref object points to the file
-                    SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME,Context.MODE_PRIVATE);
                     //getting the token back from the sharedpref
-                    String token = SharedPrefUtils.loadFromShared(sharedPreferences, emailTokenKey);
+                    String token = SharedPrefUtils.loadFromShared(sharedPreferences, "token");
                     //showing the token in a message
                     Toast.makeText(getApplicationContext(), token, Toast.LENGTH_SHORT).show();
                 }
@@ -78,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void initViews() {
-        logInProgressBar =  findViewById(R.id.login_Pb);
+        logInProgressBar = findViewById(R.id.login_Pb);
         registerTV = findViewById(R.id.orSignUp_Tv);
         emailTextInput = findViewById(R.id.textInputLayout_email);
         passwordTextInput = findViewById(R.id.textInputLayout_pass);
@@ -139,11 +138,10 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (response.code() == 400) {
                     //setting the progress bar to be gone(invisible) on getting a response
                     logInProgressBar.setVisibility(View.GONE);
-                    try {
-                        Toast.makeText(getApplicationContext(), response.errorBody().string(), Toast.LENGTH_SHORT).show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    //parsing the error body json to a string
+                    ModelError error = ApiErrorHandler.parseError(response, retrofit);
+                    //showing the error message in a toast message
+                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
