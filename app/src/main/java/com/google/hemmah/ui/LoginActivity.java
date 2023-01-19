@@ -22,6 +22,7 @@ import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.Utils.Validator;
 import com.google.hemmah.api.ApiClient;
 import com.google.hemmah.api.WebServices;
+import com.google.hemmah.ui.disabled.DisabledActivity;
 import com.google.hemmah.ui.volunteer.VolunteerActivity;
 
 import org.webrtc.EglBase;
@@ -138,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (response.code() == 400) {
                     //setting the progress bar to be gone(invisible) on getting a response
                     logInProgressBar.setVisibility(View.GONE);
-                    //parsing the error body json to a string
+                    //parsing the error body from json to a string
                     ModelError error = ApiErrorHandler.parseError(response, retrofit);
                     //showing the error message in a toast message
                     Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();

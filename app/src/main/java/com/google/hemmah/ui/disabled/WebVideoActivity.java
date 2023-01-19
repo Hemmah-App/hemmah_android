@@ -1,4 +1,4 @@
-package com.google.hemmah.ui;
+package com.google.hemmah.ui.disabled;
 
 import androidx.appcompat.app.AppCompatActivity;
 

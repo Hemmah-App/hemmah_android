@@ -15,7 +15,7 @@ import com.google.hemmah.ui.volunteer.VolunteerActivity;
 import java.util.Map;
 
 public class SplashActivity extends AppCompatActivity {
-    private SharedPreferences mSharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, 0);
+//    private SharedPreferences mSharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, 0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +45,14 @@ public class SplashActivity extends AppCompatActivity {
 //    private Map<String, Object> getCurrentUserByToken() {
 //        //here send the token to the to  me:api
 //        //get user's token
-//        String token = SharedPrefUtils.loadFromShared(mSharedPreferences, SharedPrefUtils.TOKEN_KEY);
+//        String token = SharedPrefUtils.loadFromShared(mSharedPreferences, "token");
 //
 //    }
 //
 //    private boolean isTokenExpired() {
-//        //Here use this method to send the token to the api:me and get the response code ,
+//        //use this method to get the response code ,
 //        getCurrentUserByToken();
 //        // if unexpired(200 OK) return false,
-//        return false;
 //        //if expired(401) return true
 //
 //    }

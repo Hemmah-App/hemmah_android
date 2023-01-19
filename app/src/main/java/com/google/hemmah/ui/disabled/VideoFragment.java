@@ -1,7 +1,6 @@
 package com.google.hemmah.ui.disabled;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,18 +14,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.hemmah.R;
-import com.google.hemmah.ui.WebVideoActivity;
-
-import org.jitsi.meet.sdk.JitsiMeet;
-import org.jitsi.meet.sdk.JitsiMeetActivity;
-import org.jitsi.meet.sdk.JitsiMeetConferenceOptions;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 
 
 public class VideoFragment extends Fragment {
-
     private Button callForHelpButton;
     private final String ROOM_NAME = "Hemmah";
     private String meetId;

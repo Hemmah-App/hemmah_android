@@ -10,4 +10,6 @@
     <color name="transparent">#00000000</color>
     <color name="blue">#2f308c</color>
     <color name="dark_blue">#262783</color>
+    <color name="red">#FF0000</color>
+    <color name="white_green">#00FF04</color>
 </resources>
