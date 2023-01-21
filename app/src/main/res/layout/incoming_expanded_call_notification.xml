@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
+    android:layout_height="95dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -19,7 +19,8 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Caller's Name"
+                android:text="Help Request !"
+                style="@style/TextAppearance.Compat.Notification.Title"
                 android:padding="5dp" />
 
             <TextView
@@ -28,15 +29,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-10dp"
                 android:padding="5dp"
-                android:text="{name} needs your help" />
+                android:text="{name} needs your help"
+                style="@style/TextAppearance.Compat.Notification"
+                />
         </LinearLayout>
 
-
-        <ImageView
-            android:id="@+id/photo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/splash_logo_nobg" />
 
     </LinearLayout>
 
@@ -53,9 +50,10 @@
             android:layout_height="40dp"
             android:layout_marginStart="5dp"
             android:layout_weight="0.5"
-            android:backgroundTint="@color/blue"
+            android:backgroundTint="@color/amp_gray"
             android:text="@string/notification_button_name"
-            android:textColor="@color/white" />
+            android:textColor="@color/dark_blue"
+            />
 
     </LinearLayout>
 

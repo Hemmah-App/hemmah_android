@@ -33,16 +33,8 @@ public class ApiClient {
     }
 
     public static Retrofit getRetrofitWithClient() {
-        if (retrofit == null) {
-            Gson gson = new GsonBuilder()
-                    .setLenient()
-                    .create();
-            retrofit = new Retrofit.Builder().baseUrl(RegisterActivity.BASE_URL)
-                    .client(getOkHttpClient())
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-        }
-        return retrofit;
+     Retrofit retrofit = getRetrofit().newBuilder().client(getOkHttpClient()).build();
+     return retrofit;
     }
 
     public static OkHttpClient getOkHttpClient() {

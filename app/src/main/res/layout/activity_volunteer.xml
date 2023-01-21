@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@id/framentContinar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottomnavigation_menu"
-        android:background="@color/purple_500"
+        android:background="@color/dark_blue"
         app:itemIconTint="@color/bottom_navigation_item_color"
         app:itemTextColor="@color/bottom_navigation_item_color"
         />

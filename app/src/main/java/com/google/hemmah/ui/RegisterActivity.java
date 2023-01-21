@@ -1,6 +1,5 @@
 package com.google.hemmah.ui;
 
-import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,19 +25,27 @@ import com.google.hemmah.api.WebServices;
 import com.google.hemmah.ui.disabled.DisabledActivity;
 import com.google.hemmah.ui.volunteer.VolunteerActivity;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.WebSocket;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
+import rx.Scheduler;
+import rx.Subscriber;
+import rx.schedulers.Schedulers;
 import ua.naiksoftware.stomp.Stomp;
 import ua.naiksoftware.stomp.client.StompClient;
+import ua.naiksoftware.stomp.client.StompMessage;
 
 public class RegisterActivity extends AppCompatActivity {
-    public static final String BASE_URL = "http://192.168.1.11:8080/";
-    private static final String websocketApi = "ws://192.168.1.7:8080/ws";
+    public static final String BASE_URL = "http://192.168.1.9:8080/ws";
+    private static final String websocketApi = "wss://demo.piesocket.com/v3/channel_123?api_key=VCXCEuvhGcBDP7XhiJJUDvR1e1D3eiVjgZ9VRiaV&notify_self";
+    public static final String TAG = "Stomp";
     private TextInputLayout userNameTextInput;
     private TextInputLayout emailTextInput;
     private TextInputLayout phoneNumberTextInput;
@@ -50,6 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button createAccountDisabled;
     private SharedPreferences mSharedPreferences;
     private String token;
+    private StompClient mStompClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
         createAccountVolunteer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                connectSocket();
                 if (valid()) {
                     //setting the progress bar to be visible when clicking on create volunteer button
                     logInProgressBar.setVisibility(View.VISIBLE);
@@ -88,7 +97,6 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        connectSocket().disconnect();
     }
 
     private Map<String, Object> populateUser(String userType) {
@@ -198,6 +206,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<HashMap<String, String>> call, @NonNull Throwable t) {
                 logInProgressBar.setVisibility(View.GONE);
@@ -207,26 +216,36 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public StompClient connectSocket() {
-        StompClient client = Stomp.over(Stomp.ConnectionProvider.OKHTTP, websocketApi);
-        client.connect();
-        client.topic("/all").subscribe(message -> {
-            Log.i(TAG, "Received message: " + message.getPayload());
+    public void connectSocket() {
+        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, BASE_URL);
+        mStompClient.connect();
+
+        mStompClient.topic("/all").subscribe(topicMessage -> {
+            Log.d(TAG, topicMessage.getPayload());
+            Toast.makeText(this, topicMessage.getStompHeaders().get(0).getValue(), Toast.LENGTH_SHORT).show();
+
         });
-        client.lifecycle().subscribe(lifecycleEvent -> {
+
+
+        mStompClient.lifecycle().subscribe(lifecycleEvent -> {
             switch (lifecycleEvent.getType()) {
+
                 case OPENED:
                     Log.d(TAG, "Stomp connection opened");
                     break;
+
+                case ERROR:
+                    Log.e(TAG, "Error", lifecycleEvent.getException());
+                    break;
+
                 case CLOSED:
                     Log.d(TAG, "Stomp connection closed");
                     break;
-                case ERROR:
-                    Log.e(TAG, "Stomp connection error", lifecycleEvent.getException());
-                    break;
             }
         });
-        return client;
-    }
 
+    }
 }
+
+
+

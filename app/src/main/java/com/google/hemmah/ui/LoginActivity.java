@@ -13,7 +13,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.common.util.SecureHashUtil;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.hemmah.R;
 import com.google.hemmah.Utils.ApiErrorHandler;
@@ -22,12 +21,8 @@ import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.Utils.Validator;
 import com.google.hemmah.api.ApiClient;
 import com.google.hemmah.api.WebServices;
-import com.google.hemmah.ui.disabled.DisabledActivity;
 import com.google.hemmah.ui.volunteer.VolunteerActivity;
 
-import org.webrtc.EglBase;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (valid()) {
+                if (validLogin()) {
                     //setting the progress bad to be visible
                     logInProgressBar.setVisibility(View.VISIBLE);
                     Map<String, Object> userMap = populateUser();
@@ -95,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private boolean valid() {
+    private boolean validLogin() {
         boolean valid = true;
         //email
         if (Validator.isEmpty(emailTextInput)) {
