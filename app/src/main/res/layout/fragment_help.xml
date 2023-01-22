@@ -12,9 +12,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="write what do you need"
+        android:text="@string/disabled_helpfrag_header"
         android:textSize="28sp"
         android:textStyle="bold"
+        android:textColor="@color/colorAccent"
         android:layout_margin="20sp"
         />
 
@@ -40,8 +41,8 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:lines="7" />
+                    android:layout_height="wrap_content"
+                     />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -63,17 +64,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:text="Choose date"
+                android:text="@string/toggle_date_dishelpfrag"
                 android:textSize="18sp"
-                android:textColor="#5658DD"/>
+                android:textColor="@color/colorAccent"/>
 
             <Button
                 android:id="@+id/help_button_add_request"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="18dp"
-                android:background="@drawable/button_background_color"
-                android:text="Request"
+                android:backgroundTint="@color/colorAccent"
+                android:textColor="@color/colorOnAccent"
+                android:text="@string/request_help_bt"
                 android:textAllCaps="false" />
 
         </LinearLayout>

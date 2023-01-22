@@ -17,7 +17,7 @@
         android:textSize="28sp"
         android:layout_margin="10dp"
         android:textStyle="bold"
-        android:textColor="@color/blue"
+        android:textColor="@color/colorAccent"
         />
 
     <FrameLayout
@@ -35,9 +35,9 @@
         app:layout_constraintTop_toBottomOf="@id/framentContinar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottomnavigation_menu"
-        android:background="@color/dark_blue"
+        android:background="@color/colorPrimaryLight"
         app:itemIconTint="@color/bottom_navigation_item_color"
-        app:itemTextColor="@color/bottom_navigation_item_color"
+        app:itemTextColor="@color/colorOnPrimary"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

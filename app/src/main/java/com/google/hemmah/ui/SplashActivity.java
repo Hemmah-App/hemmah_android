@@ -21,6 +21,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        fromSplashToActivity(LoginActivity.class);
 //        handleSplash();
     }
 
@@ -58,21 +59,21 @@ public class SplashActivity extends AppCompatActivity {
 //    }
 //
 //
-//    private void fromSplashToActivity(Class Activity) {
-//        new Handler().postDelayed(
-//                new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        goToActivity(Activity);
-//                    }
-//                },
-//                2000);
-//    }
-//
-//
-//    private void goToActivity(Class Activity) {
-//        Intent intent = new Intent(this, Activity);
-//        startActivity(intent);
-//        finish();
-//    }
+    private void fromSplashToActivity(Class Activity) {
+        new Handler().postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        goToActivity(Activity);
+                    }
+                },
+                2000);
+    }
+
+
+    private void goToActivity(Class Activity) {
+        Intent intent = new Intent(this, Activity);
+        startActivity(intent);
+        finish();
+    }
 }

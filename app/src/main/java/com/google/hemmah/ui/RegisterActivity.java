@@ -43,7 +43,7 @@ import ua.naiksoftware.stomp.client.StompClient;
 import ua.naiksoftware.stomp.client.StompMessage;
 
 public class RegisterActivity extends AppCompatActivity {
-    public static final String BASE_URL = "http://192.168.1.9:8080/ws";
+    public static final String BASE_URL = "http://192.168.1.9:8080/";
     private static final String websocketApi = "wss://demo.piesocket.com/v3/channel_123?api_key=VCXCEuvhGcBDP7XhiJJUDvR1e1D3eiVjgZ9VRiaV&notify_self";
     public static final String TAG = "Stomp";
     private TextInputLayout userNameTextInput;

@@ -6,12 +6,10 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.RemoteViews;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -21,8 +19,6 @@ import com.google.hemmah.ui.Notifications.App;
 import com.google.hemmah.ui.SettingsFragment;
 
 import org.jitsi.meet.sdk.JitsiMeetActivity;
-
-import java.util.zip.Inflater;
 
 public class VolunteerActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigation;
@@ -56,7 +52,7 @@ public class VolunteerActivity extends AppCompatActivity {
                 .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
                 .setCustomContentView(collapsedNotification)
                 .setCustomBigContentView(expandedNotification)
-                .setColor(getColor(R.color.dark_blue))
+                .setColor(getColor(R.color.colorOnPrimary))
                 .build();
 
         mNotificationManagerCompat.notify(notificationId,notification);

@@ -5,13 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/colorBackground"
     tools:context=".ui.LoginActivity">
 
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/blue"
+        android:background="@color/colorPrimaryDark"
         app:layout_constraintBottom_toTopOf="@+id/login_cardview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:text="@string/logIn_TV"
-        android:textColor="@color/white"
+        android:textColor="@color/colorOnPrimary"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +54,7 @@
                 android:id="@+id/textInputLayout_email"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:boxBackgroundColor="@color/transparent"
+                app:boxBackgroundColor="@color/colorBackground"
                 app:boxBackgroundMode="outline"
                 app:endIconMode="clear_text"
                 app:hintAnimationEnabled="true"
@@ -80,7 +80,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="40dp"
-                app:boxBackgroundColor="@color/transparent"
+                app:boxBackgroundColor="@color/colorBackground"
                 app:boxBackgroundMode="outline"
                 app:hintAnimationEnabled="true"
                 app:layout_constraintEnd_toEndOf="@id/rightguideline"
@@ -105,12 +105,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:indeterminate="true"
-                android:indeterminateTint="@color/blue"
+                android:indeterminateTint="@color/colorAccent"
                 android:visibility="gone"
                 app:layout_constraintEnd_toStartOf="@id/rightguideline"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toEndOf="@id/leftguideline"
-
                 app:layout_constraintTop_toBottomOf="@id/topbuttonguidline"
                 app:trackThickness="8dp" />
 
@@ -119,8 +118,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="27dp"
-                android:background="@drawable/button_background_color"
+                android:backgroundTint="@color/colorAccent"
                 android:text="@string/signIn_Button"
+                android:textColor="@color/colorOnAccent"
                 app:layout_constraintEnd_toStartOf="@+id/rightguideline"
                 app:layout_constraintStart_toStartOf="@+id/leftguideline"
                 app:layout_constraintTop_toBottomOf="@+id/login_Pb" />
@@ -140,7 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/dontHaveAccout"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colorOnAccent"
                     android:textSize="14sp" />
 
                 <TextView
@@ -149,7 +149,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/orSignUp_TV"
                     android:layout_marginStart="5dp"
-                    android:textColor="#5658DD"
+                    android:textColor="@color/colorAccent"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:layout_toRightOf="@+id/donthaveaccount" />

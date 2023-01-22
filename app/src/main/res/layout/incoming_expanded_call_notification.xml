@@ -52,7 +52,7 @@
             android:layout_weight="0.5"
             android:backgroundTint="@color/amp_gray"
             android:text="@string/notification_button_name"
-            android:textColor="@color/dark_blue"
+            android:textColor="@color/colorOnAccent"
             />
 
     </LinearLayout>

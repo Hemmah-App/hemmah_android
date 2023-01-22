@@ -50,6 +50,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/description_text_layout"
             tools:text="Choose date"
+            android:textColor="@color/colorAccent"
             android:layout_margin="12dp"
             />
 
