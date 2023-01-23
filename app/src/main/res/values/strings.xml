@@ -13,9 +13,8 @@
     <string name="email_ET">Email</string>
     <string name="password_ET">Password</string>
     <string name="createAccount_BT">Create Volunteer</string>
-    <string name="video_item1_nav">Video</string>
-    <string name="video_item2_nav">Help</string>
-    <string name="video_item3_nav">settings</string>
+    <string name="video_item1_nav">Home</string>
+    <string name="video_item2_nav">Settings</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="callforhelp_frag_bt">Call For Help</string>
@@ -25,6 +24,10 @@
     <string name="disabled_helpfrag_header">Write what you need</string>
     <string name="toggle_date_dishelpfrag">Choose date</string>
     <string name="helppost_bt">Ok</string>
+    <string name="create_disabled_bt">Create Disabled</string>
+    <string name="post_a_help_request_TV">Post A Help Request</string>
+    <string name="help_notification_text">needs your help</string>
+    <string name="help_notification_title">Help Request !</string>
     <string-array name="planets_array">
         <item>vol</item>
         <item>dis</item>

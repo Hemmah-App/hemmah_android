@@ -27,6 +27,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="33">
         <activity
+            android:name=".ui.disabled.MakePostActivity"
+            android:exported="true"
+            >
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value=""/>
+        </activity>
+        <activity
             android:name=".ui.disabled.WebVideoActivity"
             android:exported="false">
             <meta-data
@@ -45,14 +53,16 @@
             android:exported="true" />
         <activity
             android:name=".ui.LoginActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.Hemmah.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".ui.SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

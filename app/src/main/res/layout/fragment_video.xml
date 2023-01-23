@@ -4,21 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.disabled.VideoFragment">
+    tools:context=".ui.disabled.VideoPostFragment">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/callforhelp_BT"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@drawable/button_background_color"
         android:backgroundTint="@color/colorAccent"
-        android:textColor="@color/colorOnAccent"
         android:text="@string/callforhelp_frag_bt"
+        android:textColor="@color/colorOnAccent"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/downguideline"
         app:layout_constraintEnd_toEndOf="@id/rightguideline"
         app:layout_constraintStart_toStartOf="@id/leftguideline"
         app:layout_constraintTop_toTopOf="@id/topguideline" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addAPost_FAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/add_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/callforhelp_BT"
+        app:layout_constraintTop_toBottomOf="@+id/callforhelp_BT" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/topguideline"
@@ -47,6 +57,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.778125" />
+
+    <TextView
+        android:id="@+id/postAHelpRequest_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/post_a_help_request_TV"
+        android:textColor="@color/colorText"
+        app:layout_constraintBottom_toBottomOf="@+id/addAPost_FAB"
+        app:layout_constraintEnd_toStartOf="@+id/addAPost_FAB"
+        app:layout_constraintHorizontal_bias="0.91"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/addAPost_FAB" />
 
 
     />

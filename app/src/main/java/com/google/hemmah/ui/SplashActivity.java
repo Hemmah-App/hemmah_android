@@ -1,9 +1,13 @@
 package com.google.hemmah.ui;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -16,13 +20,14 @@ import java.util.Map;
 
 public class SplashActivity extends AppCompatActivity {
 //    private SharedPreferences mSharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, 0);
-
+    ActionBar mActionBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
         fromSplashToActivity(LoginActivity.class);
-//        handleSplash();
+
     }
 
 //

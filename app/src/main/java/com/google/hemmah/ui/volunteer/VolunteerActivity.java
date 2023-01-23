@@ -31,6 +31,7 @@ public class VolunteerActivity extends AppCompatActivity {
         intializeFragments();
         mNotificationManagerCompat = NotificationManagerCompat.from(this);
         makeCallNotification("Test",1);
+        
     }
 
     private PendingIntent makeNotificationPendingIntent(){
@@ -53,19 +54,20 @@ public class VolunteerActivity extends AppCompatActivity {
                 .setCustomContentView(collapsedNotification)
                 .setCustomBigContentView(expandedNotification)
                 .setColor(getColor(R.color.colorOnPrimary))
+                .setGroup(NOTIFICATION_GROUP_KEY)
                 .build();
 
         mNotificationManagerCompat.notify(notificationId,notification);
     }
 
     private void intializeFragments(){
-        getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar ,new ListFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar ,new PostsFragment()).commit();
 
         bottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.list){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar ,new ListFragment()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar ,new PostsFragment()).commit();
                 } else if (item.getItemId() == R.id.history){
                     getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar ,new HistoryFragment()).commit();
                 } else if (item.getItemId() == R.id.settings){

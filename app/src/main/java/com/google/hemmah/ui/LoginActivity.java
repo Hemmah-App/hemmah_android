@@ -21,6 +21,7 @@ import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.Utils.Validator;
 import com.google.hemmah.api.ApiClient;
 import com.google.hemmah.api.WebServices;
+import com.google.hemmah.ui.disabled.DisabledActivity;
 import com.google.hemmah.ui.volunteer.VolunteerActivity;
 
 import java.util.HashMap;
@@ -58,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                     //setting the progress bad to be visible
                     logInProgressBar.setVisibility(View.VISIBLE);
                     Map<String, Object> userMap = populateUser();
-                    userLogin(userMap, VolunteerActivity.class);
+                    userLogin(userMap, DisabledActivity.class);
                     //sharedpref object points to the file
                     SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME,Context.MODE_PRIVATE);
                     //getting the token back from the sharedpref

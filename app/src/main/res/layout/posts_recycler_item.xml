@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:contentPadding="8dp"
+    android:layout_margin="18dp"
+    app:cardCornerRadius="8dp"
+    android:elevation="8dp"
+    app:strokeColor="@color/colorSurface"
+    app:strokeWidth="3dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/post_itemview_inc"
+            layout="@layout/common_post_history_recyclerviewitem" />
+
+
+        <Button
+            android:id="@+id/ok_button_list_recycler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:backgroundTint="@color/colorAccent"
+            android:text="@string/helppost_bt"
+            android:textAllCaps="false"
+            android:textColor="@color/colorOnAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline1" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.7256637" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

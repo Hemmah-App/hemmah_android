@@ -25,7 +25,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostHolder> 
     public PostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //constant line in all
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_recycler_item, parent, false);
+                .inflate(R.layout.posts_recycler_item, parent, false);
         return new PostHolder(view);
     }
 

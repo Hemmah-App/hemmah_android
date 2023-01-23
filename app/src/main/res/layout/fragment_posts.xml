@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.volunteer.ListFragment">
+    tools:context=".ui.volunteer.PostsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/list_recycler_item"
+        tools:listitem="@layout/posts_recycler_item"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
 

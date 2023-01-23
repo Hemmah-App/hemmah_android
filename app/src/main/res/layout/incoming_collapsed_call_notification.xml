@@ -15,23 +15,7 @@
             android:layout_weight="0.85"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Help Request !"
-                style="@style/TextAppearance.Compat.Notification.Title"
-                android:padding="5dp" />
-
-            <TextView
-                android:id="@+id/callType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-10dp"
-                android:padding="5dp"
-                android:text="{name} needs your help"
-                style="@style/TextAppearance.Compat.Notification"
-                />
+       <include layout="@layout/common_notification"/>
         </LinearLayout>
 
 
