@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/list" android:title="post"
+    <item android:id="@+id/list" android:title="@string/volunteer_navbar_post"
         android:icon="@drawable/ic_list"
         />
-    <item android:id="@+id/history" android:title="history"
+    <item android:id="@+id/history" android:title="@string/volunteer_navbar_history"
         android:icon="@drawable/ic_history"
         />
-    <item android:id="@+id/settings" android:title="settings"
+    <item android:id="@+id/settings" android:title="@string/volunteer_navbar_settings"
         android:icon="@drawable/ic_settings"
         />
 </menu>

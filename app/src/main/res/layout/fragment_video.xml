@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.disabled.VideoPostFragment">
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/callforhelp_BT"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -20,7 +20,6 @@
         app:layout_constraintEnd_toEndOf="@id/rightguideline"
         app:layout_constraintStart_toStartOf="@id/leftguideline"
         app:layout_constraintTop_toTopOf="@id/topguideline" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addAPost_FAB"
         android:layout_width="wrap_content"

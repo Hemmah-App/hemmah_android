@@ -15,7 +15,6 @@
     <string name="createAccount_BT">Create Volunteer</string>
     <string name="video_item1_nav">Home</string>
     <string name="video_item2_nav">Settings</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="callforhelp_frag_bt">Call For Help</string>
     <string name="phone_number_hint">Phone Number</string>
@@ -28,8 +27,34 @@
     <string name="post_a_help_request_TV">Post A Help Request</string>
     <string name="help_notification_text">needs your help</string>
     <string name="help_notification_title">Help Request !</string>
+    <string name="helprequest_title_ET">title</string>
+    <string name="helprequest_description_ET">description</string>
+    <string name="volunteer_navbar_post">post</string>
+    <string name="volunteer_navbar_history">history</string>
+    <string name="volunteer_navbar_settings">settings</string>
+    <string name="notification_title_ET">title</string>
+    <string name="notification_description_ET">description</string>
+    <string name="choosedate_recyvlerview_TV">Choose date</string>
     <string-array name="planets_array">
         <item>vol</item>
         <item>dis</item>
     </string-array>
+
+<!--  toast messages  -->
+    <string name="signup_toastmessage">You Have been Signed Up Successfully</string>
+    <string name="signin_toastmessage">You Have Successfully Logged In</string>
+    <string name="failedtoconnect_toastmessage">Failed to connect</string>
+<!--    validation errors-->
+    <string name="firstname_em_error">Please enter a firstname</string>
+    <string name="lastname_em_error">Please enter a lastname</string>
+    <string name="username_em_error">Please enter a username</string>
+    <string name="username_inv_error">username is invalid</string>
+    <string name="email_em_error">Please enter an email</string>
+    <string name="email_inv_error">Email is invalid</string>
+    <string name="password_em_error">Please enter a password</string>
+    <string name="password_inv_error">Password is invalid</string>
+    <string name="phonenumber_em_error">Please enter a phonenumber</string>
+
+
+
 </resources>

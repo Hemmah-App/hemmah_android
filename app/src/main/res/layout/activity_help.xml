@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.disabled.HelpFragment">
+    tools:context=".ui.disabled.MakePostActivity">
 
     <TextView
         android:id="@+id/help_textView"
@@ -17,6 +17,7 @@
         android:textStyle="bold"
         android:textColor="@color/colorAccent"
         android:layout_margin="20sp"
+
         />
 
     <ScrollView
@@ -36,12 +37,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
-                android:hint="title"
-                app:boxBackgroundColor="@color/transparent">
+                android:hint="@string/helprequest_title_ET"
+                app:boxBackgroundColor="@color/transparent"
+                >
+
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
                      />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -50,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
-                android:hint="description"
+                android:hint="@string/helprequest_description_ET"
                 app:boxBackgroundColor="@color/transparent">
 
                 <EditText

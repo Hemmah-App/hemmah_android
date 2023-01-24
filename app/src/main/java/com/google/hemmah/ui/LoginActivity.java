@@ -95,22 +95,22 @@ public class LoginActivity extends AppCompatActivity {
         boolean valid = true;
         //email
         if (Validator.isEmpty(emailTextInput)) {
-            emailTextInput.setError("Please enter an email");
+            emailTextInput.setError(getString(R.string.email_em_error));
             valid = false;
         } else if (!Validator.isValidRegex(emailTextInput, Validator.emailRegex)) {
             //check if it not matches the email's regex
-            emailTextInput.setError("Email is invalid");
+            emailTextInput.setError(getString(R.string.email_inv_error));
             valid = false;
         } else {
             emailTextInput.setError(null);
         }
         //password
         if (Validator.isEmpty(passwordTextInput)) {
-            passwordTextInput.setError("Please enter a password");
+            passwordTextInput.setError(getString(R.string.password_em_error));
             valid = false;
             //check if it not matches the password's regex
         } else if (!Validator.isValidRegex(passwordTextInput, Validator.passwordRegex)) {
-            passwordTextInput.setError("Password is invalid");
+            passwordTextInput.setError(getString(R.string.password_inv_error));
             valid = false;
         } else {
             passwordTextInput.setError(null);
@@ -130,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                     logInProgressBar.setVisibility(View.GONE);
                     Intent intent = new Intent(getApplicationContext(), intendedClass);
                     startActivity(intent);
-                    Toast.makeText(getApplicationContext(), "You Have Successfully Logged In", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.signin_toastmessage, Toast.LENGTH_SHORT).show();
 
                 } else if (response.code() == 400) {
                     //setting the progress bar to be gone(invisible) on getting a response
@@ -146,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Call<String> call, Throwable t) {
                 //setting the progress bar to be gone(invisible) on getting fail response
                 logInProgressBar.setVisibility(View.GONE);
-                Toast.makeText(LoginActivity.this, "Failed to connect", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, R.string.failedtoconnect_toastmessage, Toast.LENGTH_SHORT).show();
                 Log.d("signin_response", t.getMessage());
             }
         });

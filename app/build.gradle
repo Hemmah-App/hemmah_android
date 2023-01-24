@@ -36,6 +36,9 @@ dependencies {
     implementation 'com.google.android.material:material:1.7.0'
     implementation "androidx.core:core:$core_version"
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.preference:preference:1.2.0'
+    //ripple effect
+    implementation 'com.balysv:material-ripple:1.0.2'
     //retrofit support
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -43,12 +46,12 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:21.0.1'
     //jitsi for video meeting
     implementation ('org.jitsi.react:jitsi-meet-sdk:7.0.1') { transitive = true }
-    //for websocket
-//    implementation 'com.github.HertelDavid:StompedAndroidClient:1.0'
-    implementation 'com.github.forresthopkinsa:stompprotocolandroid:17.11.0'
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
-    //socket
-//    implementation 'com.github.naios:stomp-websocket:1.1.0'
+    //for stomp socket
+//    implementation 'com.github.NaikSoftware:StompProtocolAndroid:1.2.2'
+//    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+//    //for rxjava
+//    implementation 'io.reactivex.rxjava2:rxjava:2.2.5'
+//    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'

@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:hint="title"
+        android:hint="@string/notification_title_ET"
         app:boxBackgroundColor="@color/transparent"
         android:layout_margin="12dp"
         >
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/title_text_layout"
-        android:hint="description"
+        android:hint="@string/notification_description_ET"
         app:boxBackgroundColor="@color/transparent"
         android:layout_margin="12dp"
         >
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/description_text_layout"
-        tools:text="Choose date"
+        tools:text="@string/choosedate_recyvlerview_TV"
         android:textColor="@color/colorAccent"
         android:layout_margin="12dp"
         />

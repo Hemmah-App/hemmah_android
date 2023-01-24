@@ -16,6 +16,13 @@
         app:layout_constraintBottom_toTopOf="@id/buttomNavigathion"
         />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="@color/colorBlack"
+        app:layout_constraintBottom_toBottomOf="@+id/framentContinar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/buttomNavigathion"
         android:layout_width="match_parent"
@@ -23,9 +30,10 @@
         app:layout_constraintTop_toBottomOf="@id/framentContinar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottomnavigation_menu"
-        android:background="@color/colorPrimaryLight"
+        android:background="@color/colorPrimary"
         app:itemIconTint="@drawable/bottom_navigation_item_color"
         app:itemTextColor="@color/colorOnPrimary"
+        android:elevation="250dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

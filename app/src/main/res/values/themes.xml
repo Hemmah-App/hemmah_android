@@ -18,6 +18,7 @@
     <style name="Button.accent" parent="ThemeOverlay.AppCompat">
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="Theme.Hemmah.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>

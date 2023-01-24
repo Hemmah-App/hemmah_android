@@ -29,49 +29,38 @@ import com.google.hemmah.ui.volunteer.VolunteerActivity;
 import java.util.HashMap;
 import java.util.Map;
 
-import okhttp3.WebSocket;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-import rx.Scheduler;
-import rx.Subscriber;
-import rx.schedulers.Schedulers;
-import ua.naiksoftware.stomp.Stomp;
-import ua.naiksoftware.stomp.client.StompClient;
-import ua.naiksoftware.stomp.client.StompMessage;
+
 
 public class RegisterActivity extends AppCompatActivity {
-    public static final String BASE_URL = "http://192.168.1.9:8080/";
-    private static final String websocketApi = "wss://demo.piesocket.com/v3/channel_123?api_key=VCXCEuvhGcBDP7XhiJJUDvR1e1D3eiVjgZ9VRiaV&notify_self";
-    public static final String TAG = "Stomp";
-    private TextInputLayout userNameTextInput;
-    private TextInputLayout emailTextInput;
-    private TextInputLayout phoneNumberTextInput;
-    private TextInputLayout firstNameTextInput;
-    private TextInputLayout lastNameTextInput;
-    private TextInputLayout passwordTextInput;
-    private ProgressBar logInProgressBar;
-    private Button createAccountVolunteer;
-    private Button createAccountDisabled;
+    public static final String mTag = "Stomp";
+    private TextInputLayout mUserNameTextInput;
+    private TextInputLayout mEmailTextInput;
+    private TextInputLayout mPhoneNumberTextInput;
+    private TextInputLayout mFirstNameTextInput;
+    private TextInputLayout mLastNameTextInput;
+    private TextInputLayout mPasswordTextInput;
+    private ProgressBar mLogInProgressBar;
+    private Button mCreateAccountVolunteer_Bt;
+    private Button mCreateAccountDisabled_Bt;
     private SharedPreferences mSharedPreferences;
     private String token;
-    private StompClient mStompClient;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initViews();
         mSharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
-        createAccountVolunteer.setOnClickListener(new View.OnClickListener() {
+        mCreateAccountVolunteer_Bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                connectSocket();
                 if (valid()) {
                     //setting the progress bar to be visible when clicking on create volunteer button
-                    logInProgressBar.setVisibility(View.VISIBLE);
+                    mLogInProgressBar.setVisibility(View.VISIBLE);
                     //passing volunteer's  data to a map in order to post it
                     Map<String, Object> volunteerMap = populateUser("vol");
                     //posting the volunteerMap to the server
@@ -79,12 +68,12 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-        createAccountDisabled.setOnClickListener(new View.OnClickListener() {
+        mCreateAccountDisabled_Bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (valid()) {
                     //setting the progress bad to be visible when clicking on create disabled button
-                    logInProgressBar.setVisibility(View.VISIBLE);
+                    mLogInProgressBar.setVisibility(View.VISIBLE);
                     //passing disabled's data to a map in order to post it
                     Map<String, Object> disabledMap = populateUser("dis");
                     //posting the disabledMap to the server
@@ -101,12 +90,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     private Map<String, Object> populateUser(String userType) {
         Map<String, Object> userMap = new HashMap<String, Object>();
-        userMap.put("userName", userNameTextInput.getEditText().getText().toString());
-        userMap.put("email", emailTextInput.getEditText().getText().toString());
-        userMap.put("password", passwordTextInput.getEditText().getText().toString());
-        userMap.put("phoneNumber", phoneNumberTextInput.getEditText().getText().toString());
-        userMap.put("firstName", firstNameTextInput.getEditText().getText().toString());
-        userMap.put("lastName", lastNameTextInput.getEditText().getText().toString());
+        userMap.put("userName", mUserNameTextInput.getEditText().getText().toString());
+        userMap.put("email", mEmailTextInput.getEditText().getText().toString());
+        userMap.put("password", mPasswordTextInput.getEditText().getText().toString());
+        userMap.put("phoneNumber", mPhoneNumberTextInput.getEditText().getText().toString());
+        userMap.put("firstName", mFirstNameTextInput.getEditText().getText().toString());
+        userMap.put("lastName", mLastNameTextInput.getEditText().getText().toString());
         userMap.put("userType", userType);
         return userMap;
     }
@@ -114,71 +103,71 @@ public class RegisterActivity extends AppCompatActivity {
 
     public Boolean valid() {
         boolean valid = true;
-        if (Validator.isEmpty(firstNameTextInput)) {
-            firstNameTextInput.setError("Please enter a firstname");
+        if (Validator.isEmpty(mFirstNameTextInput)) {
+            mFirstNameTextInput.setError(getString(R.string.firstname_em_error));
             valid = false;
         } else {
-            firstNameTextInput.setError(null);
+            mFirstNameTextInput.setError(null);
         }
 
-        if (Validator.isEmpty(lastNameTextInput)) {
-            lastNameTextInput.setError("Please enter a lastname");
+        if (Validator.isEmpty(mLastNameTextInput)) {
+            mLastNameTextInput.setError(getString(R.string.lastname_em_error));
             valid = false;
         } else {
-            lastNameTextInput.setError(null);
+            mLastNameTextInput.setError(null);
         }
         //username
-        if (Validator.isEmpty(userNameTextInput)) {
-            userNameTextInput.setError("Please enter a username ");
+        if (Validator.isEmpty(mUserNameTextInput)) {
+            mUserNameTextInput.setError(getString(R.string.username_em_error));
             valid = false;
-        } else if (!Validator.isValidRegex(userNameTextInput, Validator.usernameRegex)) {
-            userNameTextInput.setError("username is invalid");
+        } else if (!Validator.isValidRegex(mUserNameTextInput, Validator.usernameRegex)) {
+            mUserNameTextInput.setError(getString(R.string.username_inv_error));
             valid = false;
         } else {
-            userNameTextInput.setError(null);
+            mUserNameTextInput.setError(null);
         }
         //email
-        if (Validator.isEmpty(emailTextInput)) {
-            emailTextInput.setError("Please enter an email");
+        if (Validator.isEmpty(mEmailTextInput)) {
+            mEmailTextInput.setError(getString(R.string.email_em_error));
             valid = false;
-        } else if (!Validator.isValidRegex(emailTextInput, Validator.emailRegex)) {
+        } else if (!Validator.isValidRegex(mEmailTextInput, Validator.emailRegex)) {
             //check if it not matches the email's regex
-            emailTextInput.setError("Email is invalid");
+            mEmailTextInput.setError(getString(R.string.email_inv_error));
             valid = false;
         } else {
-            emailTextInput.setError(null);
+            mEmailTextInput.setError(null);
         }
         //password
-        if (Validator.isEmpty(passwordTextInput)) {
-            passwordTextInput.setError("Please enter a password");
+        if (Validator.isEmpty(mPasswordTextInput)) {
+            mPasswordTextInput.setError(getString(R.string.password_em_error));
             valid = false;
             //check if it not matches the password's regex
-        } else if (!Validator.isValidRegex(passwordTextInput, Validator.passwordRegex)) {
-            passwordTextInput.setError("Password is invalid");
+        } else if (!Validator.isValidRegex(mPasswordTextInput, Validator.passwordRegex)) {
+            mPasswordTextInput.setError(getString(R.string.password_inv_error));
             valid = false;
         } else {
-            passwordTextInput.setError(null);
+            mPasswordTextInput.setError(null);
         }
         //phonenumber
-        if (Validator.isEmpty(phoneNumberTextInput)) {
-            phoneNumberTextInput.setError("Please enter a phonenumber");
+        if (Validator.isEmpty(mPhoneNumberTextInput)) {
+            mPhoneNumberTextInput.setError(getString(R.string.phonenumber_em_error));
             valid = false;
         } else {
-            phoneNumberTextInput.setError(null);
+            mPhoneNumberTextInput.setError(null);
         }
         return valid;
     }
 
     public void initViews() {
-        logInProgressBar = (ProgressBar) findViewById(R.id.register_Pb);
-        firstNameTextInput = (TextInputLayout) findViewById(R.id.first_name_Layout);
-        lastNameTextInput = (TextInputLayout) findViewById(R.id.last_name_Layout);
-        userNameTextInput = (TextInputLayout) findViewById(R.id.user_name_Layout);
-        emailTextInput = (TextInputLayout) findViewById(R.id.email_Layout);
-        passwordTextInput = (TextInputLayout) findViewById(R.id.password_Layout);
-        createAccountVolunteer = (Button) findViewById(R.id.button_create_account_as_volunteer);
-        createAccountDisabled = (Button) findViewById(R.id.button_create_account_as_disabled);
-        phoneNumberTextInput = (TextInputLayout) findViewById(R.id.user_phone_Layout);
+        mLogInProgressBar = (ProgressBar) findViewById(R.id.register_Pb);
+        mFirstNameTextInput = (TextInputLayout) findViewById(R.id.first_name_Layout);
+        mLastNameTextInput = (TextInputLayout) findViewById(R.id.last_name_Layout);
+        mUserNameTextInput = (TextInputLayout) findViewById(R.id.user_name_Layout);
+        mEmailTextInput = (TextInputLayout) findViewById(R.id.email_Layout);
+        mPasswordTextInput = (TextInputLayout) findViewById(R.id.password_Layout);
+        mCreateAccountVolunteer_Bt = (Button) findViewById(R.id.button_create_account_as_volunteer);
+        mCreateAccountDisabled_Bt = (Button) findViewById(R.id.button_create_account_as_disabled);
+        mPhoneNumberTextInput = (TextInputLayout) findViewById(R.id.user_phone_Layout);
     }
 
     public void signUp(Map userMap, Class intentedClass) {
@@ -189,7 +178,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<HashMap<String, String>> call, @NonNull Response<HashMap<String, String>> response) {
                 if (response.code() == 200) {
-                    logInProgressBar.setVisibility(View.GONE);
+                    mLogInProgressBar.setVisibility(View.GONE);
                     //store response body into the token var
                     token = response.body().toString();
                     //store the token in a shared preferences file
@@ -197,9 +186,9 @@ public class RegisterActivity extends AppCompatActivity {
                     //got to the needed activity volunteer or disabled
                     Intent intent = new Intent(RegisterActivity.this, intentedClass);
                     startActivity(intent);
-                    Toast.makeText(RegisterActivity.this, "You Have been Signed Up Successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this,R.string.signup_toastmessage, Toast.LENGTH_SHORT).show();
                 } else if (response.code() == 400) {
-                    logInProgressBar.setVisibility(View.GONE);
+                    mLogInProgressBar.setVisibility(View.GONE);
                     //parsing the error body from json to a string
                     ModelError error = ApiErrorHandler.parseError(response, retrofit);
                     //showing the error message in a toast message
@@ -209,42 +198,14 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<HashMap<String, String>> call, @NonNull Throwable t) {
-                logInProgressBar.setVisibility(View.GONE);
-                Toast.makeText(RegisterActivity.this, "Failed to connect", Toast.LENGTH_SHORT).show();
+                mLogInProgressBar.setVisibility(View.GONE);
+                Toast.makeText(RegisterActivity.this, R.string.failedtoconnect_toastmessage, Toast.LENGTH_SHORT).show();
                 Log.d("signup_response", t.getMessage());
             }
         });
     }
 
-    public void connectSocket() {
-        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, BASE_URL);
-        mStompClient.connect();
 
-        mStompClient.topic("/all").subscribe(topicMessage -> {
-            Log.d(TAG, topicMessage.getPayload());
-            Toast.makeText(this, topicMessage.getStompHeaders().get(0).getValue(), Toast.LENGTH_SHORT).show();
-
-        });
-
-
-        mStompClient.lifecycle().subscribe(lifecycleEvent -> {
-            switch (lifecycleEvent.getType()) {
-
-                case OPENED:
-                    Log.d(TAG, "Stomp connection opened");
-                    break;
-
-                case ERROR:
-                    Log.e(TAG, "Error", lifecycleEvent.getException());
-                    break;
-
-                case CLOSED:
-                    Log.d(TAG, "Stomp connection closed");
-                    break;
-            }
-        });
-
-    }
 }
 
 

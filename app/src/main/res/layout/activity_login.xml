@@ -8,15 +8,18 @@
     android:background="@color/colorPrimary"
     tools:context=".ui.LoginActivity">
 
+
     <View
         android:id="@+id/rectangleLoginView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/colorPrimary"
+        android:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/upperRoundedLoginView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/login_header_TV"
@@ -25,7 +28,8 @@
         android:layout_marginTop="50dp"
         android:text="@string/logIn_TV"
         android:textColor="@color/colorOnPrimary"
-        android:textSize="40sp"
+        android:textColorHighlight="@color/colorBlack"
+        android:textSize="45sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +41,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/upperRoundedLoginView"
-        app:layout_constraintGuide_percent="0.23"
+        app:layout_constraintGuide_percent="0.3"
         app:layout_constraintTop_toBottomOf="@+id/login_header_TV" />
 
     <View
@@ -168,7 +172,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_toRightOf="@+id/donthaveaccount"
+                    android:layout_toEndOf="@+id/donthaveaccount"
                     android:text="@string/orSignUp_TV"
                     android:textColor="@color/colorAccent"
                     android:textSize="15sp"
@@ -194,7 +198,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.2" />
+                app:layout_constraintGuide_percent="0.14" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/loginbutton_GL"

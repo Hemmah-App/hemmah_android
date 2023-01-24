@@ -62,7 +62,7 @@
         <activity
             android:name=".ui.SplashActivity"
             android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+            android:theme="@style/Theme.Hemmah.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

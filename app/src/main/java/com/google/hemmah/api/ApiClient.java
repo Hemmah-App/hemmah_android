@@ -18,14 +18,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
     private static Retrofit retrofit = null;
     private static OkHttpClient okHttpClient = null;
-
+    public static final String BASE_URL = "http://192.168.1.9:8080/";
+    private static final String websocketApi = "wss://demo.piesocket.com/v3/channel_123?api_key=VCXCEuvhGcBDP7XhiJJUDvR1e1D3eiVjgZ9VRiaV&notify_self";
     public static Retrofit getRetrofit() {
         if (retrofit == null) {
 
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
-            retrofit = new Retrofit.Builder().baseUrl(RegisterActivity.BASE_URL)
+            retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
         }

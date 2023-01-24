@@ -1,17 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">همة</string>
-    <string name="emailHint">الايميل</string>
+    <string name="emailHint">الحساب</string>
     <string name="passwordHint">كلمة المرور</string>
     <string name="signIn_Button">تسجيل دخول</string>
-    <string name="orSignUp_TV">أو انشاء حساب</string>
+    <string name="orSignUp_TV">انشاء حساب</string>
     <string name="logIn_TV">تسجيل الدخول</string>
     <string name="createACCOUNT_TV">انشاء حساب</string>
     <string name="firstName_ET">الاسم الأول</string>
     <string name="lastName_ET">اسم العائلة</string>
     <string name="userName_ET">اسم المستخدم</string>
-    <string name="email_ET">الايميل</string>
+    <string name="email_ET">الحساب</string>
     <string name="password_ET">كلمة المرور</string>
-    <string name="createAccount_BT">انشاء حساب</string>
+    <string name="createAccount_BT">انشاء كمتطوع</string>
+    <string name="dontHaveAccout">ليس لديك حساب ؟</string>
+    <string name="video_item1_nav">الرئيسية</string>
+    <string name="video_item2_nav">الاعدادات</string>
+    <string name="callforhelp_frag_bt">اطلب مساعدة مرئية</string>
+    <string name="phone_number_hint">رقم الهاتف</string>
+    <string name="notification_button_name">اقبل</string>
+    <string name="request_help_bt">ارسال</string>
+    <string name="disabled_helpfrag_header">اكتب ما تحتاج</string>
+    <string name="toggle_date_dishelpfrag">اختر التاريخ</string>
+    <string name="helppost_bt">اقبل</string>
+    <string name="create_disabled_bt">انشاء كذو همة</string>
+    <string name="post_a_help_request_TV">ارسل طلب مساعدة</string>
+    <string name="help_notification_text">يحتاج مساعدتك</string>
+    <string name="help_notification_title">طلب مساعدة</string>
+    <string name="helprequest_title_ET">العنوان</string>
+    <string name="helprequest_description_ET">الوصف</string>
+    <string name="volunteer_navbar_post">المنشورات</string>
+    <string name="volunteer_navbar_history">السجل</string>
+    <string name="volunteer_navbar_settings">الاعدادات</string>
+    <string name="notification_title_ET">العنوان</string>
+    <string name="notification_description_ET">الوصف</string>
+    <string name="choosedate_recyvlerview_TV">اختر التاريخ</string>
+    <string name="signup_toastmessage">لقد قمت بإنشاء حساب بنجاح</string>
+    <string name="failedtoconnect_toastmessage">فشل الاتصال</string>
+    <string name="username_em_error">برجاء ادخال اسم المستخدم</string>
+    <string name="lastname_em_error">برجاء ادخال الاسم الاخير</string>
+    <string name="firstname_em_error">برجاء إدخال الاسم الأول</string>
+    <string name="username_inv_error">اسم المستخدم غير صحيح</string>
+    <string name="email_em_error">برجاء إدخال البريد الكتروني</string>
+    <string name="email_inv_error">البريد الالكتروني غير صحيح</string>
+    <string name="password_em_error">برجاء إدخال كلمة المرور</string>
+    <string name="password_inv_error">كلمة المرور غير صحيحية</string>
+    <string name="phonenumber_em_error">برجاء إدخال رقم الهاتف</string>
+    <string name="signin_toastmessage">لتم تسجيل الدخول بنجاح</string>
 
 </resources>
