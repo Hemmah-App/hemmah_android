@@ -32,9 +32,9 @@
     <string name="volunteer_navbar_post">post</string>
     <string name="volunteer_navbar_history">history</string>
     <string name="volunteer_navbar_settings">settings</string>
-    <string name="notification_title_ET">title</string>
-    <string name="notification_description_ET">description</string>
-    <string name="choosedate_recyvlerview_TV">Choose date</string>
+    <string name="post_title_TV">Title</string>
+    <string name="post_description_TV">description</string>
+    <string name="post_choosedate_TV">Choose date</string>
     <string-array name="planets_array">
         <item>vol</item>
         <item>dis</item>
@@ -48,13 +48,13 @@
     <string name="firstname_em_error">Please enter a firstname</string>
     <string name="lastname_em_error">Please enter a lastname</string>
     <string name="username_em_error">Please enter a username</string>
-    <string name="username_inv_error">username is invalid</string>
     <string name="email_em_error">Please enter an email</string>
-    <string name="email_inv_error">Email is invalid</string>
     <string name="password_em_error">Please enter a password</string>
-    <string name="password_inv_error">Password is invalid</string>
     <string name="phonenumber_em_error">Please enter a phonenumber</string>
-
+    <string name="password_htext">at least 8 characters &amp; uppper case &amp;special character[_,@…]</string>
+    <string name="email_ht">email must be example@hostexample.com</string>
+    <string name="username_ht">at least 7 characters</string>
+    <string name="phonenumber_htext">must start with 011, 010, 012</string>
 
 
 </resources>

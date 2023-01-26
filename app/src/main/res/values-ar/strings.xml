@@ -32,20 +32,26 @@
     <string name="volunteer_navbar_post">المنشورات</string>
     <string name="volunteer_navbar_history">السجل</string>
     <string name="volunteer_navbar_settings">الاعدادات</string>
-    <string name="notification_title_ET">العنوان</string>
-    <string name="notification_description_ET">الوصف</string>
-    <string name="choosedate_recyvlerview_TV">اختر التاريخ</string>
+    <string name="post_title_TV">العنوان</string>
+    <string name="post_description_TV">الوصف</string>
+    <string name="post_choosedate_TV">اختر التاريخ</string>
     <string name="signup_toastmessage">لقد قمت بإنشاء حساب بنجاح</string>
     <string name="failedtoconnect_toastmessage">فشل الاتصال</string>
     <string name="username_em_error">برجاء ادخال اسم المستخدم</string>
     <string name="lastname_em_error">برجاء ادخال الاسم الاخير</string>
     <string name="firstname_em_error">برجاء إدخال الاسم الأول</string>
-    <string name="username_inv_error">اسم المستخدم غير صحيح</string>
     <string name="email_em_error">برجاء إدخال البريد الكتروني</string>
-    <string name="email_inv_error">البريد الالكتروني غير صحيح</string>
     <string name="password_em_error">برجاء إدخال كلمة المرور</string>
-    <string name="password_inv_error">كلمة المرور غير صحيحية</string>
     <string name="phonenumber_em_error">برجاء إدخال رقم الهاتف</string>
     <string name="signin_toastmessage">لتم تسجيل الدخول بنجاح</string>
+    <string name="password_htext">"علي الأقل 8 احرف , حرف كبير, رمز  "</string>
+    <string name="username_ht">علي الأقل 7 احرف</string>
+    <string name="email_ht">"يجب ان يكون مثل : "</string>
+    <string name="email_ht">يجب ان يكون : example@examplehost.com</string>
+    <string name="email_ht">يجب ان يكون : example@hostexample.com</string>
+    <string name="username_ht">علي الأقل 7 احرف</string>
+    <string name="username_ht">علي الأقل 7 احرف</string>
+    <string name="username_ht">"علي الأقل 7 احرف "</string>
+    <string name="phonenumber_htext">يجب أن يبدأ ب : 011, 010, 012</string>
 
 </resources>

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.RegisterActivity">
+    tools:context=".ui.RegisterActivity"
+    >
 
     <TextView
         android:id="@+id/textView"
@@ -40,7 +41,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                >
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/first_name_Layout"
@@ -52,12 +54,14 @@
                     app:boxBackgroundMode="outline"
                     app:endIconMode="clear_text"
                     app:hintAnimationEnabled="true"
-                    app:startIconDrawable="@drawable/nametagicon">
+                    app:startIconDrawable="@drawable/nametagicon"
+                    app:helperTextTextColor="@color/colorError">
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="20dp"/>
+                        android:paddingBottom="20dp"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -71,12 +75,14 @@
                     app:endIconMode="clear_text"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
-                    app:startIconDrawable="@drawable/nametagicon">
+                    app:startIconDrawable="@drawable/nametagicon"
+                    app:helperTextTextColor="@color/colorError">
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="20dp"/>
+                        android:paddingBottom="20dp"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -87,13 +93,15 @@
                     app:boxBackgroundColor="@color/colorOnPrimary"
                     app:boxBackgroundMode="outline"
                     app:endIconMode="clear_text"
-                    app:startIconDrawable="@drawable/personicon">
+                    app:startIconDrawable="@drawable/personicon"
+                    app:helperTextTextColor="@color/colorError">
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/userName_ET"
-                        android:paddingBottom="20dp"/>
+                        android:paddingBottom="20dp"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -104,14 +112,16 @@
                     app:boxBackgroundColor="@color/colorOnPrimary"
                     app:boxBackgroundMode="outline"
                     app:endIconMode="clear_text"
-                    app:startIconDrawable="@drawable/phoneicon">
+                    app:startIconDrawable="@drawable/phoneicon"
+                    app:helperTextTextColor="@color/colorError">
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/phone_number_hint"
                         android:inputType="phone"
-                        android:paddingBottom="20dp"/>
+                        android:paddingBottom="20dp"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -122,13 +132,15 @@
                     app:boxBackgroundColor="@color/colorOnPrimary"
                     app:boxBackgroundMode="outline"
                     app:endIconMode="clear_text"
-                    app:startIconDrawable="@drawable/emailicon">
+                    app:startIconDrawable="@drawable/emailicon"
+                    app:helperTextTextColor="@color/colorError">
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/email_ET"
-                        android:paddingBottom="20dp"/>
+                        android:paddingBottom="20dp"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -140,14 +152,16 @@
                     app:boxBackgroundMode="outline"
                     app:hintAnimationEnabled="true"
                     app:passwordToggleEnabled="true"
-                    app:startIconDrawable="@drawable/passwordicon">
+                    app:startIconDrawable="@drawable/passwordicon"
+                    app:helperTextTextColor="@color/colorError">
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/password_ET"
                         android:inputType="textPassword"
-                        android:paddingBottom="20dp"/>
+                        android:paddingBottom="20dp"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout

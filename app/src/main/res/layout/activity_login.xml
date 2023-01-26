@@ -8,7 +8,6 @@
     android:background="@color/colorPrimary"
     tools:context=".ui.LoginActivity">
 
-
     <View
         android:id="@+id/rectangleLoginView"
         android:layout_width="0dp"
@@ -82,7 +81,9 @@
                 app:layout_constraintEnd_toStartOf="@id/rightguideline"
                 app:layout_constraintStart_toEndOf="@id/leftguideline"
                 app:layout_constraintTop_toBottomOf="@id/topguideline"
-                app:startIconDrawable="@drawable/emailicon">
+                app:startIconDrawable="@drawable/emailicon"
+                app:helperTextTextColor="@color/colorError"
+                >
 
 
                 <EditText
@@ -108,7 +109,10 @@
                 app:layout_constraintStart_toEndOf="@id/leftguideline"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout_email"
                 app:passwordToggleEnabled="true"
-                app:startIconDrawable="@drawable/passwordicon">
+                app:startIconDrawable="@drawable/passwordicon"
+                app:helperTextTextColor="@color/colorError"
+                app:helperTextTextAppearance="@color/colorError"
+                >
 
 
                 <EditText
@@ -143,10 +147,9 @@
                 android:hapticFeedbackEnabled="true"
                 android:text="@string/signIn_Button"
                 android:textColor="@color/colorOnAccent"
-                app:layout_constraintTop_toBottomOf="@+id/loginbutton_GL"
                 app:layout_constraintEnd_toStartOf="@+id/rightguideline"
                 app:layout_constraintStart_toStartOf="@+id/leftguideline"
-                 />
+                app:layout_constraintTop_toBottomOf="@+id/loginbutton_GL" />
 
             <RelativeLayout
                 android:layout_width="0dp"

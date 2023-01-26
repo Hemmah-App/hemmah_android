@@ -22,7 +22,6 @@ import com.google.hemmah.Utils.Validator;
 import com.google.hemmah.api.ApiClient;
 import com.google.hemmah.api.WebServices;
 import com.google.hemmah.ui.disabled.DisabledActivity;
-import com.google.hemmah.ui.volunteer.VolunteerActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -97,11 +96,13 @@ public class LoginActivity extends AppCompatActivity {
         if (Validator.isEmpty(emailTextInput)) {
             emailTextInput.setError(getString(R.string.email_em_error));
             valid = false;
-        } else if (!Validator.isValidRegex(emailTextInput, Validator.emailRegex)) {
+        } else if (!Validator.isValidRegex(emailTextInput, Validator.EMAIL_REGEX)) {
             //check if it not matches the email's regex
-            emailTextInput.setError(getString(R.string.email_inv_error));
+            emailTextInput.setHelperText(getString(R.string.email_ht));
+            emailTextInput.setBoxStrokeColor(getColor(R.color.colorError));
             valid = false;
         } else {
+            emailTextInput.setHelperText(null);
             emailTextInput.setError(null);
         }
         //password
@@ -109,10 +110,13 @@ public class LoginActivity extends AppCompatActivity {
             passwordTextInput.setError(getString(R.string.password_em_error));
             valid = false;
             //check if it not matches the password's regex
-        } else if (!Validator.isValidRegex(passwordTextInput, Validator.passwordRegex)) {
-            passwordTextInput.setError(getString(R.string.password_inv_error));
+        } else if (!Validator.isValidRegex(passwordTextInput, Validator.PASSWORD_REGEX)) {
+            passwordTextInput.setHelperText(getString(R.string.password_htext));
+            passwordTextInput.setBoxStrokeColor(getColor(R.color.colorError));
+
             valid = false;
         } else {
+            passwordTextInput.setHelperText(null);
             passwordTextInput.setError(null);
         }
         return valid;
