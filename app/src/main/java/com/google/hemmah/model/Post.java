@@ -3,6 +3,10 @@ package com.google.hemmah.model;
 import com.google.gson.annotations.SerializedName;
 
 public class Post {
+    private String title;
+    private String description;
+    private String date;
+
 
     public Post(String title, String description, String date) {
         this.title = title;
@@ -10,12 +14,28 @@ public class Post {
         this.date = date;
     }
 
-    @SerializedName("title")
-    private String title;
+    public String getTitle() {
+        return title;
+    }
 
-    @SerializedName("description")
-    private String description;
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    @SerializedName("data")
-    private String date;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
 }

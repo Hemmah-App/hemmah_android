@@ -7,14 +7,12 @@
     tools:context=".ui.volunteer.VolunteerActivity">
 
 
-
     <FrameLayout
         android:id="@+id/framentContinar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/buttomNavigathion"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:layout_width="match_parent"
@@ -23,17 +21,17 @@
         app:layout_constraintBottom_toBottomOf="@+id/framentContinar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/buttomNavigathion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/framentContinar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottomnavigation_menu"
         android:background="@color/colorPrimary"
+        android:elevation="250dp"
         app:itemIconTint="@drawable/bottom_navigation_item_color"
         app:itemTextColor="@color/colorOnPrimary"
-        android:elevation="250dp"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/framentContinar"
+        app:menu="@menu/bottomnavigation_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

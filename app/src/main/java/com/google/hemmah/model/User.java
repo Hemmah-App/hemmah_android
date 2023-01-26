@@ -9,6 +9,7 @@ public class User {
 	private String lastName;
 	private String userType;
 
+
 	public User(String userName, String email, String password, String phoneNumber, String firstName, String lastName, String userType) {
 		this.userName = userName;
 		this.email = email;
@@ -18,7 +19,6 @@ public class User {
 		this.lastName = lastName;
 		this.userType = userType;
 	}
-
 	@Override
 	public String toString() {
 		return "User{" +

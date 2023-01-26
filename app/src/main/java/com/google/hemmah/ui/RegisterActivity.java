@@ -35,7 +35,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 
-
 public class RegisterActivity extends AppCompatActivity {
     public static final String mTag = "Stomp";
     private TextInputLayout mUserNameTextInput;
@@ -49,6 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button mCreateAccountDisabled_Bt;
     private SharedPreferences mSharedPreferences;
     private String token;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,21 +120,26 @@ public class RegisterActivity extends AppCompatActivity {
         if (Validator.isEmpty(mUserNameTextInput)) {
             mUserNameTextInput.setError(getString(R.string.username_em_error));
             valid = false;
-        } else if (!Validator.isValidRegex(mUserNameTextInput, Validator.usernameRegex)) {
-            mUserNameTextInput.setError(getString(R.string.username_inv_error));
+        } else if (!Validator.isValidRegex(mUserNameTextInput, Validator.USERNAME_REGEX)) {
+            mUserNameTextInput.setHelperText(getString(R.string.username_ht));
+            mUserNameTextInput.setBoxStrokeColor(getColor(R.color.colorError));
             valid = false;
         } else {
+            mUserNameTextInput.setHelperText(null);
             mUserNameTextInput.setError(null);
         }
         //email
         if (Validator.isEmpty(mEmailTextInput)) {
             mEmailTextInput.setError(getString(R.string.email_em_error));
             valid = false;
-        } else if (!Validator.isValidRegex(mEmailTextInput, Validator.emailRegex)) {
+        } else if (!Validator.isValidRegex(mEmailTextInput, Validator.EMAIL_REGEX)) {
             //check if it not matches the email's regex
-            mEmailTextInput.setError(getString(R.string.email_inv_error));
+            mEmailTextInput.setHelperText(getString(R.string.email_ht));
+            mEmailTextInput.setBoxStrokeColor(getColor(R.color.colorError));
+
             valid = false;
         } else {
+            mEmailTextInput.setHelperText(null);
             mEmailTextInput.setError(null);
         }
         //password
@@ -142,21 +147,30 @@ public class RegisterActivity extends AppCompatActivity {
             mPasswordTextInput.setError(getString(R.string.password_em_error));
             valid = false;
             //check if it not matches the password's regex
-        } else if (!Validator.isValidRegex(mPasswordTextInput, Validator.passwordRegex)) {
-            mPasswordTextInput.setError(getString(R.string.password_inv_error));
+        } else if (!Validator.isValidRegex(mPasswordTextInput, Validator.PASSWORD_REGEX)) {
+            mPasswordTextInput.setHelperText(getString(R.string.password_htext));
+            mPasswordTextInput.setBoxStrokeColor(getColor(R.color.colorError));
             valid = false;
         } else {
+            mPasswordTextInput.setHelperText(null);;
             mPasswordTextInput.setError(null);
         }
         //phonenumber
         if (Validator.isEmpty(mPhoneNumberTextInput)) {
             mPhoneNumberTextInput.setError(getString(R.string.phonenumber_em_error));
             valid = false;
-        } else {
-            mPhoneNumberTextInput.setError(null);
+        } else if (!Validator.isValidRegex(mPhoneNumberTextInput, Validator.PHONE_RAGEX)) {
+            mPhoneNumberTextInput.setHelperText(getString(R.string.phonenumber_htext));
+            mPhoneNumberTextInput.setBoxStrokeColor(getColor(R.color.colorError));
+
         }
-        return valid;
+    else
+    {
+        mPhoneNumberTextInput.setHelperText(null);
+        mPhoneNumberTextInput.setError(null);
     }
+        return valid;
+}
 
     public void initViews() {
         mLogInProgressBar = (ProgressBar) findViewById(R.id.register_Pb);
@@ -186,7 +200,7 @@ public class RegisterActivity extends AppCompatActivity {
                     //got to the needed activity volunteer or disabled
                     Intent intent = new Intent(RegisterActivity.this, intentedClass);
                     startActivity(intent);
-                    Toast.makeText(RegisterActivity.this,R.string.signup_toastmessage, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, R.string.signup_toastmessage, Toast.LENGTH_SHORT).show();
                 } else if (response.code() == 400) {
                     mLogInProgressBar.setVisibility(View.GONE);
                     //parsing the error body from json to a string

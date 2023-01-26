@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.volunteer.HistoryFragment">
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/history_post_RV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/history_recycler_item"

@@ -7,6 +7,7 @@
     tools:context=".ui.volunteer.PostsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/post_RV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/posts_recycler_item"

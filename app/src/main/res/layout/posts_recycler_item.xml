@@ -7,18 +7,65 @@
     app:contentPadding="8dp"
     android:layout_margin="18dp"
     app:cardCornerRadius="8dp"
-    android:elevation="8dp"
+    android:elevation="30dp"
     app:strokeColor="@color/colorSurface"
     app:strokeWidth="3dp"
+    app:cardBackgroundColor="@color/colorBackground"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/post_itemview_inc"
-            layout="@layout/common_post_history_recyclerviewitem" />
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/materialDivider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            app:dividerColor="@color/colorBlack"
+            app:layout_constraintBottom_toTopOf="@+id/description_text_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_text_layout" />
+
+
+        <TextView
+            android:id="@+id/title_text_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:hint="@string/post_title_TV"
+            android:textColor="@color/colorText"
+            android:maxLines="1"
+            app:boxBackgroundColor="@color/transparent"
+            android:layout_margin="12dp"/>
+
+        <TextView
+            android:id="@+id/description_text_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:hint="@string/post_description_TV"
+            android:textColor="@color/colorText"
+            android:textSize="15sp"
+            app:boxBackgroundColor="@color/transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_text_layout" />
+
+        <TextView
+            android:id="@+id/choose_date_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description_text_layout"
+            tools:text="@string/post_choosedate_TV"
+            android:textSize="12sp"
+            android:textColor="@color/colorText"
+            android:textStyle="bold"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="10dp"
+            />
 
 
         <Button
@@ -26,19 +73,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimaryLight"
             android:text="@string/helppost_bt"
             android:textAllCaps="false"
-            android:textColor="@color/colorOnAccent"
+            android:textColor="@color/colorOnPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideline1" />
+            app:layout_constraintTop_toBottomOf="@+id/choose_date_textView" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.7256637" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
