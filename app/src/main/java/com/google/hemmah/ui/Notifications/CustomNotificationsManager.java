@@ -16,16 +16,15 @@ import org.jitsi.meet.sdk.JitsiMeetActivity;
 
 public class CustomNotificationsManager {
     protected Context mContext;
-    private NotificationManagerCompat mNotificationManagerCompat;
+    private final NotificationManagerCompat mNotificationManagerCompat;
+
     public CustomNotificationsManager(Context context) {
         this.mContext = context;
         mNotificationManagerCompat = NotificationManagerCompat.from(context);
     }
 
 
-
-
-    public void makeCallNotification(String nameOfDisabled, int notificationId) {
+    public void makeCallNotification(int notificationId) {
         //this group id to group all the same notifications in inbox style
         final String NOTIFICATION_GROUP_KEY = "com.google.hemmah.ui.volunteer";
         //inflating the custom notification layout

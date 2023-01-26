@@ -27,7 +27,7 @@ public class VolunteerActivity extends AppCompatActivity {
         intializeFragments();
         mNotificationManagerCompat = NotificationManagerCompat.from(this);
         mCustomNotificationsManager = new CustomNotificationsManager(this);
-        mCustomNotificationsManager.makeCallNotification("Test", 1);
+        mCustomNotificationsManager.makeCallNotification(1);
 
     }
 
