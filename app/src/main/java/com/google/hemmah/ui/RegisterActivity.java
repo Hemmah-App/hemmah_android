@@ -121,11 +121,9 @@ public class RegisterActivity extends AppCompatActivity {
             mUserNameTextInput.setError(getString(R.string.username_em_error));
             valid = false;
         } else if (!Validator.isValidRegex(mUserNameTextInput, Validator.USERNAME_REGEX)) {
-            mUserNameTextInput.setHelperText(getString(R.string.username_ht));
-            mUserNameTextInput.setBoxStrokeColor(getColor(R.color.colorError));
+            mUserNameTextInput.setError(getString(R.string.username_ht));
             valid = false;
         } else {
-            mUserNameTextInput.setHelperText(null);
             mUserNameTextInput.setError(null);
         }
         //email
@@ -134,12 +132,10 @@ public class RegisterActivity extends AppCompatActivity {
             valid = false;
         } else if (!Validator.isValidRegex(mEmailTextInput, Validator.EMAIL_REGEX)) {
             //check if it not matches the email's regex
-            mEmailTextInput.setHelperText(getString(R.string.email_ht));
-            mEmailTextInput.setBoxStrokeColor(getColor(R.color.colorError));
+            mEmailTextInput.setError(getString(R.string.email_ht));
 
             valid = false;
         } else {
-            mEmailTextInput.setHelperText(null);
             mEmailTextInput.setError(null);
         }
         //password
@@ -148,29 +144,20 @@ public class RegisterActivity extends AppCompatActivity {
             valid = false;
             //check if it not matches the password's regex
         } else if (!Validator.isValidRegex(mPasswordTextInput, Validator.PASSWORD_REGEX)) {
-            mPasswordTextInput.setHelperText(getString(R.string.password_htext));
-            mPasswordTextInput.setBoxStrokeColor(getColor(R.color.colorError));
+            mPasswordTextInput.setError(getString(R.string.password_htext));
             valid = false;
         } else {
-            mPasswordTextInput.setHelperText(null);;
             mPasswordTextInput.setError(null);
         }
         //phonenumber
         if (Validator.isEmpty(mPhoneNumberTextInput)) {
             mPhoneNumberTextInput.setError(getString(R.string.phonenumber_em_error));
             valid = false;
-        } else if (!Validator.isValidRegex(mPhoneNumberTextInput, Validator.PHONE_RAGEX)) {
-            mPhoneNumberTextInput.setHelperText(getString(R.string.phonenumber_htext));
-            mPhoneNumberTextInput.setBoxStrokeColor(getColor(R.color.colorError));
-
+        } else {
+            mPhoneNumberTextInput.setError(null);
         }
-    else
-    {
-        mPhoneNumberTextInput.setHelperText(null);
-        mPhoneNumberTextInput.setError(null);
-    }
         return valid;
-}
+    }
 
     public void initViews() {
         mLogInProgressBar = (ProgressBar) findViewById(R.id.register_Pb);

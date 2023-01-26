@@ -98,11 +98,9 @@ public class LoginActivity extends AppCompatActivity {
             valid = false;
         } else if (!Validator.isValidRegex(emailTextInput, Validator.EMAIL_REGEX)) {
             //check if it not matches the email's regex
-            emailTextInput.setHelperText(getString(R.string.email_ht));
-            emailTextInput.setBoxStrokeColor(getColor(R.color.colorError));
+            emailTextInput.setError(getString(R.string.email_ht));
             valid = false;
         } else {
-            emailTextInput.setHelperText(null);
             emailTextInput.setError(null);
         }
         //password
@@ -111,13 +109,13 @@ public class LoginActivity extends AppCompatActivity {
             valid = false;
             //check if it not matches the password's regex
         } else if (!Validator.isValidRegex(passwordTextInput, Validator.PASSWORD_REGEX)) {
-            passwordTextInput.setHelperText(getString(R.string.password_htext));
-            passwordTextInput.setBoxStrokeColor(getColor(R.color.colorError));
+            passwordTextInput.setError(getString(R.string.password_htext));
+
 
             valid = false;
         } else {
-            passwordTextInput.setHelperText(null);
             passwordTextInput.setError(null);
+
         }
         return valid;
     }

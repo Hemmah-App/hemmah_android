@@ -44,9 +44,9 @@
     <string name="password_em_error">برجاء إدخال كلمة المرور</string>
     <string name="phonenumber_em_error">برجاء إدخال رقم الهاتف</string>
     <string name="signin_toastmessage">لتم تسجيل الدخول بنجاح</string>
-    <string name="password_htext">"علي الأقل 8 احرف , حرف كبير, رمز  "</string>
+    <string name="password_htext">"علي الأقل 8 احرف , حرف كبير, رقم  "</string>
     <string name="email_ht">يجب ان يكون : example@examplehost.com</string>
     <string name="username_ht">علي الأقل 7 احرف</string>
-    <string name="phonenumber_htext">يجب أن يبدأ ب : 011, 010, 012</string>
+
 
 </resources>

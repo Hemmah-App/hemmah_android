@@ -18,19 +18,20 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:foreground="@drawable/loginbackground"/>
 
     <TextView
         android:id="@+id/login_header_TV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+        android:layout_marginStart="30dp"
         android:text="@string/logIn_TV"
         android:textColor="@color/colorOnPrimary"
         android:textColorHighlight="@color/colorBlack"
         android:textSize="45sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -91,7 +92,9 @@
                     android:layout_height="match_parent"
                     android:autofillHints="emailAddress"
                     android:hint="@string/email_ET"
-                    android:paddingBottom="20dp" />
+                    android:paddingBottom="20dp"
+                    android:nextFocusDown="@id/textInputLayout_pass"
+                    />
 
 
             </com.google.android.material.textfield.TextInputLayout>

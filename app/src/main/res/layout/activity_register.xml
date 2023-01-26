@@ -61,6 +61,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingBottom="20dp"
+                        android:nextFocusDown="@id/last_name_Layout"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,6 +83,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingBottom="20dp"
+                        android:nextFocusDown="@id/user_name_Layout"
+
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,6 +104,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/userName_ET"
                         android:paddingBottom="20dp"
+                        android:nextFocusDown="@id/user_phone_Layout"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,7 +117,8 @@
                     app:boxBackgroundMode="outline"
                     app:endIconMode="clear_text"
                     app:startIconDrawable="@drawable/phoneicon"
-                    app:helperTextTextColor="@color/colorError">
+                    app:helperTextTextColor="@color/colorError"
+                    >
 
                     <EditText
                         android:layout_width="match_parent"
@@ -121,6 +126,7 @@
                         android:hint="@string/phone_number_hint"
                         android:inputType="phone"
                         android:paddingBottom="20dp"
+                        android:nextFocusDown="@id/email_Layout"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -140,6 +146,8 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/email_ET"
                         android:paddingBottom="20dp"
+                        android:nextFocusDown="@id/password_Layout"
+
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
