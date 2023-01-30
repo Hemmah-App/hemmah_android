@@ -13,7 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="-10dp"
-        android:padding="5dp"
+        android:paddingStart="5dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingEnd="3dp"
         android:text="@string/help_notification_text"
         style="@style/TextAppearance.Compat.Notification"
         />

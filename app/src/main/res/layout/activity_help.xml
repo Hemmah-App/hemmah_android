@@ -47,7 +47,7 @@
         android:hint="@string/helprequest_description_ET"
         app:boxBackgroundColor="@color/transparent"
         app:counterEnabled="true"
-        app:counterMaxLength="500"
+        app:counterMaxLength="180"
         app:counterOverflowTextAppearance="@color/colorError">
 
         <EditText

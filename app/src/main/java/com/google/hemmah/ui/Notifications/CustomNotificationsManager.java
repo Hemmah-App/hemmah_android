@@ -1,15 +1,17 @@
 package com.google.hemmah.ui.Notifications;
 
+import android.app.Application;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.hemmah.R;
 
 import org.jitsi.meet.sdk.JitsiMeetActivity;
@@ -48,6 +50,32 @@ public class CustomNotificationsManager {
         Intent intent = new Intent(mContext, JitsiMeetActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         return PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+    }
+
+    public static class NotificationChannelManager extends Application {
+        public static final String CHANNEL_1_ID = "call notification";
+        public static final String CHANNEL_1_NAME = "Call Notification";
+        public static final String CHANNEL_1_DESCRIPTION = "This notification appears when a disabled needs a video call help";
+
+        @Override
+        public void onCreate() {
+            super.onCreate();
+            makeNotificationChannel();
+        }
+
+
+        public void makeNotificationChannel() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel callNotification = new NotificationChannel(CHANNEL_1_ID,
+                        CHANNEL_1_NAME,
+                        android.app.NotificationManager.IMPORTANCE_HIGH);
+                callNotification.setDescription(CHANNEL_1_DESCRIPTION);
+                android.app.NotificationManager manager = getSystemService(android.app.NotificationManager.class);
+                manager.createNotificationChannel(callNotification);
+            }
+        }
+
 
     }
 }

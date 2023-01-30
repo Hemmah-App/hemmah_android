@@ -51,10 +51,10 @@
     <string name="email_em_error">Please enter an email</string>
     <string name="password_em_error">Please enter a password</string>
     <string name="phonenumber_em_error">Please enter a phonenumber</string>
-    <string name="password_htext">at least 8 characters &amp; uppper case &amp; a number</string>
+    <string name="password_htext">at least 8 characters</string>
     <string name="email_ht">email must be example@hostexample.com</string>
-    <string name="username_ht">at least 7 characters</string>
-
+    <string name="username_ht">at least 8 characters</string>
+    <string name="volunteer_welcome_tv">Welcome,</string>
 
 
 </resources>

@@ -100,7 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
         return userMap;
     }
 
-
+    // Enhance this
     public Boolean valid() {
         boolean valid = true;
         if (Validator.isEmpty(mFirstNameTextInput)) {

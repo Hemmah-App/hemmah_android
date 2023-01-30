@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        app:title="Profile"
+        app:iconSpaceReserved="false">
+        <Preference
+            app:key="change_email"
+            app:title="Change Email"
+            app:iconSpaceReserved="false"
+            />
+        <Preference
+            app:key="change_password"
+            app:title="Change Password"
+            app:iconSpaceReserved="false"/>
+    </PreferenceCategory>
+
+    <ListPreference
+        app:key="language"
+        app:title="Language"
+        app:summary="the volunteer's language is based on it"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        app:iconSpaceReserved="false"
+        />
+    <PreferenceCategory
+        app:title="Theme"
+        app:iconSpaceReserved="false">
+        <SwitchPreferenceCompat
+            app:key="darkmode"
+            app:title="Dark Mode"
+            app:summary="Enable dark mode "
+            app:allowDividerBelow="true"
+            app:iconSpaceReserved="false"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="Feedback"
+        app:iconSpaceReserved="false">
+        <Preference
+            app:key="feedback"
+            app:title="Send Feedback"
+            app:summary="Report technical issues or suggest new features"
+            app:iconSpaceReserved="false"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                     Map<String, Object> userMap = populateUser();
                     userLogin(userMap, DisabledActivity.class);
                     //sharedpref object points to the file
-                    SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME,Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
                     //getting the token back from the sharedpref
                     String token = SharedPrefUtils.loadFromShared(sharedPreferences, "token");
                     //showing the token in a message
@@ -110,12 +110,9 @@ public class LoginActivity extends AppCompatActivity {
             //check if it not matches the password's regex
         } else if (!Validator.isValidRegex(passwordTextInput, Validator.PASSWORD_REGEX)) {
             passwordTextInput.setError(getString(R.string.password_htext));
-
-
             valid = false;
         } else {
             passwordTextInput.setError(null);
-
         }
         return valid;
     }

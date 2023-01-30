@@ -15,7 +15,10 @@
             android:layout_weight="0.85"
             android:orientation="vertical">
 
-       <include layout="@layout/common_notification"/>
+       <include layout="@layout/common_notification"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           />
         </LinearLayout>
 
 

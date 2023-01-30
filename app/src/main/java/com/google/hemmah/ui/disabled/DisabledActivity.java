@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.hemmah.R;
-import com.google.hemmah.ui.SettingsFragment;
+import com.google.hemmah.ui.PreferenceManager;
 
 public class DisabledActivity extends AppCompatActivity {
     private BottomNavigationView mBottomNavigationView;
@@ -29,7 +29,7 @@ public class DisabledActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.item1)
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragments_frame, new VideoPostFragment()).commit();
                 else
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragments_frame, new SettingsFragment()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragments_frame, new PreferenceManager()).commit();
 
                 return true;
 

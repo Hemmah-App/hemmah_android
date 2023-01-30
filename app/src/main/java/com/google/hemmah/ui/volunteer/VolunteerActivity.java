@@ -11,7 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.hemmah.R;
 import com.google.hemmah.ui.Notifications.CustomNotificationsManager;
-import com.google.hemmah.ui.SettingsFragment;
+import com.google.hemmah.ui.PreferenceManager;
 
 public class VolunteerActivity extends AppCompatActivity {
     private BottomNavigationView mVolunteerBottomNavigation;
@@ -50,7 +50,7 @@ public class VolunteerActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.history) {
             getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new HistoryFragment()).commit();
         } else if (item.getItemId() == R.id.settings) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new SettingsFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new PreferenceManager()).commit();
         }
     }
 
