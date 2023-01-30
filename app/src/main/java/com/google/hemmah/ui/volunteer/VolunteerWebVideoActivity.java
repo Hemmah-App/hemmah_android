@@ -1,21 +1,19 @@
-package com.google.hemmah.ui.disabled;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.google.hemmah.ui.volunteer;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Base64;
-import android.webkit.PermissionRequest;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.hemmah.R;
 
 import java.io.InputStream;
 
-public class WebVideoActivity extends AppCompatActivity {
+public class VolunteerWebVideoActivity extends AppCompatActivity {
 
     private WebView mWebView;
     private WebSettings mWebSettings;
@@ -58,15 +56,9 @@ public class WebVideoActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
     private void customizeCss() {
         try {
-            InputStream inputStream = getAssets().open("style.css");
+            InputStream inputStream = getAssets().open("volunteer_room.css");
             byte[] buffer = new byte[inputStream.available()];
             inputStream.read(buffer);
             inputStream.close();
@@ -84,4 +76,3 @@ public class WebVideoActivity extends AppCompatActivity {
         }
     }
 }
-

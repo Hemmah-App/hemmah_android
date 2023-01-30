@@ -1,0 +1,52 @@
+div#videoResolutionLabel {
+  display: none;
+}
+
+.css-1mopfq6-label-red {
+  display: none;
+}
+
+.watermark.leftwatermark {
+  display: none;
+}
+
+.subject-info-container {
+  display: none;
+}
+
+.audio-preview {
+  display: none;
+}
+
+.video-preview {
+  display: none;
+}
+
+.toolbox-button-wth-dialog.context-menu {
+  display: none;
+}
+
+.toolbox-icon.hangup-button {
+  width: 100px;
+  border-radius: 15px;
+}
+
+#polls-tab {
+  display: none;
+}
+
+.jss14.jss16.toggleFilmstripContainer {
+  display: none;
+}
+
+.toolbox-button[aria-label="Participants"] {
+  display: none;
+}
+
+.toolbox-button[aria-label="Start / Stop sharing your screen"] {
+  display: none;
+}
+
+.toolbox-button[aria-label="Toggle tile view"] {
+  display: none;
+}

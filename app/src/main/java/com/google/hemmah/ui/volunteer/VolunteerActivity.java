@@ -50,7 +50,7 @@ public class VolunteerActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.history) {
             getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new HistoryFragment()).commit();
         } else if (item.getItemId() == R.id.settings) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new PreferenceManager()).commit();
+//            getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new PreferenceManager()).commit();
         }
     }
 

@@ -38,7 +38,7 @@ public class VideoPostFragment extends Fragment {
         callForHelpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(requireContext(), WebVideoActivity.class);
+                Intent intent = new Intent(requireContext(), DisabledWebVideoActivity.class);
                 startActivity(intent);
 
             }
