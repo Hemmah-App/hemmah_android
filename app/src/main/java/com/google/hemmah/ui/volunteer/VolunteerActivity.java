@@ -11,7 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.hemmah.R;
 import com.google.hemmah.ui.Notifications.CustomNotificationsManager;
-import com.google.hemmah.ui.PreferenceManager;
+//import com.google.hemmah.ui.PreferenceManager;
 
 public class VolunteerActivity extends AppCompatActivity {
     private BottomNavigationView mVolunteerBottomNavigation;

@@ -40,7 +40,7 @@ public class SettingsFragment extends Fragment {
         SharedPreferences sharedPreferences;
         try {
             sharedPreferences = getContext().getSharedPreferences(SHARED_PREFERENCE_FILE_NAME, getContext().MODE_PRIVATE);
-            boolean isDarkmode = sharedPreferences.getBoolean()
+//            boolean isDarkmode = sharedPreferences.getBoolean();
         }catch (NullPointerException e){
             Log.d(mTAG,e.getMessage());
         }

@@ -10,9 +10,10 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".ui.Notifications.CustomNotificationsManager$NotificationChannelManager"
@@ -26,16 +27,20 @@
         android:theme="@style/Theme.Hemmah"
         android:usesCleartextTraffic="true"
         tools:targetApi="33">
+        <service
+            android:name=".VideoCallService"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <activity
             android:name=".ui.disabled.MakePostActivity"
-            android:exported="true"
-            >
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
-                android:value=""/>
+                android:value="" />
         </activity>
         <activity
-            android:name=".ui.disabled.DisabledWebVideoActivity"
+            android:name=".ui.disabled.DisabledVideoActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
