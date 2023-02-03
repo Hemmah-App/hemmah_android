@@ -27,11 +27,6 @@
         android:theme="@style/Theme.Hemmah"
         android:usesCleartextTraffic="true"
         tools:targetApi="33">
-        <service
-            android:name=".VideoCallService"
-            android:enabled="true"
-            android:exported="true"></service>
-
         <activity
             android:name=".ui.disabled.MakePostActivity"
             android:exported="true">
@@ -41,7 +36,14 @@
         </activity>
         <activity
             android:name=".ui.disabled.DisabledVideoActivity"
-            android:exported="false">
+            android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.volunteer.VolunteerVideoActivity"
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

@@ -40,11 +40,11 @@
         <item>dis</item>
     </string-array>
 
-<!--  toast messages  -->
+    <!--  toast messages  -->
     <string name="signup_toastmessage">You Have been Signed Up Successfully</string>
     <string name="signin_toastmessage">You Have Successfully Logged In</string>
     <string name="failedtoconnect_toastmessage">Failed to connect</string>
-<!--    validation errors-->
+    <!--    validation errors-->
     <string name="firstname_em_error">Please enter a firstname</string>
     <string name="lastname_em_error">Please enter a lastname</string>
     <string name="username_em_error">Please enter a username</string>
