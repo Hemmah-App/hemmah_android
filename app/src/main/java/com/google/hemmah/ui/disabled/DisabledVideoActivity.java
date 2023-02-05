@@ -11,6 +11,7 @@ import com.google.hemmah.R;
 import com.twilio.video.ConnectOptions;
 import com.twilio.video.LocalParticipant;
 import com.twilio.video.RemoteParticipant;
+import com.twilio.video.RemoteVideoTrack;
 import com.twilio.video.Room;
 import com.twilio.video.TwilioException;
 import com.twilio.video.Video;
@@ -29,10 +30,9 @@ public class DisabledVideoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_disabled_video);
 
 
-        ConnectOptions connectOptions = new ConnectOptions.Builder("token-goes-here")
-                .roomName("room-name")
+        ConnectOptions connectOptions = new ConnectOptions.Builder("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzgwNjA2YTg1YTE5NGFlYTliOTYyMWIxOWZlNjIzMzJjLTE2NzU1Mzk4MzAiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJvbSIsInZpZGVvIjp7InJvb20iOiJ0ZXN0MSJ9fSwiaWF0IjoxNjc1NTM5ODMwLCJleHAiOjE2NzU1NDM0MzAsImlzcyI6IlNLODA2MDZhODVhMTk0YWVhOWI5NjIxYjE5ZmU2MjMzMmMiLCJzdWIiOiJBQ2Q0ODM2ODg1OWZkYTJjYjY5NTQ2NGE1ODViZmJhNTFmIn0.zIhRClkGlK-ekNN6Ul4EufmsQabNu_H1dEZJK7UAxFE")
+                .roomName("test1")
                 .build();
-
         room = Video.connect(getApplicationContext(), connectOptions, roomListener());
     }
 

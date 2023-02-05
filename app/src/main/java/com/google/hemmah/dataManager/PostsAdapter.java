@@ -32,7 +32,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostHolder> 
     @NonNull
     @Override
     public PostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //constant line in all
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(layoutresourceId, parent, false);
         return new PostHolder(view);
@@ -40,7 +39,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull PostHolder holder, int position) {
-        //use the holder to access to the views with changeable data inside the recyclerview list item
         Post post = this.posts.get(position);
         holder.titleTextView.setText(post.getTitle());
         holder.descriptionTextView.setText(post.getDescription());
@@ -54,14 +52,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostHolder> 
 
 
     public class PostHolder extends RecyclerView.ViewHolder {
-        //put refrence to all the views that its data will change in the runtime
         TextView titleTextView;
         TextView descriptionTextView;
         TextView dateTextView;
 
         public PostHolder(@NonNull View itemView) {
             super(itemView);
-            //instantiates the view with its id
             titleTextView = itemView.findViewById(R.id.title_text_layout);
             descriptionTextView = itemView.findViewById(R.id.description_text_layout);
             dateTextView = itemView.findViewById(R.id.choose_date_textView);

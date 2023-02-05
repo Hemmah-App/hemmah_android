@@ -15,6 +15,7 @@ import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.hemmah.R;
+import com.google.hemmah.ui.volunteer.VolunteerVideoActivity;
 
 
 public class VideoPostFragment extends Fragment {
@@ -38,7 +39,7 @@ public class VideoPostFragment extends Fragment {
         callForHelpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(requireContext(), DisabledVideoActivity.class);
+                Intent intent = new Intent(requireContext(), VolunteerVideoActivity.class);
                 startActivity(intent);
 
             }
