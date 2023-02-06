@@ -58,7 +58,7 @@ public class DisabledVideoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_volunteer_video);
+        setContentView(R.layout.activity_disabled_video);
         initViews();
         setVideoAndAudioSettings();
 
