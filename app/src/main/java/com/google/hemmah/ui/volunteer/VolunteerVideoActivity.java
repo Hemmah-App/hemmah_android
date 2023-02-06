@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.google.hemmah.R;
+import com.google.hemmah.model.CameraDirection;
 import com.twilio.video.Camera2Capturer;
 import com.twilio.video.ConnectOptions;
 import com.twilio.video.LocalAudioTrack;
@@ -42,11 +43,10 @@ public class VolunteerVideoActivity extends AppCompatActivity {
 
     public Room room;
 
-    LocalAudioTrack localAudioTrack;
-    LocalVideoTrack localVideoTrack;
+    private LocalAudioTrack localAudioTrack;
+    private LocalVideoTrack localVideoTrack;
     private VideoView localVideoView;
     private VideoView remoteVideoView;
-    private Button testButton;
 
     private void initViews() {
         localVideoView = findViewById(R.id.local_video_view);
@@ -61,24 +61,33 @@ public class VolunteerVideoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteer_video);
         initViews();
-        //to remove echo
-        WebRtcAudioUtils.setWebRtcBasedAcousticEchoCanceler(true);
-        WebRtcAudioUtils.setWebRtcBasedAutomaticGainControl(false);
-        Video.setLogLevel(LogLevel.DEBUG);
+        setVideoAndAudioSettings();
+
+        // Request camera and microphone permissions.
+        /* TODO @Hazem - Move this to the right place when you have time
+            We need to request permissions on the application start up for one time only */
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.CAMERA,
                         Manifest.permission.RECORD_AUDIO},
                 100);
-        makeCall();
+
+        // Api call to get the room details using a service goes here
+        makeCall("test1", TEMP_TOKEN);
 
     }
 
-    private void makeCall() {
-        startLocalVideoAndAudio();
-        ConnectOptions connectOptions = new ConnectOptions.Builder(TEMP_TOKEN)
+    private void setVideoAndAudioSettings() {
+        //to remove echo
+        WebRtcAudioUtils.setWebRtcBasedAcousticEchoCanceler(true);
+        WebRtcAudioUtils.setWebRtcBasedAutomaticGainControl(false);
+    }
+
+    private void makeCall(String roomToken, String roomName) {
+        startLocalVideoAndAudio(CameraDirection.BACK);
+        ConnectOptions connectOptions = new ConnectOptions.Builder(roomToken)
                 .videoTracks(List.of(localVideoTrack))
                 .audioTracks(List.of(localAudioTrack))
-                .roomName("test1")
+                .roomName(roomName)
                 .build();
 
         room = Video.connect(getApplicationContext(), connectOptions, roomListener());
@@ -96,16 +105,6 @@ public class VolunteerVideoActivity extends AppCompatActivity {
                         break;
                     }
                 }
-                //if participants already exist in the meeting
-                //this block is not in the right place
-//                if (room.getRemoteParticipants().size() > 0) {
-//                    RemoteParticipant remoteParticipant = room.getRemoteParticipants().get(0);
-//                    if (remoteParticipant.getVideoTracks().size() > 0) {
-//                        VideoTrackPublication remoteVideoTrack = remoteParticipant.getVideoTracks().get(0);
-//                        Objects.requireNonNull(remoteVideoTrack.getVideoTrack()).addSink(remoteVideoView);
-//                    }
-//                }
-
             }
 
             @Override
@@ -124,7 +123,8 @@ public class VolunteerVideoActivity extends AppCompatActivity {
 
             @Override
             public void onDisconnected(@NonNull Room room, @Nullable TwilioException twilioException) {
-
+                localAudioTrack.release();
+                localVideoTrack.release();
             }
 
             @Override
@@ -149,21 +149,33 @@ public class VolunteerVideoActivity extends AppCompatActivity {
         };
     }
 
-    private void startLocalVideoAndAudio() {
+    private void startLocalVideoAndAudio(CameraDirection cameraDirection) {
         localAudioTrack = LocalAudioTrack.create(this, true);
 
         // A video track requires an implementation of a VideoCapturer. Here's how to use the front camera with a Camera2Capturer.
         Camera2Enumerator camera2Enumerator = new Camera2Enumerator(getApplicationContext());
-        String frontCameraId = null;
-        for (String cameraId : camera2Enumerator.getDeviceNames()) {
-            if (camera2Enumerator.isFrontFacing(cameraId)) {
-                frontCameraId = cameraId;
-                break;
+
+        String cameraId = null;
+
+        if (cameraDirection == CameraDirection.BACK){
+            for (String id : camera2Enumerator.getDeviceNames()) {
+                if (camera2Enumerator.isBackFacing(id)) {
+                    cameraId = id;
+                    break;
+                }
+            }
+        } else if (cameraDirection == CameraDirection.FRONT){
+            for (String id : camera2Enumerator.getDeviceNames()) {
+                if (camera2Enumerator.isFrontFacing(id)) {
+                    cameraId = id;
+                    break;
+                }
             }
         }
-        if (frontCameraId != null) {
+
+        if (cameraId != null) {
             // Create the CameraCapturer with the front camera
-            Camera2Capturer cameraCapturer = new Camera2Capturer(this, frontCameraId);
+            Camera2Capturer cameraCapturer = new Camera2Capturer(this, cameraId);
 
             // Create a video track
             localVideoTrack = LocalVideoTrack.create(this, true, cameraCapturer);
@@ -171,12 +183,7 @@ public class VolunteerVideoActivity extends AppCompatActivity {
             // Render a local video track to preview your camera
             localVideoView.setMirror(false);
             localVideoTrack.addSink(localVideoView);
-
-            // To use After end of call
-            // localAudioTrack.release();
-            // localVideoTrack.release();
         }
-
     }
 
     private void renderRemoteParticipantVideo(VideoTrack videoTrack) {
@@ -195,6 +202,7 @@ public class VolunteerVideoActivity extends AppCompatActivity {
         remoteParticipant.setListener(remoteParticipantListener());
     }
 
+    // TODO @Hazem - Make sure the Audio for the remote participant works
     private RemoteParticipant.Listener remoteParticipantListener() {
         return new RemoteParticipant.Listener() {
             @Override
