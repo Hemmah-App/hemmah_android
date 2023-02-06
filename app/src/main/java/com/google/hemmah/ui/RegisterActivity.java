@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.hemmah.R;
 import com.google.hemmah.Utils.ApiErrorHandler;
-import com.google.hemmah.Utils.ModelError;
+import com.google.hemmah.Utils.ModelJson;
 import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.Utils.Validator;
 import com.google.hemmah.api.ApiClient;
@@ -191,7 +191,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (response.code() == 400) {
                     mLogInProgressBar.setVisibility(View.GONE);
                     //parsing the error body from json to a string
-                    ModelError error = ApiErrorHandler.parseError(response, retrofit);
+                    ModelJson error = ApiErrorHandler.parseError(response, retrofit);
                     //showing the error message in a toast message
                     Toast.makeText(RegisterActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                 }

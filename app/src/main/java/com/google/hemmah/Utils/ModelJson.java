@@ -1,6 +1,6 @@
 package com.google.hemmah.Utils;
 
-public class ModelError {
+public class ModelJson {
     private String Message;
 
     public String getMessage() {

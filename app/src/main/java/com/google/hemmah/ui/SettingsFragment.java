@@ -22,7 +22,6 @@ import com.google.hemmah.model.Post;
 import java.util.ArrayList;
 import java.util.zip.Inflater;
 
-import kotlin.reflect.jvm.internal.impl.renderer.DescriptorRenderer;
 
 public class SettingsFragment extends Fragment {
     public static final String mTAG = "com.google.hemmah.ui.SettingsFragment";

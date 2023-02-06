@@ -1,23 +1,37 @@
-package com.google.hemmah.api;
-
-import android.app.Service;
-import android.content.Intent;
-
-import android.os.HandlerThread;
-import android.os.IBinder;
-
-import androidx.annotation.Nullable;
-
-
-public class StompClientManager extends Service {
-    public StompClientManager(String stompApi){
-
-
-    }
-
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
-}
+//package com.google.hemmah.api;
+//
+//
+//import android.view.View;
+//
+//import java.text.SimpleDateFormat;
+//import java.util.Date;
+//import java.util.Locale;
+//
+//import ua.naiksoftware.stomp.Stomp;
+//import ua.naiksoftware.stomp.StompClient;
+//
+//public class StompClientManager {
+//    private StompClient mStompClient;
+//    private final SimpleDateFormat mTimeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+//    private Disposable mRestPingDisposable;
+//    private CompositeDisposable compositeDisposable;
+//
+//    public StompClientManager(String stompApi) {
+//        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, stompApi);
+//        mStompClient.connect();
+//    }
+//
+//    public void sendFromStomp(View v) {
+//
+//        compositeDisposable.add(mStompClient.send("/topic/hello-msg-mapping", "Echo STOMP " + mTimeFormat.format(new Date()))
+//                .compose(applySchedulers())
+//                .subscribe(() -> {
+//                    Log.d(TAG, "STOMP echo send successfully");
+//                }, throwable -> {
+//                    Log.e(TAG, "Error send STOMP echo", throwable);
+//                    toast(throwable.getMessage());
+//                }));
+//    }
+//
+//
+//}

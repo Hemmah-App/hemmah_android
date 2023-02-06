@@ -26,6 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hemmah"
         android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         tools:targetApi="33">
         <activity
             android:name=".ui.disabled.MakePostActivity"

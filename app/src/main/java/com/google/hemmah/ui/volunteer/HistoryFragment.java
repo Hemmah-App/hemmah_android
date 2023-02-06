@@ -33,7 +33,7 @@ public class HistoryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ArrayList<Post> historyPosts = new ArrayList<>();
         //for testing purpose
-        mPostsFragment.intializePosts(historyPosts);
+//        mPostsFragment.intializePosts(historyPosts);
         PostsAdapter postsAdapter = new PostsAdapter(historyPosts,R.layout.history_recycler_item);
         RecyclerView recyclerView = view.findViewById(R.id.history_post_RV);
         recyclerView.setAdapter(postsAdapter);

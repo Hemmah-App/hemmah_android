@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.hemmah.R;
 import com.google.hemmah.Utils.ApiErrorHandler;
-import com.google.hemmah.Utils.ModelError;
+import com.google.hemmah.Utils.ModelJson;
 import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.Utils.Validator;
 import com.google.hemmah.api.ApiClient;
@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                     //setting the progress bar to be gone(invisible) on getting a response
                     logInProgressBar.setVisibility(View.GONE);
                     //parsing the error body from json to a string
-                    ModelError error = ApiErrorHandler.parseError(response, retrofit);
+                    ModelJson error = ApiErrorHandler.parseError(response, retrofit);
                     //showing the error message in a toast message
                     Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                 }

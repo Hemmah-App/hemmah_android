@@ -14,7 +14,6 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.google.hemmah.R;
 
-import org.jitsi.meet.sdk.JitsiMeetActivity;
 
 public class CustomNotificationsManager {
     protected Context mContext;
@@ -33,7 +32,7 @@ public class CustomNotificationsManager {
         RemoteViews collapsedNotification = new RemoteViews(mContext.getPackageName(), R.layout.incoming_expanded_call_notification);
         RemoteViews expandedNotification = new RemoteViews(mContext.getPackageName(), R.layout.incoming_expanded_call_notification);
         //pending intent on pressing the notification , it moves the user to the call
-        PendingIntent goToVideoCallIntent = makeNotificationPendingIntent();
+//        PendingIntent goToVideoCallIntent = makeNotificationPendingIntent();
         Notification notification = new NotificationCompat.Builder(mContext.getApplicationContext(), NotificationChannelManager.CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.hemmah_logo_nobg)
                 .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
@@ -46,12 +45,12 @@ public class CustomNotificationsManager {
         mNotificationManagerCompat.notify(notificationId, notification);
     }
 
-    public PendingIntent makeNotificationPendingIntent() {
-        Intent intent = new Intent(mContext, JitsiMeetActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        return PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-    }
+//    public PendingIntent makeNotificationPendingIntent() {
+////        Intent intent = new Intent(mContext, JitsiMeetActivity.class);
+////        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+////        return PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+//
+//    }
 
     public static class NotificationChannelManager extends Application {
         public static final String CHANNEL_1_ID = "call notification";

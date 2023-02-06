@@ -29,12 +29,13 @@ import com.twilio.video.Video;
 import com.twilio.video.VideoTrack;
 import com.twilio.video.VideoView;
 
-import org.webrtc.voiceengine.WebRtcAudioUtils;
+
 
 import java.util.List;
 import java.util.Objects;
 
 import tvi.webrtc.Camera2Enumerator;
+import tvi.webrtc.voiceengine.WebRtcAudioUtils;
 
 public class DisabledVideoActivity extends AppCompatActivity {
 
@@ -48,9 +49,9 @@ public class DisabledVideoActivity extends AppCompatActivity {
     private VideoView remoteVideoView;
 
     private void initViews() {
-        localVideoView = findViewById(R.id.local_video_view);
+        localVideoView = findViewById(R.id.local_video_view_disabled);
         localVideoView.setKeepScreenOn(true);
-        remoteVideoView = findViewById(R.id.remote_video_view);
+        remoteVideoView = findViewById(R.id.remote_video_view_disabled);
         remoteVideoView.setKeepScreenOn(true);
 
     }
