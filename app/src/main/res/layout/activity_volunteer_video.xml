@@ -8,7 +8,7 @@
 
 
     <com.twilio.video.VideoView
-        android:id="@+id/remote_video_view"
+        android:id="@+id/remote_video_view_volunteer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -32,7 +32,7 @@
 
 
     <com.twilio.video.VideoView
-        android:id="@+id/local_video_view"
+        android:id="@+id/local_video_view_volunteer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/local_camera_corner"
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorError"
         android:src="@drawable/phoneicon"
-        app:layout_constraintBottom_toBottomOf="@+id/remote_video_view"
+        app:layout_constraintBottom_toBottomOf="@+id/remote_video_view_disabled"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline1" />

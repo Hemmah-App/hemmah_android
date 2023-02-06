@@ -8,7 +8,7 @@
 
 
     <com.twilio.video.VideoView
-        android:id="@+id/remote_video_view"
+        android:id="@+id/remote_video_view_disabled"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -32,7 +32,7 @@
 
 
     <com.twilio.video.VideoView
-        android:id="@+id/local_video_view"
+        android:id="@+id/local_video_view_disabled"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/local_camera_corner"
@@ -56,14 +56,26 @@
         app:layout_constraintGuide_percent="0.98" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/closecall_FAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorError"
         android:src="@drawable/phoneicon"
-        app:layout_constraintBottom_toBottomOf="@+id/remote_video_view"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/remote_video_view_disabled"
+        app:layout_constraintEnd_toStartOf="@+id/local_video_view_disabled"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/rotatecamera_IV"
         app:layout_constraintTop_toTopOf="@+id/guideline1" />
 
 
+    <ImageView
+        android:id="@+id/rotatecamera_IV"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:src="@drawable/changecamera_ic"
+        app:layout_constraintBottom_toBottomOf="@+id/closecall_FAB"
+        app:layout_constraintEnd_toStartOf="@+id/closecall_FAB"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/closecall_FAB" />
 </androidx.constraintlayout.widget.ConstraintLayout>
