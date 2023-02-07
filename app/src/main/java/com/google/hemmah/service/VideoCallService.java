@@ -4,17 +4,20 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import com.google.hemmah.api.ApiClient;
-import com.google.hemmah.api.WebServices;
+import com.google.hemmah.api.AuthApi;
 
-import retrofit2.Call;
-import retrofit2.Retrofit;
+import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class VideoCallService extends Service {
-    private WebServices webServices;
 
-    public VideoCallService() {
-        webServices = ApiClient.getRetrofit().create(WebServices.class);
+    AuthApi webServices;
+
+    @Inject
+    public VideoCallService(AuthApi webServices) {
+        this.webServices = webServices;
     }
 
 

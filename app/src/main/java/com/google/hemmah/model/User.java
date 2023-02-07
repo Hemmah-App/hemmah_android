@@ -1,5 +1,7 @@
 package com.google.hemmah.model;
 
+import com.google.hemmah.model.enums.UserType;
+
 public class User {
 	private String userName;
 	private String email;
@@ -7,10 +9,9 @@ public class User {
 	private String phoneNumber;
 	private String firstName;
 	private String lastName;
-	private String userType;
+	private UserType userType;
 
-
-	public User(String userName, String email, String password, String phoneNumber, String firstName, String lastName, String userType) {
+	public User(String userName, String email, String password, String phoneNumber, String firstName, String lastName, UserType userType) {
 		this.userName = userName;
 		this.email = email;
 		this.password = password;
@@ -18,18 +19,6 @@ public class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userType = userType;
-	}
-	@Override
-	public String toString() {
-		return "User{" +
-				"userName='" + userName + '\'' +
-				", email='" + email + '\'' +
-				", password='" + password + '\'' +
-				", phoneNumber='" + phoneNumber + '\'' +
-				", firstName='" + firstName + '\'' +
-				", lastName='" + lastName + '\'' +
-				", userType='" + userType + '\'' +
-				'}';
 	}
 
 	public String getUserName() {
@@ -80,11 +69,24 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public String getUserType() {
+	public UserType getUserType() {
 		return userType;
 	}
 
-	public void setUserType(String userType) {
+	public void setUserType(UserType userType) {
 		this.userType = userType;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"userName='" + userName + '\'' +
+				", email='" + email + '\'' +
+				", password='" + password + '\'' +
+				", phoneNumber='" + phoneNumber + '\'' +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", userType=" + userType +
+				'}';
 	}
 }

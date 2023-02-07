@@ -3,6 +3,7 @@ package com.google.hemmah.ui;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -10,6 +11,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
 import com.google.hemmah.R;
 import com.google.hemmah.Utils.SharedPrefUtils;
@@ -18,6 +20,10 @@ import com.google.hemmah.ui.volunteer.VolunteerActivity;
 
 import java.util.Map;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
+@SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
 //    private SharedPreferences mSharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, 0);
     ActionBar mActionBar;
@@ -27,6 +33,11 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         fromSplashToActivity(LoginActivity.class);
+
+        Toast.makeText(
+                getApplicationContext(),
+                SharedPrefUtils.loadFromShared(getSharedPreferences(SharedPrefUtils.FILE_NAME, MODE_PRIVATE), "token"),
+                Toast.LENGTH_LONG).show();
 
     }
 

@@ -13,12 +13,15 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
     private static Retrofit retrofit = null;
     private static OkHttpClient okHttpClient = null;
-    public static final String BASE_URL = "http://144.24.219.44:5151/";
+
+    public static final String BASE_URL = "https://api.hemmah.live";
+
     public static Retrofit getRetrofit() {
         if (retrofit == null) {
 
@@ -27,6 +30,7 @@ public class ApiClient {
                     .create();
             retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(gson))
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build();
         }
         return retrofit;

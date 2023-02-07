@@ -3,7 +3,6 @@ package com.google.hemmah.ui.volunteer;
 import android.Manifest;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,12 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.google.hemmah.R;
-import com.google.hemmah.model.CameraDirection;
+import com.google.hemmah.model.enums.CameraDirection;
 import com.twilio.video.Camera2Capturer;
 import com.twilio.video.ConnectOptions;
 import com.twilio.video.LocalAudioTrack;
 import com.twilio.video.LocalVideoTrack;
-import com.twilio.video.LogLevel;
 import com.twilio.video.RemoteAudioTrack;
 import com.twilio.video.RemoteAudioTrackPublication;
 import com.twilio.video.RemoteDataTrack;
@@ -33,7 +31,6 @@ import com.twilio.video.VideoView;
 
 import java.util.List;
 
-import tvi.webrtc.AudioTrack;
 import tvi.webrtc.Camera2Enumerator;
 import tvi.webrtc.voiceengine.WebRtcAudioUtils;
 

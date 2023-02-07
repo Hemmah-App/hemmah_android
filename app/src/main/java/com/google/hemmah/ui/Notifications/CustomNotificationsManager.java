@@ -1,21 +1,20 @@
 package com.google.hemmah.ui.Notifications;
 
-import android.app.Application;
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import android.widget.RemoteViews;
-
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-
 import com.google.hemmah.R;
 
 
 public class CustomNotificationsManager {
+
+    public static final String CHANNEL_1_ID = "call notification";
+    public static final String CHANNEL_1_NAME = "Call Notification";
+    public static final String CHANNEL_1_DESCRIPTION = "This notification appears when a disabled needs a video call help";
+
+
     protected Context mContext;
     private final NotificationManagerCompat mNotificationManagerCompat;
 
@@ -23,7 +22,6 @@ public class CustomNotificationsManager {
         this.mContext = context;
         mNotificationManagerCompat = NotificationManagerCompat.from(context);
     }
-
 
     public void makeCallNotification(int notificationId) {
         //this group id to group all the same notifications in inbox style
@@ -33,7 +31,7 @@ public class CustomNotificationsManager {
         RemoteViews expandedNotification = new RemoteViews(mContext.getPackageName(), R.layout.incoming_expanded_call_notification);
         //pending intent on pressing the notification , it moves the user to the call
 //        PendingIntent goToVideoCallIntent = makeNotificationPendingIntent();
-        Notification notification = new NotificationCompat.Builder(mContext.getApplicationContext(), NotificationChannelManager.CHANNEL_1_ID)
+        Notification notification = new NotificationCompat.Builder(mContext.getApplicationContext(), CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.hemmah_logo_nobg)
                 .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
                 .setCustomContentView(collapsedNotification)
@@ -52,29 +50,5 @@ public class CustomNotificationsManager {
 //
 //    }
 
-    public static class NotificationChannelManager extends Application {
-        public static final String CHANNEL_1_ID = "call notification";
-        public static final String CHANNEL_1_NAME = "Call Notification";
-        public static final String CHANNEL_1_DESCRIPTION = "This notification appears when a disabled needs a video call help";
 
-        @Override
-        public void onCreate() {
-            super.onCreate();
-            makeNotificationChannel();
-        }
-
-
-        public void makeNotificationChannel() {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NotificationChannel callNotification = new NotificationChannel(CHANNEL_1_ID,
-                        CHANNEL_1_NAME,
-                        android.app.NotificationManager.IMPORTANCE_HIGH);
-                callNotification.setDescription(CHANNEL_1_DESCRIPTION);
-                android.app.NotificationManager manager = getSystemService(android.app.NotificationManager.class);
-                manager.createNotificationChannel(callNotification);
-            }
-        }
-
-
-    }
 }

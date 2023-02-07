@@ -1,74 +1,48 @@
 package com.google.hemmah.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.hemmah.R;
-import com.google.hemmah.Utils.ApiErrorHandler;
-import com.google.hemmah.Utils.ModelJson;
 import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.Utils.Validator;
-import com.google.hemmah.api.ApiClient;
-import com.google.hemmah.api.WebServices;
+import com.google.hemmah.service.AuthService;
 import com.google.hemmah.ui.disabled.DisabledActivity;
-
-import java.util.HashMap;
 import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
+import javax.inject.Inject;
+import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
+@AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
+
+    @Inject
+    AuthService authService;
+
     private Button logInButton;
     private TextView registerTV;
     private TextInputLayout emailTextInput;
     private TextInputLayout passwordTextInput;
     private ProgressBar logInProgressBar;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initViews();
-        registerTV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
-        logInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (validLogin()) {
-                    //setting the progress bad to be visible
-                    logInProgressBar.setVisibility(View.VISIBLE);
-                    Map<String, Object> userMap = populateUser();
-                    userLogin(userMap, DisabledActivity.class);
-                    //sharedpref object points to the file
-                    SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
-                    //getting the token back from the sharedpref
-                    String token = SharedPrefUtils.loadFromShared(sharedPreferences, "token");
-                    //showing the token in a message
-                    Toast.makeText(getApplicationContext(), token, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
+        setButtonsListeners();
     }
 
 
@@ -81,12 +55,29 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private void setButtonsListeners() {
+        registerTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
 
-    private Map<String, Object> populateUser() {
-        Map<String, Object> userMap = new HashMap<String, Object>();
-        userMap.put("email", emailTextInput.getEditText().getText().toString());
-        userMap.put("password", passwordTextInput.getEditText().getText().toString());
-        return userMap;
+        logInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validLogin()) {
+                    //setting the progress bad to be visible
+                    logInProgressBar.setVisibility(View.VISIBLE);
+
+                    String email = emailTextInput.getEditText().getText().toString();
+                    String password = passwordTextInput.getEditText().getText().toString();
+
+                    loginUser(email, password, DisabledActivity.class);
+                }
+            }
+        });
     }
 
 
@@ -117,39 +108,38 @@ public class LoginActivity extends AppCompatActivity {
         return valid;
     }
 
-    private void userLogin(Map<String, Object> user, Class intendedClass) {
-        Retrofit retrofit = ApiClient.getRetrofit();
-        WebServices webServices = retrofit.create(WebServices.class);
-        Call<String> call = webServices.userLogin(user);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.code() == 200) {
-                    //setting the progress bar to be gone(invisible) on getting a response
-                    logInProgressBar.setVisibility(View.GONE);
-                    Intent intent = new Intent(getApplicationContext(), intendedClass);
-                    startActivity(intent);
-                    Toast.makeText(getApplicationContext(), R.string.signin_toastmessage, Toast.LENGTH_SHORT).show();
+    @SuppressLint("CheckResult")
+    private void loginUser(String email, String password, Class intendedClass) {
 
-                } else if (response.code() == 400) {
-                    //setting the progress bar to be gone(invisible) on getting a response
-                    logInProgressBar.setVisibility(View.GONE);
-                    //parsing the error body from json to a string
-                    ModelJson error = ApiErrorHandler.parseError(response, retrofit);
-                    //showing the error message in a toast message
-                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
+        Observable<Response<Map<String, Object>>> observable = authService.login(email, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
 
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                //setting the progress bar to be gone(invisible) on getting fail response
+        observable.subscribe((res) -> {
+
+            if (res.code() == 200) {
+                //setting the progress bar to be gone(invisible) on getting a response
                 logInProgressBar.setVisibility(View.GONE);
-                Toast.makeText(LoginActivity.this, R.string.failedtoconnect_toastmessage, Toast.LENGTH_SHORT).show();
-                Log.d("signin_response", t.getMessage());
-            }
-        });
-    }
+                Toast.makeText(getApplicationContext(), R.string.signin_toastmessage, Toast.LENGTH_SHORT).show();
 
+                // save token in the sharedpref
+                SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
+                SharedPrefUtils.saveToShared(sharedPreferences, "token", (String) res.body().get("token"));
+
+                Intent intent = new Intent(getApplicationContext(), intendedClass);
+                startActivity(intent);
+            }
+            else {
+                logInProgressBar.setVisibility(View.GONE);
+                Toast.makeText(getApplicationContext(),
+                        res.errorBody().string(), Toast.LENGTH_SHORT).show();
+            }
+
+        }, (err) -> {
+            logInProgressBar.setVisibility(View.GONE);
+            Toast.makeText(LoginActivity.this, err.getMessage(), Toast.LENGTH_SHORT).show();
+        });
+
+    }
 
 }

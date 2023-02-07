@@ -1,4 +1,4 @@
-package com.google.hemmah.model;
+package com.google.hemmah.model.enums;
 
 public enum CameraDirection {
     BACK, FRONT

@@ -10,11 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.hemmah.R;
-import com.google.hemmah.model.CameraDirection;
+import com.google.hemmah.model.enums.CameraDirection;
 import com.twilio.video.Camera2Capturer;
 import com.twilio.video.ConnectOptions;
 import com.twilio.video.LocalAudioTrack;
-import com.twilio.video.LocalParticipant;
 import com.twilio.video.LocalVideoTrack;
 import com.twilio.video.RemoteAudioTrack;
 import com.twilio.video.RemoteAudioTrackPublication;
@@ -32,7 +31,6 @@ import com.twilio.video.VideoView;
 
 
 import java.util.List;
-import java.util.Objects;
 
 import tvi.webrtc.Camera2Enumerator;
 import tvi.webrtc.voiceengine.WebRtcAudioUtils;

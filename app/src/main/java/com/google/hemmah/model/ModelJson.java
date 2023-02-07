@@ -1,4 +1,4 @@
-package com.google.hemmah.Utils;
+package com.google.hemmah.model;
 
 public class ModelJson {
     private String Message;

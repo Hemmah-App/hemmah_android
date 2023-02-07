@@ -1,5 +1,7 @@
 package com.google.hemmah.Utils;
 
+import com.google.hemmah.model.ModelJson;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 
