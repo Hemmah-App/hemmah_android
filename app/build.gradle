@@ -3,12 +3,12 @@ buildscript {
         classpath "com.google.dagger:hilt-android-gradle-plugin:2.44.2"
     }
 }
+
 plugins {
     id 'com.android.application'
     id 'com.google.dagger.hilt.android'
 
 }
-
 
 android {
     namespace 'com.google.hemmah'
@@ -47,7 +47,7 @@ dependencies {
 
     //ripple effect
     implementation 'com.balysv:material-ripple:1.0.2'
-    
+
     // Retrofit support
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -74,9 +74,12 @@ dependencies {
     implementation 'com.google.dagger:hilt-android:2.44.2'
     annotationProcessor 'com.google.dagger:hilt-compiler:2.44.2'
 
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+
 
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
-
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }

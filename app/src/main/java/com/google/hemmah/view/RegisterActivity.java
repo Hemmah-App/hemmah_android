@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -14,19 +13,17 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.google.hemmah.R;
 import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.Utils.Validator;
-import com.google.hemmah.model.ModelJson;
 import com.google.hemmah.model.User;
+import com.google.hemmah.model.api.ApiResponse;
+import com.google.hemmah.model.api.data.TokenRes;
 import com.google.hemmah.model.enums.UserType;
 import com.google.hemmah.service.AuthService;
 import com.google.hemmah.view.disabled.DisabledActivity;
 import com.google.hemmah.view.volunteer.VolunteerActivity;
 
-import java.lang.reflect.Type;
-import java.util.Map;
 import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.Observable;
@@ -51,6 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button mCreateAccountDisabled_Bt;
     private SharedPreferences mSharedPreferences;
     Gson gson;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -183,18 +181,16 @@ public class RegisterActivity extends AppCompatActivity {
     @SuppressLint("CheckResult")
     public void signUp(User user, Class intentedClass) {
 
-        Observable<Response<Map<String, Object>>> responseObservable = authService.signUp(user)
+        Observable<Response<ApiResponse>> responseObservable = authService.signUp(user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 
         responseObservable.subscribe((res) -> {
             if (res.code() == 200) {
                 mLogInProgressBar.setVisibility(View.GONE);
-                //store response body into the token var
-                ModelJson response = gson.fromJson(res.body().toString(), ModelJson.class);
-                String token = response.getData().getToken();
+
                 //store the token in a shared preferences file
-                SharedPrefUtils.saveToShared(mSharedPreferences, "token", token);
+                SharedPrefUtils.saveToShared(mSharedPreferences, "token", gson.fromJson(res.body().getData(), TokenRes.class).getToken());
                 //got to the needed activity volunteer or disabled
                 Intent intent = new Intent(RegisterActivity.this, intentedClass);
                 startActivity(intent);

@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.hemmah.R;
 import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.model.User;
+import com.google.hemmah.model.api.ApiResponse;
 import com.google.hemmah.model.enums.UserType;
 import com.google.hemmah.service.AuthService;
 import com.google.hemmah.view.disabled.DisabledActivity;
@@ -73,13 +74,14 @@ public class SplashActivity extends AppCompatActivity {
     private void getCurrentUserByToken() {
         //here send the token to the to  me:api
         String token = SharedPrefUtils.loadFromShared(mSharedPreferences, "token");
-        Observable<Response<Map<String, Object>>> observable = mAuthService.getUser(token).
-                subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-        observable.subscribe((res) -> {
-         Log.d("SPLASH_SCREEN",(String) res.body().get("user")+"\n --------"+res.body().toString());
-
-        });
+//        Observable<Response<ApiResponse>> observable =
+//                mAuthService.getUser(token)
+//                        .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread());
+//        observable.subscribe((res) -> {
+//         Log.d("SPLASH_SCREEN",(String) res.body().get("user")+"\n --------"+res.body().toString());
+//
+//        });
     }
 
 //    private boolean isTokenExpired() {

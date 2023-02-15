@@ -14,9 +14,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.hemmah.R;
 import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.Utils.Validator;
+import com.google.hemmah.model.api.ApiResponse;
 import com.google.hemmah.service.AuthService;
 import com.google.hemmah.view.disabled.DisabledActivity;
 import com.google.hemmah.view.volunteer.VolunteerActivity;
@@ -42,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout emailTextInput;
     private TextInputLayout passwordTextInput;
     private ProgressBar logInProgressBar;
+
+    private final Gson gson = new GsonBuilder().create();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
     @SuppressLint("CheckResult")
     private void loginUser(String email, String password, Class intendedClass) {
 
-        Observable<Response<Map<String, Object>>> observable = authService.login(email, password)
+        Observable<Response<ApiResponse>> observable = authService.login(email, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 
@@ -130,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 // save token in the sharedpref
                 SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
-                SharedPrefUtils.saveToShared(sharedPreferences, "token", (String) res.body().get("token"));
+                SharedPrefUtils.saveToShared(sharedPreferences, "token", res.body().getDataAsMap().get("token").toString());
 
                 Intent intent = new Intent(getApplicationContext(), intendedClass);
                 startActivity(intent);
