@@ -16,9 +16,8 @@ public class SharedPrefUtils {
         //returns the stored data(token)
         return sharedPreferences.getString(key, "");
     }
-    public static boolean haveToken(SharedPreferences sharedPreferences){
-        Map<String,Object> tokens = (Map<String,Object>)sharedPreferences.getAll();
-        return tokens.isEmpty();
+    public static boolean haveToken(SharedPreferences sharedPreferences,String key){
+        return !sharedPreferences.getString(key,"").isEmpty();
     }
 
 }

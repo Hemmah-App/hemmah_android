@@ -1,15 +1,18 @@
-package com.google.hemmah.ui.disabled;
+package com.google.hemmah.view.volunteer;
+
+import android.Manifest;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
-import android.os.Bundle;
-import android.util.Log;
-
 import com.google.hemmah.R;
+import com.google.hemmah.dataManager.StompClientManager;
+import com.google.hemmah.model.MeetingRoom;
 import com.google.hemmah.model.enums.CameraDirection;
 import com.twilio.video.Camera2Capturer;
 import com.twilio.video.ConnectOptions;
@@ -29,27 +32,27 @@ import com.twilio.video.VideoTrack;
 import com.twilio.video.VideoView;
 
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 import tvi.webrtc.Camera2Enumerator;
 import tvi.webrtc.voiceengine.WebRtcAudioUtils;
+import ua.naiksoftware.stomp.dto.StompHeader;
 
-public class DisabledVideoActivity extends AppCompatActivity {
-
-    public static final String TEMP_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzgwNjA2YTg1YTE5NGFlYTliOTYyMWIxOWZlNjIzMzJjLTE2NzU1NjE1MzUiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJvbSIsInZpZGVvIjp7InJvb20iOiJ0ZXN0MSJ9fSwiaWF0IjoxNjc1NTYxNTM1LCJleHAiOjE2NzU1NjUxMzUsImlzcyI6IlNLODA2MDZhODVhMTk0YWVhOWI5NjIxYjE5ZmU2MjMzMmMiLCJzdWIiOiJBQ2Q0ODM2ODg1OWZkYTJjYjY5NTQ2NGE1ODViZmJhNTFmIn0.Ub08L9nRaZvVIfkAah0V3OL6Fh51dPdEDi3xN0X7xbI";
+public class VolunteerVideoActivity extends AppCompatActivity {
 
     public Room room;
-
     private LocalAudioTrack localAudioTrack;
     private LocalVideoTrack localVideoTrack;
     private VideoView localVideoView;
     private VideoView remoteVideoView;
+    private StompClientManager mStompClientManager;
+    private List<StompHeader> mStompHeaders = new ArrayList<>();
 
     private void initViews() {
-        localVideoView = findViewById(R.id.local_video_view_disabled);
+        localVideoView = findViewById(R.id.local_video_view_volunteer);
         localVideoView.setKeepScreenOn(true);
-        remoteVideoView = findViewById(R.id.remote_video_view_disabled);
+        remoteVideoView = findViewById(R.id.remote_video_view_volunteer);
         remoteVideoView.setKeepScreenOn(true);
 
     }
@@ -57,10 +60,11 @@ public class DisabledVideoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_disabled_video);
+        setContentView(R.layout.activity_volunteer_video);
         initViews();
         setVideoAndAudioSettings();
-
+        mStompClientManager = new StompClientManager(this);
+        getRoomDetails();
         // Request camera and microphone permissions.
         /* TODO @Hazem - Move this to the right place when you have time
             We need to request permissions on the application start up for one time only */
@@ -70,8 +74,23 @@ public class DisabledVideoActivity extends AppCompatActivity {
                 100);
 
         // Api call to get the room details using a service goes here
-        makeCall("test1", TEMP_TOKEN);
+        try{
+            makeCall(getRoomDetails().getRoomName(), getRoomDetails().getRoomToken());
+        }catch (NullPointerException e){
+            Log.e("Volunteer",e.getMessage());
+        }
+    }
 
+    private MeetingRoom getRoomDetails() {
+        Intent intent = getIntent();
+        if(intent != null) {
+            mStompClientManager.sendToStomp("/app/help_call/answer",
+                    intent.getStringExtra("roomName"),
+                    StompClientManager.mVolunteerTempToken);
+            return new MeetingRoom(intent.getStringExtra("roomToken"), intent.getStringExtra("roomName"));
+        }
+        else
+            return null;
     }
 
     private void setVideoAndAudioSettings() {
@@ -90,6 +109,13 @@ public class DisabledVideoActivity extends AppCompatActivity {
 
         room = Video.connect(getApplicationContext(), connectOptions, roomListener());
 
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        localAudioTrack.release();
+        localVideoTrack.release();
+        room.disconnect();
     }
 
     private Room.Listener roomListener() {
@@ -121,8 +147,8 @@ public class DisabledVideoActivity extends AppCompatActivity {
 
             @Override
             public void onDisconnected(@NonNull Room room, @Nullable TwilioException twilioException) {
-                 localAudioTrack.release();
-                 localVideoTrack.release();
+                localAudioTrack.release();
+                localVideoTrack.release();
             }
 
             @Override
@@ -155,14 +181,14 @@ public class DisabledVideoActivity extends AppCompatActivity {
 
         String cameraId = null;
 
-        if (cameraDirection == CameraDirection.BACK){
+        if (cameraDirection == CameraDirection.BACK) {
             for (String id : camera2Enumerator.getDeviceNames()) {
                 if (camera2Enumerator.isBackFacing(id)) {
                     cameraId = id;
                     break;
                 }
             }
-        } else if (cameraDirection == CameraDirection.FRONT){
+        } else if (cameraDirection == CameraDirection.FRONT) {
             for (String id : camera2Enumerator.getDeviceNames()) {
                 if (camera2Enumerator.isFrontFacing(id)) {
                     cameraId = id;
@@ -300,4 +326,3 @@ public class DisabledVideoActivity extends AppCompatActivity {
         };
     }
 }
-

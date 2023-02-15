@@ -1,4 +1,4 @@
-package com.google.hemmah.ui;
+package com.google.hemmah.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
@@ -6,19 +6,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.google.hemmah.R;
 import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.Utils.Validator;
+import com.google.hemmah.model.ModelJson;
 import com.google.hemmah.model.User;
 import com.google.hemmah.model.enums.UserType;
 import com.google.hemmah.service.AuthService;
-import com.google.hemmah.ui.disabled.DisabledActivity;
-import com.google.hemmah.ui.volunteer.VolunteerActivity;
+import com.google.hemmah.view.disabled.DisabledActivity;
+import com.google.hemmah.view.volunteer.VolunteerActivity;
+
+import java.lang.reflect.Type;
 import java.util.Map;
 import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
@@ -33,8 +40,6 @@ public class RegisterActivity extends AppCompatActivity {
     @Inject
     AuthService authService;
 
-    public static final String mTag = "Stomp";
-
     private TextInputLayout mUserNameTextInput;
     private TextInputLayout mEmailTextInput;
     private TextInputLayout mPhoneNumberTextInput;
@@ -45,14 +50,16 @@ public class RegisterActivity extends AppCompatActivity {
     private Button mCreateAccountVolunteer_Bt;
     private Button mCreateAccountDisabled_Bt;
     private SharedPreferences mSharedPreferences;
-
+    Gson gson;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initViews();
-        setButtonsListeners();
+        gson = new GsonBuilder().create();
         mSharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
+        setButtonsListeners();
+
     }
 
     @Override
@@ -184,7 +191,8 @@ public class RegisterActivity extends AppCompatActivity {
             if (res.code() == 200) {
                 mLogInProgressBar.setVisibility(View.GONE);
                 //store response body into the token var
-                String token = res.body().get("token").toString();
+                ModelJson response = gson.fromJson(res.body().toString(), ModelJson.class);
+                String token = response.getData().getToken();
                 //store the token in a shared preferences file
                 SharedPrefUtils.saveToShared(mSharedPreferences, "token", token);
                 //got to the needed activity volunteer or disabled
@@ -193,7 +201,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this, R.string.signup_toastmessage, Toast.LENGTH_SHORT).show();
             } else {
                 mLogInProgressBar.setVisibility(View.GONE);
-                if (res.errorBody() != null)
+                if (res.errorBody().string() != null)
                     Toast.makeText(RegisterActivity.this, res.errorBody().string(), Toast.LENGTH_SHORT).show();
             }
 

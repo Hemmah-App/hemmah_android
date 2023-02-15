@@ -1,10 +1,15 @@
 package com.google.hemmah.dataManager;
 
+import android.content.Context;
 import android.util.Log;
+
+import androidx.core.util.Consumer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.hemmah.model.ModelJson;
+import com.google.hemmah.model.MeetingRoom;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +21,16 @@ import ua.naiksoftware.stomp.StompClient;
 import ua.naiksoftware.stomp.dto.StompHeader;
 
 public class StompClientManager {
-    public static final String stompHeaderTempToken = "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiYWJkdWxsYWh3c2RkNTUiLCJleHAiOjE2NzU3MjIzODQsImlhdCI6MTY3NTY4NjM4NCwicm9sZXMiOiJVU0VSLERJU0FCTEVEIn0.f38Cb3aHOIsS0VV2tISk3W8lb1MVYZIphXX07CzZ2Iit8IPDVXwPqTn7E28EIbhXgp_aPJDRTTQIfTrJdfaTCNNcUdv3r87aEDvT5QURLeAO4aFLsYkdW9qPPsnCFBzhfUhrZYp3x6g9Jf58H70DYrSQV4BS-odQ3c9OQ9PeVBu_ySIKG5sZmqWELcx02qAKkbbj_pQu1VKHX_3UElIPiyGjRoB7WewZs0ZuvZrYTXl46acH9OyEYyYtLgITVsapthU1s3_JcP-8kwooE0r5WlS7xt7uVm6j_ucCE0j519phlA_oRllIQQFu6jOVw8OAEcLCplEdXvXQaiZZvbC-Iw";
+    public static final String mVolunteerTempToken = "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoidm9sdW50ZWVyMSIsImV4cCI6MTY3NjM1MzEyMywiaWF0IjoxNjc2MzE3MTIzLCJyb2xlcyI6IlVTRVIsVk9MVU5URUVSIn0.mmA01OtPZbSWciAikLTBQPU8oVkBNpe5JgfpUdrgOMtYSIro3_gaYFIpnMwldHjMdm3SwO2YdzJJzKVKNk_IKp1FeQQ4IlDNmAK7YgKeFtf41AVYfpu1OA94HxA_CKyrAeAT80pQzip5YhjPeyfpd-7HywVr1qYmiznRTDQUT1CxfnZDbwt4uVqVJbiTZmW4tI2ejZS07aSDhI4lt-uons2E2iT3yz9oZvFbdTQWwANp5xrv7-LacrLXaK5EtrBM4Ly7CJqjUfUIQSHrwXegpeNWF6ZEzDWxoSGMMBHFwyjCZhScYr0F5HCBT-umQKoeW7urBxidD-hoU1vwyP6o-Q";
+    public static final String mDisabledTempToken = "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiZGlzYWJsZWQxIiwiZXhwIjoxNjc2MzUyODQzLCJpYXQiOjE2NzYzMTY4NDMsInJvbGVzIjoiVVNFUixESVNBQkxFRCJ9.FssvHATCKAKr3lxq0g4J2s9ZlsYPVEomWj4fVVVRVWyeMqeXuRYkJ2CVJm1PKcGnjjvFnYx1McT9de_gCYJs9ooKbHkaFV-CwbkPV4Rr3rONvZKzSczR92vdje-3nqKnP9xMJam3c6jU2Kmv0eSn7WEOsPmtWrh63bA_VWl0bynKcRM4MHJ7nsX6kE2irjELbLbrlwiBDG8OheQ1xWYuYOndjCTyeTU9cJtxeCZNQ7sFWagY_4qnjHTrwtZgccLrVSqojjIk_MvWun-UwTBzEAtin8gVVhPCyCZeIfO634U1kaSC0JTu1gHYeIicYYYBKEdaga0A9k0GILBJiwq8HA";
     private static final String stompApi = "wss://api.hemmah.live/ws";
-    private static final String TAG = "StompMessages";
-    private Gson mGson = new GsonBuilder().create();
+    public static final String TAG = "StompMessages";
+    private Context mContext;
+    Gson mGson = new GsonBuilder().create();
     private StompClient mStompClient;
 
-    public StompClientManager() {
+    public StompClientManager(Context context) {
+        this.mContext = context;
         mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, stompApi);
         mStompClient.withClientHeartbeat(1000).withServerHeartbeat(1000);
         mStompClient.lifecycle()
@@ -38,7 +46,6 @@ public class StompClientManager {
                             break;
                         case CLOSED:
                             Log.d(TAG, "Stomp connection closed");
-                            mStompClient.reconnect();
                             break;
                         case FAILED_SERVER_HEARTBEAT:
                             Log.d(TAG, "Stomp failed server heartbeat");
@@ -48,28 +55,37 @@ public class StompClientManager {
     }
 
 
-
-
-    public void subscribeOnTopic(String topic ,String stompHeaderToken ) {
-        List<StompHeader> headers  = new ArrayList<>();
+    public void subscribeOnTopic(String receiveTopic, String stompHeaderToken, Consumer<MeetingRoom> callback) {
+        List<StompHeader> headers = new ArrayList<>();
         headers.add(new StompHeader("Authorization", stompHeaderToken));
-         mStompClient.topic(topic)
+        mStompClient.topic(receiveTopic)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(topicMessage -> {
-                Log.d(TAG, "Received " + topicMessage.getPayload());
-//                convertJsonToString(mGson.fromJson(topicMessage.getPayload(), ModelJson.class));
+                    MeetingRoom room = mGson.fromJson(topicMessage.getPayload(), MeetingRoom.class);
+                    callback.accept(room);
+                    Log.d(TAG, "Received " + room.toString());
                 }, throwable -> {
                     Log.d(TAG, "Error on subscribe topic", throwable);
                 });
         mStompClient.connect(headers);
     }
+    public void sendToStomp(String topic, String message, String stompHeaderToken) {
+        List<StompHeader> headers = new ArrayList<>();
+        headers.add(new StompHeader("Authorization", stompHeaderToken));
+        mStompClient.send(topic, message)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
+
+
 
     private void convertJsonToString(ModelJson fromJson) {
         Log.d(TAG, fromJson.getMessage());
     }
-    public void  discconectStomp(StompClientManager stompClientManager){
-        stompClientManager.mStompClient.disconnect();
+    public void  discconectStomp(){
+        mStompClient.disconnect();
     }
 
 }

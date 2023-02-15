@@ -1,15 +1,13 @@
-package com.google.hemmah.ui.disabled;
+package com.google.hemmah.view.disabled;
 
 import android.app.DatePickerDialog;
 import android.icu.util.Calendar;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;

@@ -1,4 +1,4 @@
-package com.google.hemmah.ui;
+package com.google.hemmah.view;
 
 //import android.os.Bundle;
 //

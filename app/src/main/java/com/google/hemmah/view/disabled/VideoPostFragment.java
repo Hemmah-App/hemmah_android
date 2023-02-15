@@ -1,4 +1,4 @@
-package com.google.hemmah.ui.disabled;
+package com.google.hemmah.view.disabled;
 
 
 import android.content.Intent;
@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +16,13 @@ import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.hemmah.R;
-import com.google.hemmah.ui.volunteer.VolunteerVideoActivity;
+import com.google.hemmah.dataManager.StompClientManager;
 
 
 public class VideoPostFragment extends Fragment {
     private Button callForHelpButton;
-    private final String ROOM_NAME = "Hemmah";
-    private String meetId;
-    private static final String SERVER_URL = "https://meet.jit.si/";
     private FloatingActionButton mFab;
+    StompClientManager mStompClientManager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -36,11 +35,18 @@ public class VideoPostFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         callForHelpButton = (Button) view.findViewById(R.id.callforhelp_BT);
         mFab = (FloatingActionButton)view.findViewById(R.id.addAPost_FAB);
+        mStompClientManager = new StompClientManager(requireContext());
         callForHelpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(requireContext(), DisabledVideoActivity.class);
-                startActivity(intent);
+                mStompClientManager.sendToStomp("/app/help_call/ask","",StompClientManager.mDisabledTempToken);
+                mStompClientManager.subscribeOnTopic("/user/help_call/ask",StompClientManager.mDisabledTempToken, message ->{
+                    Log.d(StompClientManager.TAG,"From disabled subscribtion"+message.toString());
+                    Intent intent = new Intent(requireContext(),DisabledVideoActivity.class);
+                    intent.putExtra("roomToken",message.getRoomToken());
+                    intent.putExtra("roomName",message.getRoomName());
+                    startActivity(intent);
+                });
 
             }
         });
@@ -54,8 +60,11 @@ public class VideoPostFragment extends Fragment {
 
     }
 
-
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mStompClientManager.discconectStomp();
+    }
 }
 
 

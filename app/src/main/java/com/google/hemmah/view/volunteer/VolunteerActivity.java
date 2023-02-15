@@ -1,22 +1,18 @@
-package com.google.hemmah.ui.volunteer;
+package com.google.hemmah.view.volunteer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationManagerCompat;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.hemmah.R;
-import com.google.hemmah.ui.Notifications.CustomNotificationsManager;
-//import com.google.hemmah.ui.PreferenceManager;
+import com.google.hemmah.R;;
 
 public class VolunteerActivity extends AppCompatActivity {
     private BottomNavigationView mVolunteerBottomNavigation;
-    private NotificationManagerCompat mNotificationManagerCompat;
-    private CustomNotificationsManager mCustomNotificationsManager ;
+
 
 
     @Override
@@ -25,9 +21,6 @@ public class VolunteerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_volunteer);
         mVolunteerBottomNavigation = findViewById(R.id.buttomNavigathion);
         intializeFragments();
-        mNotificationManagerCompat = NotificationManagerCompat.from(this);
-        mCustomNotificationsManager = new CustomNotificationsManager(this);
-        mCustomNotificationsManager.makeCallNotification(1);
 
     }
 

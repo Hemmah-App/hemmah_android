@@ -1,4 +1,4 @@
-package com.google.hemmah.ui.volunteer;
+package com.google.hemmah.view.volunteer;
 
 import android.os.Bundle;
 
@@ -10,9 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.hemmah.R;
 import com.google.hemmah.dataManager.PostsAdapter;
 import com.google.hemmah.model.Post;

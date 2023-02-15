@@ -55,6 +55,8 @@
     <string name="email_ht">email must be example@hostexample.com</string>
     <string name="username_ht">at least 8 characters</string>
     <string name="volunteer_welcome_tv">Welcome,</string>
+    <string name="status_offline_TB">offline</string>
+    <string name="status_online_TB">Online</string>
 
 
 </resources>

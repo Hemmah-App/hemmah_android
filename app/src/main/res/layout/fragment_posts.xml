@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.volunteer.PostsFragment">
+    tools:context=".view.volunteer.PostsFragment">
 
     <TextView
         android:id="@+id/volunteer_welcome_TV"
@@ -44,8 +44,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton"
+        app:layout_constraintTop_toBottomOf="@+id/status_TB"
         tools:listitem="@layout/posts_recycler_item" />
+
+    <ToggleButton
+        android:id="@+id/status_TB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorError"
+        android:textColor="@color/colorOnPrimary"
+        android:textOff="@string/status_offline_TB"
+        android:textOn="@string/status_online_TB"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton"
+        app:layout_constraintStart_toStartOf="@+id/volunteer_welcome_TV"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"

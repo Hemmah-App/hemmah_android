@@ -1,11 +1,12 @@
 package com.google.hemmah;
 
-import static com.google.hemmah.ui.Notifications.CustomNotificationsManager.CHANNEL_1_DESCRIPTION;
-import static com.google.hemmah.ui.Notifications.CustomNotificationsManager.CHANNEL_1_ID;
-import static com.google.hemmah.ui.Notifications.CustomNotificationsManager.CHANNEL_1_NAME;
+import static com.google.hemmah.view.Notifications.HelpCallRequestNotification.CHANNEL_1_DESCRIPTION;
+import static com.google.hemmah.view.Notifications.HelpCallRequestNotification.CHANNEL_1_ID;
+import static com.google.hemmah.view.Notifications.HelpCallRequestNotification.CHANNEL_1_NAME;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.os.Build;
+
 import dagger.hilt.android.HiltAndroidApp;
 
 @HiltAndroidApp
@@ -27,4 +28,7 @@ public final class HemmahApp extends Application {
             manager.createNotificationChannel(callNotification);
         }
     }
+
+
+
 }

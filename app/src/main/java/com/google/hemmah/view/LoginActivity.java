@@ -1,4 +1,4 @@
-package com.google.hemmah.ui;
+package com.google.hemmah.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,15 +10,21 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.hemmah.R;
 import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.Utils.Validator;
 import com.google.hemmah.service.AuthService;
-import com.google.hemmah.ui.disabled.DisabledActivity;
+import com.google.hemmah.view.disabled.DisabledActivity;
+import com.google.hemmah.view.volunteer.VolunteerActivity;
+
 import java.util.Map;
+
 import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -128,8 +134,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(), intendedClass);
                 startActivity(intent);
-            }
-            else {
+            } else {
                 logInProgressBar.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(),
                         res.errorBody().string(), Toast.LENGTH_SHORT).show();

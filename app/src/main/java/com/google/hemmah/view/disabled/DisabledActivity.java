@@ -1,4 +1,4 @@
-package com.google.hemmah.ui.disabled;
+package com.google.hemmah.view.disabled;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

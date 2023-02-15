@@ -1,4 +1,4 @@
-package com.google.hemmah.ui;
+package com.google.hemmah.view;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,17 +10,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.preference.Preference;
-import androidx.preference.PreferenceViewHolder;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.hemmah.R;
-import com.google.hemmah.Utils.SharedPrefUtils;
-import com.google.hemmah.dataManager.PostsAdapter;
-import com.google.hemmah.model.Post;
-
-import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 
 public class SettingsFragment extends Fragment {

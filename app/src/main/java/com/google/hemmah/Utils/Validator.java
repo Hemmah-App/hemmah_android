@@ -4,8 +4,8 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class Validator {
      public static final String EMAIL_REGEX ="[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
-     public static final String PASSWORD_REGEX = "[A-Za-z][A-Za-z0-9_]{7,29}$";
      public static final String USERNAME_REGEX = "[A-Za-z][A-Za-z0-9_]{7,29}$";
+     public static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
 
 
     public static boolean isEmpty(TextInputLayout textInputLayout){

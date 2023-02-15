@@ -1,5 +1,6 @@
 package com.google.hemmah.service;
 
+import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -16,19 +17,14 @@ import io.reactivex.Observable;
 import retrofit2.Response;
 
 @AndroidEntryPoint
-public class AuthService extends Service{
+public class AuthService extends IntentService {
 
     private AuthApi authApi;
 
     @Inject
     public AuthService(AuthApi authApi) {
+        super("authenticationService");
         this.authApi = authApi;
-    }
-
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
     }
 
 
@@ -40,4 +36,12 @@ public class AuthService extends Service{
         return authApi.userSignUp(user);
     }
 
+    public Observable<Response<Map<String, Object>>> getUser(String token) {
+        return authApi.getUser(token);
+    }
+
+    @Override
+    protected void onHandleIntent(@Nullable Intent intent) {
+
+    }
 }

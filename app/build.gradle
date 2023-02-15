@@ -6,6 +6,7 @@ buildscript {
 plugins {
     id 'com.android.application'
     id 'com.google.dagger.hilt.android'
+
 }
 
 
@@ -15,7 +16,7 @@ android {
 
     defaultConfig {
         applicationId "com.google.hemmah"
-        minSdk 24
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -64,6 +65,7 @@ dependencies {
     // RXJava - RxAndroid
 //    implementation 'io.reactivex.rxjava2:rxjava:2.2.23'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
 
     // Twilio Video
     implementation 'com.twilio:video-android:7.5.1'
