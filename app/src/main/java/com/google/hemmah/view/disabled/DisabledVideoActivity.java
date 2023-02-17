@@ -10,10 +10,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.google.hemmah.R;
+import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.dataManager.StompClientManager;
 import com.google.hemmah.model.MeetingRoom;
 import com.google.hemmah.model.enums.CameraDirection;
@@ -39,6 +41,7 @@ import com.twilio.video.VideoView;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
 import tvi.webrtc.Camera2Enumerator;
 import tvi.webrtc.voiceengine.WebRtcAudioUtils;
 import ua.naiksoftware.stomp.dto.StompHeader;
@@ -50,8 +53,6 @@ public class DisabledVideoActivity extends AppCompatActivity {
     private LocalVideoTrack localVideoTrack;
     private VideoView localVideoView;
     private VideoView remoteVideoView;
-    private StompClientManager mStompClientManager;
-    private List<StompHeader> mStompHeaders = new ArrayList<>();
 
     private void initViews() {
         localVideoView = findViewById(R.id.local_video_view_disabled);
@@ -65,28 +66,27 @@ public class DisabledVideoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disabled_video);
-        initViews();
-        setVideoAndAudioSettings();
-        mStompClientManager = new StompClientManager(this);
-        // Request camera and microphone permissions.
-        /* TODO @Hazem - Move this to the right place when you have time
-            We need to request permissions on the application start up for one time only */
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.CAMERA,
                         Manifest.permission.RECORD_AUDIO},
                 100);
-
+        initViews();
+        setVideoAndAudioSettings();
+        SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
         // Api call to get the room details using a service goes here
-        try{
             makeCall(getRoomDetails().getRoomName(), getRoomDetails().getRoomToken());
-        }catch (NullPointerException e){
-            Log.e("Disabled",e.getMessage());
-        }
+
+
 
 
     }
     private MeetingRoom getRoomDetails() {
         Intent intent = getIntent();
+        Timber.d("Receiving room details intent sent from intent from when callforhelp button pressed \n: "
+                +"roomToken: \n"
+                +intent.getStringExtra("roomToken")+
+                "roomName: \n"
+                +intent.getStringExtra("roomName"));
         return new MeetingRoom(intent.getStringExtra("roomToken"), intent.getStringExtra("roomName"));
 
     }
@@ -95,8 +95,6 @@ public class DisabledVideoActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        localAudioTrack.release();
-        localVideoTrack.release();
         room.disconnect();
     }
 
@@ -122,7 +120,7 @@ public class DisabledVideoActivity extends AppCompatActivity {
         return new Room.Listener() {
             @Override
             public void onConnected(@NonNull Room room) {
-                Log.d("VideoCallActivity", "Connected to room");
+                Timber.d("Connected to room");
                 if (room.getRemoteParticipants().size() > 0) {
                     for (RemoteParticipant remoteParticipant : room.getRemoteParticipants()) {
                         attachRemoteToListner(remoteParticipant);
@@ -133,7 +131,7 @@ public class DisabledVideoActivity extends AppCompatActivity {
 
             @Override
             public void onConnectFailure(@NonNull Room room, @NonNull TwilioException twilioException) {
-                Log.d("VideoCallActivity", "Error Connecting to room " + twilioException.getMessage());
+                Timber.e("Error Connecting to room %s", twilioException.getMessage());
             }
 
             @Override
@@ -147,6 +145,7 @@ public class DisabledVideoActivity extends AppCompatActivity {
 
             @Override
             public void onDisconnected(@NonNull Room room, @Nullable TwilioException twilioException) {
+                Timber.d(twilioException.getMessage(),"Room disconnected");
                 localAudioTrack.release();
                 localVideoTrack.release();
             }
@@ -154,6 +153,7 @@ public class DisabledVideoActivity extends AppCompatActivity {
             @Override
             public void onParticipantConnected(@NonNull Room room, @NonNull RemoteParticipant remoteParticipant) {
                 attachRemoteToListner(remoteParticipant);
+                Timber.d("Remote participant connected");
             }
 
             @Override
@@ -175,7 +175,6 @@ public class DisabledVideoActivity extends AppCompatActivity {
 
     private void startLocalVideoAndAudio(CameraDirection cameraDirection) {
         localAudioTrack = LocalAudioTrack.create(this, true);
-
         // A video track requires an implementation of a VideoCapturer. Here's how to use the front camera with a Camera2Capturer.
         Camera2Enumerator camera2Enumerator = new Camera2Enumerator(getApplicationContext());
 
@@ -267,6 +266,7 @@ public class DisabledVideoActivity extends AppCompatActivity {
             @Override
             public void onVideoTrackSubscribed(@NonNull RemoteParticipant remoteParticipant, @NonNull RemoteVideoTrackPublication remoteVideoTrackPublication, @NonNull RemoteVideoTrack remoteVideoTrack) {
                 renderRemoteParticipantVideo(remoteVideoTrack);
+                Timber.d("remotevideo track subscribed");
             }
 
             @Override

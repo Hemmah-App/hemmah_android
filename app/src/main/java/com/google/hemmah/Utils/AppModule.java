@@ -1,6 +1,5 @@
 package com.google.hemmah.Utils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.hemmah.api.ApiClient;
 import com.google.hemmah.api.AuthApi;
 
@@ -21,10 +20,10 @@ public class AppModule {
         return ApiClient.getRetrofit().create(AuthApi.class);
     }
 
-    @Provides
-    @Singleton
-    public ObjectMapper provideObjectMapper() {
-        return new ObjectMapper();
-    }
+//    @Provides
+//    @Singleton
+//    public ObjectMapper provideObjectMapper() {
+//        return new ObjectMapper();
+//    }
 
 }

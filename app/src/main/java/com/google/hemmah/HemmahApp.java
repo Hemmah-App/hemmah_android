@@ -8,6 +8,7 @@ import android.app.NotificationChannel;
 import android.os.Build;
 
 import dagger.hilt.android.HiltAndroidApp;
+import timber.log.Timber;
 
 @HiltAndroidApp
 public final class HemmahApp extends Application {
@@ -16,6 +17,9 @@ public final class HemmahApp extends Application {
     public void onCreate() {
         super.onCreate();
         makeNotificationChannel();
+        if(BuildConfig.DEBUG){
+            Timber.plant(new Timber.DebugTree());
+        }
     }
 
     public void makeNotificationChannel() {

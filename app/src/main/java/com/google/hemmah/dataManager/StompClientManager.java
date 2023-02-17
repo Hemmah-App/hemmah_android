@@ -1,13 +1,15 @@
 package com.google.hemmah.dataManager;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.util.Consumer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.hemmah.model.ModelJson;
+import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.model.MeetingRoom;
 
 
@@ -16,22 +18,28 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 import ua.naiksoftware.stomp.Stomp;
 import ua.naiksoftware.stomp.StompClient;
 import ua.naiksoftware.stomp.dto.StompHeader;
 
 public class StompClientManager {
-    public static final String mVolunteerTempToken = "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoidm9sdW50ZWVyMSIsImV4cCI6MTY3NjM1MzEyMywiaWF0IjoxNjc2MzE3MTIzLCJyb2xlcyI6IlVTRVIsVk9MVU5URUVSIn0.mmA01OtPZbSWciAikLTBQPU8oVkBNpe5JgfpUdrgOMtYSIro3_gaYFIpnMwldHjMdm3SwO2YdzJJzKVKNk_IKp1FeQQ4IlDNmAK7YgKeFtf41AVYfpu1OA94HxA_CKyrAeAT80pQzip5YhjPeyfpd-7HywVr1qYmiznRTDQUT1CxfnZDbwt4uVqVJbiTZmW4tI2ejZS07aSDhI4lt-uons2E2iT3yz9oZvFbdTQWwANp5xrv7-LacrLXaK5EtrBM4Ly7CJqjUfUIQSHrwXegpeNWF6ZEzDWxoSGMMBHFwyjCZhScYr0F5HCBT-umQKoeW7urBxidD-hoU1vwyP6o-Q";
-    public static final String mDisabledTempToken = "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiZGlzYWJsZWQxIiwiZXhwIjoxNjc2MzUyODQzLCJpYXQiOjE2NzYzMTY4NDMsInJvbGVzIjoiVVNFUixESVNBQkxFRCJ9.FssvHATCKAKr3lxq0g4J2s9ZlsYPVEomWj4fVVVRVWyeMqeXuRYkJ2CVJm1PKcGnjjvFnYx1McT9de_gCYJs9ooKbHkaFV-CwbkPV4Rr3rONvZKzSczR92vdje-3nqKnP9xMJam3c6jU2Kmv0eSn7WEOsPmtWrh63bA_VWl0bynKcRM4MHJ7nsX6kE2irjELbLbrlwiBDG8OheQ1xWYuYOndjCTyeTU9cJtxeCZNQ7sFWagY_4qnjHTrwtZgccLrVSqojjIk_MvWun-UwTBzEAtin8gVVhPCyCZeIfO634U1kaSC0JTu1gHYeIicYYYBKEdaga0A9k0GILBJiwq8HA";
-    private static final String stompApi = "wss://api.hemmah.live/ws";
-    public static final String TAG = "StompMessages";
+    public  String mUserToken;
+    private static final String STOMP_API = "wss://api.hemmah.live/ws";
+    public static final String DISABLED_SEND_TOPIC = "/app/help_call/ask";
+    public static final String DISABLED_SUBSCRIBE_TOPIC = "/user/help_call/ask";
+    public static final String VOLUNTEER_SEND_TOPIC = "/app/help_call/answer";
+    public static final String VOLUNTEER_SUBSCRIBE_TOPIC = "/user/help_call/answer";
     private Context mContext;
     Gson mGson = new GsonBuilder().create();
     private StompClient mStompClient;
+    private SharedPreferences mSharedPreferences;
 
-    public StompClientManager(Context context) {
+    public StompClientManager(Context context, String token) {
         this.mContext = context;
-        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, stompApi);
+        this.mSharedPreferences = mContext.getSharedPreferences(SharedPrefUtils.FILE_NAME,Context.MODE_PRIVATE);
+        this.mUserToken = token;
+        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, STOMP_API);
         mStompClient.withClientHeartbeat(1000).withServerHeartbeat(1000);
         mStompClient.lifecycle()
                 .subscribeOn(Schedulers.io())
@@ -39,40 +47,41 @@ public class StompClientManager {
                 .subscribe(lifecycleEvent -> {
                     switch (lifecycleEvent.getType()) {
                         case OPENED:
-                            Log.d(TAG, "Stomp connection opened");
+                            Timber.d("Stomp connection opened");
                             break;
                         case ERROR:
-                            Log.d(TAG, "Stomp connection error", lifecycleEvent.getException());
+                            Timber.d(lifecycleEvent.getException(), "Stomp connection error");
                             break;
                         case CLOSED:
-                            Log.d(TAG, "Stomp connection closed");
+                            Timber.d("Stomp connection closed");
                             break;
                         case FAILED_SERVER_HEARTBEAT:
-                            Log.d(TAG, "Stomp failed server heartbeat");
+                            Timber.d("Stomp failed server heartbeat");
                             break;
                     }
                 });
     }
 
 
-    public void subscribeOnTopic(String receiveTopic, String stompHeaderToken, Consumer<MeetingRoom> callback) {
+    public void subscribeOnTopic(String receiveTopic, Consumer<MeetingRoom> callback) {
         List<StompHeader> headers = new ArrayList<>();
-        headers.add(new StompHeader("Authorization", stompHeaderToken));
+        headers.add(new StompHeader("Authorization", mUserToken));
         mStompClient.topic(receiveTopic)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(topicMessage -> {
                     MeetingRoom room = mGson.fromJson(topicMessage.getPayload(), MeetingRoom.class);
                     callback.accept(room);
-                    Log.d(TAG, "Received " + room.toString());
+                    Timber.d("Received " + room.toString());
                 }, throwable -> {
-                    Log.d(TAG, "Error on subscribe topic", throwable);
+                    Timber.d(throwable, "Error on subscribe topic");
+                    Toast.makeText(mContext, "Failed to Connect", Toast.LENGTH_SHORT).show();
                 });
         mStompClient.connect(headers);
     }
-    public void sendToStomp(String topic, String message, String stompHeaderToken) {
+    public void sendToStomp(String topic, String message) {
         List<StompHeader> headers = new ArrayList<>();
-        headers.add(new StompHeader("Authorization", stompHeaderToken));
+        headers.add(new StompHeader("Authorization", mUserToken));
         mStompClient.send(topic, message)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -81,9 +90,7 @@ public class StompClientManager {
 
 
 
-    private void convertJsonToString(ModelJson fromJson) {
-        Log.d(TAG, fromJson.getMessage());
-    }
+
     public void  discconectStomp(){
         mStompClient.disconnect();
     }

@@ -7,7 +7,6 @@ buildscript {
 plugins {
     id 'com.android.application'
     id 'com.google.dagger.hilt.android'
-
 }
 
 android {
@@ -35,11 +34,16 @@ android {
         targetCompatibility JavaVersion.VERSION_1_9
 
     }
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
 }
 def core_version = "1.6.0"
 dependencies {
 
-    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation "androidx.core:core:$core_version"
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -77,9 +81,16 @@ dependencies {
     // Lombok
     compileOnly 'org.projectlombok:lombok:1.18.26'
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
+    //Timber
+    implementation 'com.jakewharton.timber:timber:5.0.1'
+
 
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }

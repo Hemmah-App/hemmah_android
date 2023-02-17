@@ -6,37 +6,35 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.hemmah.R;
 import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.Utils.Validator;
 import com.google.hemmah.model.User;
 import com.google.hemmah.model.api.ApiResponse;
-import com.google.hemmah.model.api.data.TokenRes;
 import com.google.hemmah.model.enums.UserType;
 import com.google.hemmah.service.AuthService;
 import com.google.hemmah.view.disabled.DisabledActivity;
 import com.google.hemmah.view.volunteer.VolunteerActivity;
-
 import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
+import timber.log.Timber;
 
 @AndroidEntryPoint
 public class RegisterActivity extends AppCompatActivity {
 
     @Inject
     AuthService authService;
-
     private TextInputLayout mUserNameTextInput;
     private TextInputLayout mEmailTextInput;
     private TextInputLayout mPhoneNumberTextInput;
@@ -47,14 +45,12 @@ public class RegisterActivity extends AppCompatActivity {
     private Button mCreateAccountVolunteer_Bt;
     private Button mCreateAccountDisabled_Bt;
     private SharedPreferences mSharedPreferences;
-    Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initViews();
-        gson = new GsonBuilder().create();
         mSharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
         setButtonsListeners();
 
@@ -87,6 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
                     mLogInProgressBar.setVisibility(View.VISIBLE);
                     //passing volunteer's  data to a map in order to post it
                     User user = populateUser(UserType.VOLUNTEER);
+                    Timber.d("Registring user data from ui with info:\n"+user.toString());
                     //posting the user to the server
                     signUp(user, VolunteerActivity.class);
                 }
@@ -101,6 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
                     mLogInProgressBar.setVisibility(View.VISIBLE);
                     //passing disabled's data to a map in order to post it
                     User user = populateUser(UserType.DISABLED);
+                    Timber.d("Registring user data from ui with info:\n"+user.toString());
                     //posting the user to the server
                     signUp(user, DisabledActivity.class);
                 }
@@ -115,7 +113,6 @@ public class RegisterActivity extends AppCompatActivity {
         String phoneNumber = mPhoneNumberTextInput.getEditText().getText().toString();
         String firstName = mFirstNameTextInput.getEditText().getText().toString();
         String lastName = mLastNameTextInput.getEditText().getText().toString();
-
         return new User(userName, email, password, phoneNumber, firstName, lastName, userType);
     }
 
@@ -176,6 +173,7 @@ public class RegisterActivity extends AppCompatActivity {
             mPhoneNumberTextInput.setError(null);
         }
         return valid;
+
     }
 
     @SuppressLint("CheckResult")
@@ -188,22 +186,24 @@ public class RegisterActivity extends AppCompatActivity {
         responseObservable.subscribe((res) -> {
             if (res.code() == 200) {
                 mLogInProgressBar.setVisibility(View.GONE);
-
+                Timber.d("get token on successful register response :\n"+res.body().getData().getToken());
                 //store the token in a shared preferences file
-                SharedPrefUtils.saveToShared(mSharedPreferences, "token", gson.fromJson(res.body().getData(), TokenRes.class).getToken());
+                SharedPrefUtils.saveToShared(mSharedPreferences, SharedPrefUtils.TOKEN_KEY, res.body().getData().getToken());
                 //got to the needed activity volunteer or disabled
                 Intent intent = new Intent(RegisterActivity.this, intentedClass);
                 startActivity(intent);
                 Toast.makeText(RegisterActivity.this, R.string.signup_toastmessage, Toast.LENGTH_SHORT).show();
             } else {
                 mLogInProgressBar.setVisibility(View.GONE);
-                if (res.errorBody().string() != null)
-                    Toast.makeText(RegisterActivity.this, res.errorBody().string(), Toast.LENGTH_SHORT).show();
+                 ApiResponse apiResponseError = new GsonBuilder().create().fromJson(res.errorBody().string(), ApiResponse.class);
+                 Timber.d("Not getting 200 code:\n"+apiResponseError.getMessage());
+                 Toast.makeText(RegisterActivity.this, apiResponseError.getReason(), Toast.LENGTH_SHORT).show();
             }
 
         }, (err) -> {
             mLogInProgressBar.setVisibility(View.GONE);
-            Toast.makeText(RegisterActivity.this, err.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this, R.string.failedtoconnect_toastmessage, Toast.LENGTH_SHORT).show();
+            Timber.e("Error posting to Register api: \n"+err.getMessage());
         });
     }
 }

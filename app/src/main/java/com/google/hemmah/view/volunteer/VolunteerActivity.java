@@ -8,7 +8,8 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.hemmah.R;;
+import com.google.hemmah.R;
+import com.google.hemmah.view.PreferenceManager;;
 
 public class VolunteerActivity extends AppCompatActivity {
     private BottomNavigationView mVolunteerBottomNavigation;
@@ -27,7 +28,6 @@ public class VolunteerActivity extends AppCompatActivity {
 
     private void intializeFragments() {
         getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new PostsFragment()).commit();
-
         mVolunteerBottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -43,7 +43,7 @@ public class VolunteerActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.history) {
             getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new HistoryFragment()).commit();
         } else if (item.getItemId() == R.id.settings) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new PreferenceManager()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new PreferenceManager()).commit();
         }
     }
 

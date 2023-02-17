@@ -5,6 +5,7 @@ import com.google.hemmah.model.api.ApiResponse;
 
 import java.util.Map;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -21,6 +22,6 @@ public interface AuthApi {
     Observable<Response<ApiResponse>> userLogin(@Body Map<String,Object> user);
 
     @GET("/v1/auth/@me")
-    Observable<Response<ApiResponse>> getUser(@Header("Authorization") String authHeader);
+    Observable<Response<ApiResponse>> getUser(@Header("Authorization") String token);
 
 }

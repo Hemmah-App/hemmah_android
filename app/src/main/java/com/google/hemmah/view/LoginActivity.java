@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -22,17 +23,13 @@ import com.google.hemmah.Utils.Validator;
 import com.google.hemmah.model.api.ApiResponse;
 import com.google.hemmah.service.AuthService;
 import com.google.hemmah.view.disabled.DisabledActivity;
-import com.google.hemmah.view.volunteer.VolunteerActivity;
-
-import java.util.Map;
-
 import javax.inject.Inject;
-
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
+import timber.log.Timber;
 
 @AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
@@ -45,14 +42,14 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout emailTextInput;
     private TextInputLayout passwordTextInput;
     private ProgressBar logInProgressBar;
-
-    private final Gson gson = new GsonBuilder().create();
+    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initViews();
+        gson = new GsonBuilder().create();
         setButtonsListeners();
     }
 
@@ -86,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                     String password = passwordTextInput.getEditText().getText().toString();
 
                     loginUser(email, password, DisabledActivity.class);
+                    Timber.d("Logging in user from ui with info :\n email: "+ email+"\npassword: "+password);
                 }
             }
         });
@@ -132,22 +130,24 @@ public class LoginActivity extends AppCompatActivity {
                 //setting the progress bar to be gone(invisible) on getting a response
                 logInProgressBar.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), R.string.signin_toastmessage, Toast.LENGTH_SHORT).show();
-
+                Timber.d("get token on successful login response :\n"+res.body().getData().getToken());
                 // save token in the sharedpref
                 SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
-                SharedPrefUtils.saveToShared(sharedPreferences, "token", res.body().getDataAsMap().get("token").toString());
+                SharedPrefUtils.saveToShared(sharedPreferences, SharedPrefUtils.TOKEN_KEY, res.body().getData().getToken());
 
                 Intent intent = new Intent(getApplicationContext(), intendedClass);
                 startActivity(intent);
             } else {
                 logInProgressBar.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(),
-                        res.errorBody().string(), Toast.LENGTH_SHORT).show();
+                ApiResponse apiResponseError = gson.fromJson(res.errorBody().string(), ApiResponse.class);
+                Timber.d("Not getting 200 code:\n"+apiResponseError.getMessage());
+                Toast.makeText(LoginActivity.this, apiResponseError.getReason(), Toast.LENGTH_SHORT).show();
             }
 
         }, (err) -> {
             logInProgressBar.setVisibility(View.GONE);
-            Toast.makeText(LoginActivity.this, err.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, R.string.failedtoconnect_toastmessage, Toast.LENGTH_SHORT).show();
+            Timber.e("Error  posting to login api: \n"+err.getMessage());
         });
 
     }

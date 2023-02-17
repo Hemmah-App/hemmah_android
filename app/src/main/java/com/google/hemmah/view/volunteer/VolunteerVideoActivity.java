@@ -1,7 +1,9 @@
 package com.google.hemmah.view.volunteer;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -11,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.google.hemmah.R;
+import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.dataManager.StompClientManager;
 import com.google.hemmah.model.MeetingRoom;
 import com.google.hemmah.model.enums.CameraDirection;
@@ -35,6 +38,7 @@ import com.twilio.video.VideoView;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
 import tvi.webrtc.Camera2Enumerator;
 import tvi.webrtc.voiceengine.WebRtcAudioUtils;
 import ua.naiksoftware.stomp.dto.StompHeader;
@@ -61,36 +65,45 @@ public class VolunteerVideoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteer_video);
-        initViews();
-        setVideoAndAudioSettings();
-        mStompClientManager = new StompClientManager(this);
-        getRoomDetails();
-        // Request camera and microphone permissions.
-        /* TODO @Hazem - Move this to the right place when you have time
-            We need to request permissions on the application start up for one time only */
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.CAMERA,
                         Manifest.permission.RECORD_AUDIO},
                 100);
+        initViews();
+        // Request camera and microphone permissions.
+        /* TODO @Hazem - Move this to the right place when you have time
+            We need to request permissions on the application start up for one time only */
+        setVideoAndAudioSettings();
+        SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
+        mStompClientManager = new StompClientManager(this,SharedPrefUtils.loadFromShared(sharedPreferences,SharedPrefUtils.TOKEN_KEY));
+
 
         // Api call to get the room details using a service goes here
+        MeetingRoom volunteerRoom;
         try{
-            makeCall(getRoomDetails().getRoomName(), getRoomDetails().getRoomToken());
+            volunteerRoom = getRoomDetails();
+            makeCall(volunteerRoom.getRoomToken(),volunteerRoom.getRoomName());
         }catch (NullPointerException e){
-            Log.e("Volunteer",e.getMessage());
+            Timber.d("Failed getting room details " +e.getMessage());
         }
+
+
     }
 
     private MeetingRoom getRoomDetails() {
         Intent intent = getIntent();
         if(intent != null) {
-            mStompClientManager.sendToStomp("/app/help_call/answer",
-                    intent.getStringExtra("roomName"),
-                    StompClientManager.mVolunteerTempToken);
+            mStompClientManager.sendToStomp(StompClientManager.VOLUNTEER_SEND_TOPIC,
+                    intent.getStringExtra("roomName"));
+            Timber.d("Receiving room details intent sent from call service \n: "+"roomToken: \n"
+                    +intent.getStringExtra("roomToken")+"roomName: \n"
+                    +intent.getStringExtra("roomName"));
             return new MeetingRoom(intent.getStringExtra("roomToken"), intent.getStringExtra("roomName"));
+
         }
         else
             return null;
+
     }
 
     private void setVideoAndAudioSettings() {
@@ -122,7 +135,7 @@ public class VolunteerVideoActivity extends AppCompatActivity {
         return new Room.Listener() {
             @Override
             public void onConnected(@NonNull Room room) {
-                Log.d("VideoCallActivity", "Connected to room");
+                Timber.d("Connected to room");
                 if (room.getRemoteParticipants().size() > 0) {
                     for (RemoteParticipant remoteParticipant : room.getRemoteParticipants()) {
                         attachRemoteToListner(remoteParticipant);
@@ -133,7 +146,7 @@ public class VolunteerVideoActivity extends AppCompatActivity {
 
             @Override
             public void onConnectFailure(@NonNull Room room, @NonNull TwilioException twilioException) {
-                Log.d("VideoCallActivity", "Error Connecting to room " + twilioException.getMessage());
+                Timber.e("Error Connecting to room " + twilioException.getMessage());
             }
 
             @Override

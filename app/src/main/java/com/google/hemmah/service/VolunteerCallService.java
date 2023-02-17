@@ -7,12 +7,14 @@ import android.app.Service;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.google.hemmah.R;
+import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.dataManager.StompClientManager;
 import com.google.hemmah.model.MeetingRoom;
 import com.google.hemmah.view.Notifications.HelpCallRequestNotification;
@@ -21,6 +23,7 @@ import com.google.hemmah.view.volunteer.VolunteerVideoActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
 import ua.naiksoftware.stomp.dto.StompHeader;
 
 public class VolunteerCallService extends Service {
@@ -45,9 +48,11 @@ public class VolunteerCallService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         makeServiceIndicationNotification();
-        mStompClientManager = new StompClientManager(this);
-        mStompClientManager.subscribeOnTopic("/user/help_call/answer", StompClientManager.mVolunteerTempToken,
+        SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
+        mStompClientManager = new StompClientManager(this, SharedPrefUtils.loadFromShared(sharedPreferences,SharedPrefUtils.TOKEN_KEY));
+        mStompClientManager.subscribeOnTopic(StompClientManager.VOLUNTEER_SUBSCRIBE_TOPIC,
                 message -> {
+                    Timber.d("Received a call from stomp with roomName: "+message.getRoomName() +"roomToken: "+message.getRoomToken());
                     makeNotification("Someone Needs Your Help !", message);
                 });
 
@@ -68,6 +73,7 @@ public class VolunteerCallService extends Service {
         Intent intent = new Intent(this, VolunteerVideoActivity.class);
         intent.putExtra("roomToken", meetingRoom.getRoomToken());
         intent.putExtra("roomName", meetingRoom.getRoomName());
+        Timber.d("Sending Notification to Volunteer with room details intent");
         // Create the TaskStackBuilder and add the intent, which inflates the back stack
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntentWithParentStack(intent);
@@ -77,6 +83,7 @@ public class VolunteerCallService extends Service {
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mCustomNotificationsManager = new HelpCallRequestNotification(this, pendingIntent);
         mCustomNotificationsManager.makeCallNotification(1, text);
+
 
     }
 

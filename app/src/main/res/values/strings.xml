@@ -15,7 +15,6 @@
     <string name="createAccount_BT">Create Volunteer</string>
     <string name="video_item1_nav">Home</string>
     <string name="video_item2_nav">Settings</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="callforhelp_frag_bt">Call For Help</string>
     <string name="phone_number_hint">Phone Number</string>
     <string name="notification_button_name">Accept</string>
@@ -41,7 +40,7 @@
     </string-array>
 
     <!--  toast messages  -->
-    <string name="signup_toastmessage">You Have been Signed Up Successfully</string>
+    <string name="signup_toastmessage">You Have Successfully Signed Up</string>
     <string name="signin_toastmessage">You Have Successfully Logged In</string>
     <string name="failedtoconnect_toastmessage">Failed to connect</string>
     <!--    validation errors-->
@@ -51,11 +50,15 @@
     <string name="email_em_error">Please enter an email</string>
     <string name="password_em_error">Please enter a password</string>
     <string name="phonenumber_em_error">Please enter a phonenumber</string>
-    <string name="password_htext">at least 8 characters</string>
-    <string name="email_ht">email must be example@hostexample.com</string>
+    <string name="password_htext">
+        Password must contain at least 8 characters,
+        \nincluding UPPER/lower case,
+        \na number
+        \nand a special character</string>
+    <string name="email_ht">Email must be example@hostexample.com</string>
     <string name="username_ht">at least 8 characters</string>
     <string name="volunteer_welcome_tv">Welcome,</string>
-    <string name="status_offline_TB">offline</string>
+    <string name="status_offline_TB">Offline</string>
     <string name="status_online_TB">Online</string>
 
 

@@ -4,11 +4,13 @@ import com.google.hemmah.model.enums.UserType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @ToString
+@NoArgsConstructor
 public class User {
 	private String userName;
 	private String email;
@@ -17,4 +19,6 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private UserType userType;
+
+
 }
