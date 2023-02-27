@@ -24,7 +24,7 @@ import ua.naiksoftware.stomp.StompClient;
 import ua.naiksoftware.stomp.dto.StompHeader;
 
 public class StompClientManager {
-    public  String mUserToken;
+    private  String mUserToken;
     private static final String STOMP_API = "wss://api.hemmah.live/ws";
     public static final String DISABLED_SEND_TOPIC = "/app/help_call/ask";
     public static final String DISABLED_SUBSCRIBE_TOPIC = "/user/help_call/ask";

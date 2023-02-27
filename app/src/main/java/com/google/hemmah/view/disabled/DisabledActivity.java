@@ -12,7 +12,6 @@ import com.google.hemmah.R;
 import com.google.hemmah.view.PreferenceManager;
 import com.google.hemmah.view.volunteer.HistoryFragment;
 import com.google.hemmah.view.volunteer.PostsFragment;
-//import com.google.hemmah.ui.PreferenceManager;
 
 public class DisabledActivity extends AppCompatActivity {
     private BottomNavigationView mBottomNavigationView;
@@ -39,9 +38,11 @@ public class DisabledActivity extends AppCompatActivity {
 
     private void handleBottomNavBarSelection(MenuItem item) {
         if (item.getItemId() == R.id.home) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragments_frame, new VideoPostFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragments_frame, new VideoPostFragment())
+                    .commit();
         } else if (item.getItemId() == R.id.disabled_settings) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragments_frame, new PreferenceManager()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragments_frame, new PreferenceManager())
+                    .commit();
         }
     }
 

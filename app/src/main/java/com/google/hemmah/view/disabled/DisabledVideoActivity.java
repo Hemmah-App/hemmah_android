@@ -11,17 +11,33 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.media.AudioAttributes;
+import android.media.AudioDeviceInfo;
+import android.media.AudioFocusRequest;
+import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.hemmah.R;
 import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.dataManager.StompClientManager;
 import com.google.hemmah.model.MeetingRoom;
 import com.google.hemmah.model.enums.CameraDirection;
+import com.google.hemmah.model.enums.UserType;
 import com.google.hemmah.service.VolunteerCallService;
+import com.twilio.video.AudioDevice;
+import com.twilio.video.AudioSink;
 import com.twilio.video.Camera2Capturer;
 import com.twilio.video.ConnectOptions;
+import com.twilio.video.DefaultAudioDevice;
 import com.twilio.video.LocalAudioTrack;
 import com.twilio.video.LocalVideoTrack;
 import com.twilio.video.RemoteAudioTrack;
@@ -38,11 +54,14 @@ import com.twilio.video.VideoTrack;
 import com.twilio.video.VideoView;
 
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
 import timber.log.Timber;
+import tvi.webrtc.AudioTrack;
 import tvi.webrtc.Camera2Enumerator;
+import tvi.webrtc.VideoCapturer;
 import tvi.webrtc.voiceengine.WebRtcAudioUtils;
 import ua.naiksoftware.stomp.dto.StompHeader;
 
@@ -53,12 +72,22 @@ public class DisabledVideoActivity extends AppCompatActivity {
     private LocalVideoTrack localVideoTrack;
     private VideoView localVideoView;
     private VideoView remoteVideoView;
+    private AudioManager audioManager;
+    private ProgressBar mVideoProgressBar;
+    private FloatingActionButton mCloseCallFab;
+    private ImageView mRotateCameraButton;
+    private CameraDirection mCameraDirection;
+    private MeetingRoom mMeetingRoom;
 
     private void initViews() {
         localVideoView = findViewById(R.id.local_video_view_disabled);
         localVideoView.setKeepScreenOn(true);
         remoteVideoView = findViewById(R.id.remote_video_view_disabled);
         remoteVideoView.setKeepScreenOn(true);
+        mVideoProgressBar = findViewById(R.id.video_Pb);
+        mVideoProgressBar.setVisibility(View.VISIBLE);
+        mCloseCallFab = findViewById(R.id.closecall_FAB);
+        mRotateCameraButton = findViewById(R.id.rotatecamera_FAB);
 
     }
 
@@ -66,38 +95,110 @@ public class DisabledVideoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disabled_video);
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.CAMERA,
-                        Manifest.permission.RECORD_AUDIO},
-                100);
         initViews();
-        setVideoAndAudioSettings();
-        SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
+        requestAudioFocus(this);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO}, 100);
         // Api call to get the room details using a service goes here
-            makeCall(getRoomDetails().getRoomName(), getRoomDetails().getRoomToken());
-
-
-
+        mCameraDirection = CameraDirection.BACK;
+        handleButtonsClick();
+        mMeetingRoom = getRoomDetails();
+        try {
+            makeCall(mMeetingRoom.getRoomToken(), mMeetingRoom.getRoomName());
+        }catch (NullPointerException e){
+            Timber.e(e);
+            Toast.makeText(this, "Failed to connect", Toast.LENGTH_SHORT).show();
+        }
 
     }
+
+    private void handleButtonsClick() {
+        mCloseCallFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (room != null && room.getState() != Room.State.DISCONNECTED) {
+                    room.disconnect();
+                }
+                if (localAudioTrack != null) {
+                    localAudioTrack.release();
+                }
+                if (localVideoTrack != null) {
+                    localVideoTrack.removeSink(localVideoView);
+                    localVideoTrack.release();
+                }
+                Intent intent = new Intent(getApplicationContext(), DisabledActivity.class);
+                startActivity(intent);
+            }
+        });
+        mRotateCameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCameraDirection == CameraDirection.BACK) {
+                    mCameraDirection = CameraDirection.FRONT;
+                } else {
+                    mCameraDirection = CameraDirection.BACK;
+                }
+                localVideoTrack.release();
+                makeCall(mMeetingRoom.getRoomToken(), mMeetingRoom.getRoomName());
+
+            }
+        });
+    }
+
     private MeetingRoom getRoomDetails() {
         Intent intent = getIntent();
         Timber.d("Receiving room details intent sent from intent from when callforhelp button pressed \n: "
-                +"roomToken: \n"
-                +intent.getStringExtra("roomToken")+
-                "roomName: \n"
-                +intent.getStringExtra("roomName"));
+                + "roomToken: \n"
+                + intent.getStringExtra("roomToken") +
+                "\nroomName: \n"
+                + intent.getStringExtra("roomName"));
         return new MeetingRoom(intent.getStringExtra("roomToken"), intent.getStringExtra("roomName"));
 
     }
 
+    private void requestAudioFocus(Context context) {
+        audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        AudioAttributes playbackAttributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                .build();
+        AudioFocusRequest focusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
+                .setAudioAttributes(playbackAttributes)
+                .setAcceptsDelayedFocusGain(true).setOnAudioFocusChangeListener(new AudioManager.OnAudioFocusChangeListener() {
+                    @Override
+                    public void onAudioFocusChange(int focusChange) {
+                    }
+                })
+                .build();
+        audioManager.requestAudioFocus(focusRequest);
+        audioManager.setSpeakerphoneOn(!isHeadphonesPlugged());
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        room.disconnect();
     }
 
+    private boolean isHeadphonesPlugged() {
+        if (audioManager == null)
+            return false;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return audioManager.isWiredHeadsetOn() || audioManager.isBluetoothScoOn() || audioManager.isBluetoothA2dpOn();
+        } else {
+            AudioDeviceInfo[] devices = audioManager.getDevices(AudioManager.GET_DEVICES_OUTPUTS);
+
+            for (AudioDeviceInfo device : devices) {
+                if (device.getType() == AudioDeviceInfo.TYPE_WIRED_HEADSET
+                        || device.getType() == AudioDeviceInfo.TYPE_WIRED_HEADPHONES
+                        || device.getType() == AudioDeviceInfo.TYPE_BLUETOOTH_A2DP
+                        || device.getType() == AudioDeviceInfo.TYPE_BLUETOOTH_SCO) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void removeRemoteView(VideoTrack v) {
+        v.removeSink(remoteVideoView);
+    }
+
+    // Clear the drawing of the remote participant
     private void setVideoAndAudioSettings() {
         //to remove echo
         WebRtcAudioUtils.setWebRtcBasedAcousticEchoCanceler(true);
@@ -105,7 +206,9 @@ public class DisabledVideoActivity extends AppCompatActivity {
     }
 
     private void makeCall(String roomToken, String roomName) {
-        startLocalVideoAndAudio(CameraDirection.BACK);
+        setVideoAndAudioSettings();
+        startLocalVideoAndAudio();
+        requestAudioFocus(this);
         ConnectOptions connectOptions = new ConnectOptions.Builder(roomToken)
                 .videoTracks(List.of(localVideoTrack))
                 .audioTracks(List.of(localAudioTrack))
@@ -116,78 +219,19 @@ public class DisabledVideoActivity extends AppCompatActivity {
 
     }
 
-    private Room.Listener roomListener() {
-        return new Room.Listener() {
-            @Override
-            public void onConnected(@NonNull Room room) {
-                Timber.d("Connected to room");
-                if (room.getRemoteParticipants().size() > 0) {
-                    for (RemoteParticipant remoteParticipant : room.getRemoteParticipants()) {
-                        attachRemoteToListner(remoteParticipant);
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void onConnectFailure(@NonNull Room room, @NonNull TwilioException twilioException) {
-                Timber.e("Error Connecting to room %s", twilioException.getMessage());
-            }
-
-            @Override
-            public void onReconnecting(@NonNull Room room, @NonNull TwilioException twilioException) {
-            }
-
-            @Override
-            public void onReconnected(@NonNull Room room) {
-
-            }
-
-            @Override
-            public void onDisconnected(@NonNull Room room, @Nullable TwilioException twilioException) {
-                Timber.d(twilioException.getMessage(),"Room disconnected");
-                localAudioTrack.release();
-                localVideoTrack.release();
-            }
-
-            @Override
-            public void onParticipantConnected(@NonNull Room room, @NonNull RemoteParticipant remoteParticipant) {
-                attachRemoteToListner(remoteParticipant);
-                Timber.d("Remote participant connected");
-            }
-
-            @Override
-            public void onParticipantDisconnected(@NonNull Room room, @NonNull RemoteParticipant remoteParticipant) {
-
-            }
-
-            @Override
-            public void onRecordingStarted(@NonNull Room room) {
-
-            }
-
-            @Override
-            public void onRecordingStopped(@NonNull Room room) {
-
-            }
-        };
-    }
-
-    private void startLocalVideoAndAudio(CameraDirection cameraDirection) {
-        localAudioTrack = LocalAudioTrack.create(this, true);
+    private void startLocalVideoAndAudio() {
         // A video track requires an implementation of a VideoCapturer. Here's how to use the front camera with a Camera2Capturer.
+        localAudioTrack = LocalAudioTrack.create(this, true);
         Camera2Enumerator camera2Enumerator = new Camera2Enumerator(getApplicationContext());
-
         String cameraId = null;
-
-        if (cameraDirection == CameraDirection.BACK) {
+        if (mCameraDirection == CameraDirection.BACK) {
             for (String id : camera2Enumerator.getDeviceNames()) {
                 if (camera2Enumerator.isBackFacing(id)) {
                     cameraId = id;
                     break;
                 }
             }
-        } else if (cameraDirection == CameraDirection.FRONT) {
+        } else if (mCameraDirection == CameraDirection.FRONT) {
             for (String id : camera2Enumerator.getDeviceNames()) {
                 if (camera2Enumerator.isFrontFacing(id)) {
                     cameraId = id;
@@ -204,10 +248,28 @@ public class DisabledVideoActivity extends AppCompatActivity {
             localVideoTrack = LocalVideoTrack.create(this, true, cameraCapturer);
 
             // Render a local video track to preview your camera
-            localVideoView.setMirror(false);
+            if(mCameraDirection == CameraDirection.FRONT)
+                localVideoView.setMirror(true);
+            else
+                localVideoView.setMirror(false);
             localVideoTrack.addSink(localVideoView);
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        if (room != null && room.getState() != Room.State.DISCONNECTED) {
+            room.disconnect();
+        }
+        if (localAudioTrack != null) {
+            localAudioTrack.release();
+        }
+        if (localVideoTrack != null) {
+            localVideoTrack.release();
+        }
+        super.onDestroy();
+    }
+
 
     private void renderRemoteParticipantVideo(VideoTrack videoTrack) {
         remoteVideoView.setMirror(false);
@@ -225,7 +287,72 @@ public class DisabledVideoActivity extends AppCompatActivity {
         remoteParticipant.setListener(remoteParticipantListener());
     }
 
-    // TODO @Hazem - Make sure the Audio for the remote participant works
+    private Room.Listener roomListener() {
+        return new Room.Listener() {
+            @Override
+            public void onConnected(@NonNull Room room) {
+                Timber.d("Connected to room");
+                if (room.getRemoteParticipants().size() > 0) {
+                    for (RemoteParticipant remoteParticipant : room.getRemoteParticipants()) {
+                        attachRemoteToListner(remoteParticipant);
+                        Toast.makeText(DisabledVideoActivity.this, "Connected", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onConnectFailure(@NonNull Room room, @NonNull TwilioException twilioException) {
+                Timber.e("Error Connecting to room %s", twilioException.getMessage());
+                mVideoProgressBar.setVisibility(View.GONE);
+                Toast.makeText(DisabledVideoActivity.this, "Failed to find volunteers", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onReconnecting(@NonNull Room room, @NonNull TwilioException twilioException) {
+                mVideoProgressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onReconnected(@NonNull Room room) {
+                mVideoProgressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onDisconnected(@NonNull Room room, @Nullable TwilioException twilioException) {
+                Timber.d(twilioException);
+                mVideoProgressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onParticipantConnected(@NonNull Room room, @NonNull RemoteParticipant remoteParticipant) {
+                attachRemoteToListner(remoteParticipant);
+                Toast.makeText(DisabledVideoActivity.this, "Found a volunteer", Toast.LENGTH_SHORT).show();
+                Timber.d("Remote participant connected");
+                mVideoProgressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onParticipantDisconnected(@NonNull Room room, @NonNull RemoteParticipant remoteParticipant) {
+                mVideoProgressBar.setVisibility(View.GONE);
+                RemoteVideoTrack remoteVideoTrack = remoteParticipant.getRemoteVideoTracks().get(0).getRemoteVideoTrack();
+                if (remoteVideoTrack != null)
+                    removeRemoteView(remoteVideoTrack);
+            }
+
+            @Override
+            public void onRecordingStarted(@NonNull Room room) {
+
+            }
+
+            @Override
+            public void onRecordingStopped(@NonNull Room room) {
+
+            }
+        };
+    }
+
+
     private RemoteParticipant.Listener remoteParticipantListener() {
         return new RemoteParticipant.Listener() {
             @Override
@@ -250,7 +377,6 @@ public class DisabledVideoActivity extends AppCompatActivity {
 
             @Override
             public void onAudioTrackUnsubscribed(@NonNull RemoteParticipant remoteParticipant, @NonNull RemoteAudioTrackPublication remoteAudioTrackPublication, @NonNull RemoteAudioTrack remoteAudioTrack) {
-
             }
 
             @Override
@@ -266,17 +392,19 @@ public class DisabledVideoActivity extends AppCompatActivity {
             @Override
             public void onVideoTrackSubscribed(@NonNull RemoteParticipant remoteParticipant, @NonNull RemoteVideoTrackPublication remoteVideoTrackPublication, @NonNull RemoteVideoTrack remoteVideoTrack) {
                 renderRemoteParticipantVideo(remoteVideoTrack);
+                mVideoProgressBar.setVisibility(View.GONE);
                 Timber.d("remotevideo track subscribed");
             }
 
             @Override
             public void onVideoTrackSubscriptionFailed(@NonNull RemoteParticipant remoteParticipant, @NonNull RemoteVideoTrackPublication remoteVideoTrackPublication, @NonNull TwilioException twilioException) {
-
+                mVideoProgressBar.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onVideoTrackUnsubscribed(@NonNull RemoteParticipant remoteParticipant, @NonNull RemoteVideoTrackPublication remoteVideoTrackPublication, @NonNull RemoteVideoTrack remoteVideoTrack) {
-
+                removeRemoteView(remoteVideoTrack);
+                mVideoProgressBar.setVisibility(View.GONE);
             }
 
             @Override

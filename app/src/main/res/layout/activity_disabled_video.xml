@@ -16,6 +16,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <FrameLayout
+        android:id="@+id/progressbar_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/guideline1"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <include layout="@layout/room_progressbar" />
+    </FrameLayout>
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
         android:layout_width="wrap_content"
@@ -55,27 +66,14 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.98" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/closecall_FAB"
+
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorError"
-        android:src="@drawable/phoneicon"
-        app:layout_constraintBottom_toBottomOf="@+id/remote_video_view_disabled"
-        app:layout_constraintEnd_toStartOf="@+id/local_video_view_disabled"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/rotatecamera_IV"
-        app:layout_constraintTop_toTopOf="@+id/guideline1" />
-
-
-    <ImageView
-        android:id="@+id/rotatecamera_IV"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:src="@drawable/changecamera_ic"
-        app:layout_constraintBottom_toBottomOf="@+id/closecall_FAB"
-        app:layout_constraintEnd_toStartOf="@+id/closecall_FAB"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/closecall_FAB" />
+        app:layout_constraintTop_toTopOf="@+id/guideline1">
+        <include layout="@layout/common_room_tools" />
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

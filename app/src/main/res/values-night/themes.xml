@@ -18,6 +18,23 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="Theme.Hemmah.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/colorAccent</item>
+        <item name="colorSecondaryVariant">@color/colorAccent</item>
+        <item name="colorOnSecondary">@color/colorOnAccent</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Buttons color        -->
+        <item name="android:button">@color/colorAccent</item>
+        <!-- prefrence theme       -->
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <!-- Customize your theme here. -->
+    </style>
     <style name="Button.accent" parent="ThemeOverlay.AppCompat">
         <item name="colorAccent">@color/colorAccent</item>
     </style>

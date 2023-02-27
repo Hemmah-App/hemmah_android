@@ -1,86 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:contentPadding="8dp"
-    android:layout_margin="18dp"
-    app:cardCornerRadius="8dp"
-    android:elevation="100dp"
-
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:elevation="50dp"
     app:cardBackgroundColor="@color/colorBackground"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    app:cardCornerRadius="8dp"
+    app:strokeColor="@color/grayShade"
+    app:strokeWidth="0.4dp">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/materialDivider"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            app:dividerColor="@color/colorPrimary"
-            app:layout_constraintBottom_toTopOf="@+id/description_text_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_text_layout" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/left_GL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.0" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/right_GL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="1.0" />
 
         <TextView
-            android:id="@+id/title_text_layout"
-            android:layout_width="match_parent"
+            android:id="@+id/postAddress_TV"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/colorPrimaryLight1"
+            android:gravity="left"
+            android:padding="10dp"
+            android:text="This is the address of the post"
+            android:textColor="@color/colorText"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:hint="@string/post_title_TV"
-            android:textColor="@color/colorText"
-            android:maxLines="1"
-            app:boxBackgroundColor="@color/transparent"
-            android:layout_margin="12dp"/>
+            app:layout_constraintEnd_toStartOf="@+id/right_GL"
+            app:layout_constraintStart_toStartOf="@+id/left_GL"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/addressDivider_MD"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/postAddress_TV"
+            app:layout_constraintStart_toStartOf="@+id/postAddress_TV"
+            app:layout_constraintTop_toBottomOf="@+id/postAddress_TV" />
 
         <TextView
-            android:id="@+id/description_text_layout"
-            android:layout_width="match_parent"
+            android:id="@+id/date_TV"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:hint="@string/post_description_TV"
-            android:textColor="@color/colorText"
+            android:padding="10dp"
+            android:text="Date of the post"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/right_GL"
+            app:layout_constraintTop_toBottomOf="@+id/describtion_TV" />
+
+        <TextView
+            android:id="@+id/address_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Address"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/describtion_TV" />
+
+        <TextView
+            android:id="@+id/describtion_TV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:lines="6"
+            android:padding="10dp"
+            android:text="here is the descibtion of the post"
             android:textSize="15sp"
-            app:boxBackgroundColor="@color/transparent"
+            app:layout_constraintEnd_toEndOf="@+id/postAddress_TV"
+            app:layout_constraintStart_toStartOf="@+id/postAddress_TV"
+            app:layout_constraintTop_toBottomOf="@+id/addressDivider_MD" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_text_layout" />
+            app:layout_constraintTop_toBottomOf="@+id/date_TV" />
 
-        <TextView
-            android:id="@+id/choose_date_textView"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/description_text_layout"
-            tools:text="@string/post_choosedate_TV"
-            android:textSize="12sp"
-            android:textColor="@color/colorText"
-            android:textStyle="bold"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="10dp"
-            />
-
-
-        <Button
-            android:id="@+id/ok_button_list_recycler"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:backgroundTint="@color/colorPrimaryLight"
-            android:text="@string/helppost_bt"
-            android:textAllCaps="false"
-            android:textColor="@color/colorOnPrimary"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/choose_date_textView" />
+            app:layout_constraintEnd_toEndOf="@+id/postAddress_TV"
+            app:layout_constraintStart_toStartOf="@+id/postAddress_TV"
+            app:layout_constraintTop_toBottomOf="@+id/date_TV">
 
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                >
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/posts_buttons_background"
+                    android:src="@drawable/share_ic_24"
+                    android:layout_gravity="center"/>
 
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <ImageButton
+                    android:id="@+id/fortestfragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/posts_buttons_background"
+                    android:src="@drawable/chat_ic_24"
+                    android:layout_gravity="center"
+                    />
+
+            </FrameLayout>
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

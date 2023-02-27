@@ -48,8 +48,10 @@
     <string name="email_ht">يجب ان يكون : example@examplehost.com</string>
     <string name="username_ht">علي الأقل 8 احرف</string>
     <string name="volunteer_welcome_tv">"مرحبا, "</string>
-    <string name="status_offline_TB">غير متاح</string>
-    <string name="status_online_TB">متاح</string>
+    <string name="status_offline_SWITCH">غير متاح</string>
+    <string name="status_online_SWITCH">متاح</string>
+    <string name="volunteer_helps_counter">عدد المساعدات\n التي قدمتها</string>
+    <string name="current_status">الحالة</string>
 
 
 </resources>

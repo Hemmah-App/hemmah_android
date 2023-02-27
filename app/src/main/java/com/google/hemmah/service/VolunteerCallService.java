@@ -56,7 +56,7 @@ public class VolunteerCallService extends Service {
                     makeNotification("Someone Needs Your Help !", message);
                 });
 
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     private void makeServiceIndicationNotification() {

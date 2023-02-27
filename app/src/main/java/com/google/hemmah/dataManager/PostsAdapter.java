@@ -58,9 +58,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostHolder> 
 
         public PostHolder(@NonNull View itemView) {
             super(itemView);
-            titleTextView = itemView.findViewById(R.id.title_text_layout);
-            descriptionTextView = itemView.findViewById(R.id.description_text_layout);
-            dateTextView = itemView.findViewById(R.id.choose_date_textView);
+            titleTextView = itemView.findViewById(R.id.postAddress_TV);
+            descriptionTextView = itemView.findViewById(R.id.describtion_TV);
+            dateTextView = itemView.findViewById(R.id.date_TV);
         }
     }
 

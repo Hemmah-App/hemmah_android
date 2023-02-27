@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout2"
+    android:layout_width="130dp"
+    android:layout_height="50dp"
+    android:background="@drawable/rotatecamera_background">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/closecallFAB_LAYOUT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/rotatecameraFAB_layout"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/closecall_FAB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorError"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />"
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/white_phone_ic_24"
+        app:layout_constraintBottom_toBottomOf="@+id/closecallFAB_LAYOUT"
+        app:layout_constraintEnd_toEndOf="@+id/closecallFAB_LAYOUT"
+        app:layout_constraintStart_toStartOf="@+id/closecallFAB_LAYOUT"
+        app:layout_constraintTop_toTopOf="@+id/closecallFAB_LAYOUT" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rotatecameraFAB_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/closecallFAB_LAYOUT"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/rotatecamera_FAB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:src="@drawable/rotatecamera_ic_24"
+        app:layout_constraintBottom_toBottomOf="@+id/rotatecameraFAB_layout"
+        app:layout_constraintEnd_toEndOf="@+id/rotatecameraFAB_layout"
+        app:layout_constraintStart_toStartOf="@+id/rotatecameraFAB_layout"
+        app:layout_constraintTop_toTopOf="@+id/rotatecameraFAB_layout" />
+</androidx.constraintlayout.widget.ConstraintLayout>

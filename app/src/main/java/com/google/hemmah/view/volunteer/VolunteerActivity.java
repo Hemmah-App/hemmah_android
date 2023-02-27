@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.hemmah.R;
-import com.google.hemmah.view.PreferenceManager;;
+import com.google.hemmah.view.PreferenceManager;
+import com.google.hemmah.view.ProfilePhotoFragment;;
 
 public class VolunteerActivity extends AppCompatActivity {
     private BottomNavigationView mVolunteerBottomNavigation;
@@ -22,8 +24,8 @@ public class VolunteerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_volunteer);
         mVolunteerBottomNavigation = findViewById(R.id.buttomNavigathion);
         intializeFragments();
-
     }
+
 
 
     private void intializeFragments() {
@@ -39,11 +41,14 @@ public class VolunteerActivity extends AppCompatActivity {
 
     private void handleBottomNavBarSelection(MenuItem item) {
         if (item.getItemId() == R.id.list) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new PostsFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new PostsFragment())
+                    .commit();
         } else if (item.getItemId() == R.id.history) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new HistoryFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new HistoryFragment())
+                    .commit();
         } else if (item.getItemId() == R.id.settings) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new PreferenceManager()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new PreferenceManager())
+                    .commit();
         }
     }
 
