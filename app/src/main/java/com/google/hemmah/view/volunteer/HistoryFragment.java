@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.hemmah.R;
-import com.google.hemmah.dataManager.PostsAdapter;
+import com.google.hemmah.dataManager.AppAdapter;
 import com.google.hemmah.model.Post;
 
 import java.util.ArrayList;
@@ -32,10 +32,10 @@ public class HistoryFragment extends Fragment {
         ArrayList<Post> historyPosts = new ArrayList<>();
         //for testing purpose
 //        mPostsFragment.intializePosts(historyPosts);
-        PostsAdapter postsAdapter = new PostsAdapter(historyPosts,R.layout.history_recycler_item);
+        AppAdapter appAdapter = new AppAdapter(historyPosts,R.layout.history_recycler_item,mPostsFragment);
         RecyclerView recyclerView = view.findViewById(R.id.history_post_RV);
-        recyclerView.setAdapter(postsAdapter);
-        postsAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(appAdapter);
+        appAdapter.notifyDataSetChanged();
 
     }
 }

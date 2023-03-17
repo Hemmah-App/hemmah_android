@@ -1,28 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Hemmah" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnPrimary">@color/colorOnPrimary</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/colorAccent</item>
-        <item name="colorSecondaryVariant">@color/colorAccent</item>
-        <item name="colorOnSecondary">@color/colorOnAccent</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Buttons color        -->
-        <item name="android:button">@color/colorAccent</item>
-        <!-- prefrence theme       -->
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
-        <!-- Customize your theme here. -->
-
-    </style>
     <style name="Theme.Hemmah.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="colorSurface">@color/colorSurface</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/colorAccent</item>
         <item name="colorSecondaryVariant">@color/colorAccent</item>
@@ -30,29 +14,15 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Buttons color        -->
-        <item name="android:button">@color/colorAccent</item>
+            <item name="android:button">@color/colorAccent</item>
         <!-- prefrence theme       -->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <!-- Customize your theme here. -->
-
     </style>
 
-<!--    <style name="Theme.Hemmah.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->
-<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
-<!--        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>-->
-<!--        <item name="colorOnPrimary">@color/colorOnPrimary</item>-->
-<!--        &lt;!&ndash; Secondary brand color. &ndash;&gt;-->
-<!--        <item name="colorSecondary">@color/colorAccent</item>-->
-<!--        <item name="colorSecondaryVariant">@color/colorAccent</item>-->
-<!--        <item name="colorOnSecondary">@color/colorOnAccent</item>-->
-<!--        &lt;!&ndash; Status bar color. &ndash;&gt;-->
-<!--        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>-->
-<!--        &lt;!&ndash; Buttons color        &ndash;&gt;-->
-<!--        <item name="android:button">@color/colorAccent</item>-->
-<!--    </style>-->
-<!--    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">-->
-<!--        <item name="boxStrokeColor">#fff</item>-->
-<!--        <item name="boxStrokeWidth">2dp</item>-->
-<!--    </style>-->
+<style name="addRequestDialog_EditText" parent="Widget.AppCompat.EditText">
+    <item name="android:background">@drawable/edittext_background</item>
+    <item name="android:textSize">14sp</item>
+</style>
 
 </resources>

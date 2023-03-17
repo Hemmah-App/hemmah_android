@@ -13,6 +13,7 @@ public class Post {
     private String title;
     private String description;
     private String date;
+    private String address;
 
 
 

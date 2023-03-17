@@ -35,15 +35,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Inject
     AuthService authService;
-    private TextInputLayout mUserNameTextInput;
-    private TextInputLayout mEmailTextInput;
-    private TextInputLayout mPhoneNumberTextInput;
-    private TextInputLayout mFirstNameTextInput;
-    private TextInputLayout mLastNameTextInput;
-    private TextInputLayout mPasswordTextInput;
+    private TextInputLayout mUserNameTextInput,mEmailTextInput,
+            mPhoneNumberTextInput ,mFirstNameTextInput ,
+            mLastNameTextInput, mPasswordTextInput;
     private ProgressBar mLogInProgressBar;
-    private Button mCreateAccountVolunteer_Bt;
-    private Button mCreateAccountDisabled_Bt;
+    private Button mCreateAccountVolunteer_Bt,mCreateAccountDisabled_Bt;
     private SharedPreferences mSharedPreferences;
 
     @Override

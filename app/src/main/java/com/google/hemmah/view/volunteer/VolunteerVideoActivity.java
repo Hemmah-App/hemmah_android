@@ -23,6 +23,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.hemmah.R;
+import com.google.hemmah.Utils.OnDoubleClickListener;
 import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.dataManager.StompClientManager;
 import com.google.hemmah.model.MeetingRoom;
@@ -137,18 +138,27 @@ public class VolunteerVideoActivity extends AppCompatActivity {
         mRotateCameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCameraDirection == CameraDirection.BACK) {
-                    mCameraDirection = CameraDirection.FRONT;
-                } else {
-                    mCameraDirection = CameraDirection.BACK;
-                }
-                localVideoTrack.release();
-                makeCall(mMeetingRoom.getRoomToken(), mMeetingRoom.getRoomName());
-
+                rotateCamera();
             }
         });
+        remoteVideoView.setOnTouchListener(new OnDoubleClickListener(
+                () -> {
+                    // Single click action
+                },
+                () -> {
+                    rotateCamera();
+                }
+        ));
     }
-
+    private void rotateCamera(){
+        if (mCameraDirection == CameraDirection.BACK) {
+            mCameraDirection = CameraDirection.FRONT;
+        } else {
+            mCameraDirection = CameraDirection.BACK;
+        }
+        localVideoTrack.release();
+        makeCall(mMeetingRoom.getRoomToken(), mMeetingRoom.getRoomName());
+    }
     private MeetingRoom getRoomDetails() {
         Intent intent = getIntent();
         if (intent != null) {
@@ -213,9 +223,9 @@ public class VolunteerVideoActivity extends AppCompatActivity {
     }
 
     private void makeCall(String roomToken, String roomName) {
+        requestAudioFocus(this);
         setVideoAndAudioSettings();
         startLocalVideoAndAudio();
-        requestAudioFocus(this);
         ConnectOptions connectOptions = new ConnectOptions.Builder(roomToken)
                 .videoTracks(List.of(localVideoTrack))
                 .audioTracks(List.of(localAudioTrack))
@@ -327,7 +337,7 @@ public class VolunteerVideoActivity extends AppCompatActivity {
             @Override
             public void onDisconnected(@NonNull Room room, @Nullable TwilioException twilioException) {
                 Timber.d(twilioException);
-                mVideoProgressBar.setVisibility(View.GONE);
+                mVideoProgressBar.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -339,7 +349,7 @@ public class VolunteerVideoActivity extends AppCompatActivity {
 
             @Override
             public void onParticipantDisconnected(@NonNull Room room, @NonNull RemoteParticipant remoteParticipant) {
-                mVideoProgressBar.setVisibility(View.GONE);
+                mVideoProgressBar.setVisibility(View.VISIBLE);
                 RemoteVideoTrack remoteVideoTrack = remoteParticipant.getRemoteVideoTracks().get(0).getRemoteVideoTrack();
                 if (remoteVideoTrack != null)
                     removeRemoteView(remoteVideoTrack);

@@ -12,6 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/buttomNavigathion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
@@ -27,7 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:elevation="250dp"
+        app:itemRippleColor="@color/colorWhite"
+
         app:itemIconTint="@drawable/bottom_navigation_item_color"
         app:itemTextColor="@color/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -5,13 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.hemmah.R;
-import com.google.hemmah.view.PreferenceManager;
-import com.google.hemmah.view.ProfilePhotoFragment;;
+import com.google.hemmah.view.PreferenceFragment;
+;
 
 public class VolunteerActivity extends AppCompatActivity {
     private BottomNavigationView mVolunteerBottomNavigation;
@@ -47,7 +46,7 @@ public class VolunteerActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new HistoryFragment())
                     .commit();
         } else if (item.getItemId() == R.id.settings) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new PreferenceManager())
+            getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new PreferenceFragment())
                     .commit();
         }
     }

@@ -22,7 +22,6 @@ import timber.log.Timber;
 
 public class VideoPostFragment extends Fragment {
     private Button callForHelpButton;
-    private FloatingActionButton mFab;
     private StompClientManager mStompClientManager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,18 +67,10 @@ public class VideoPostFragment extends Fragment {
 
             }
         });
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(requireContext(), MakePostActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private void intializeViews(View view) {
         callForHelpButton = view.findViewById(R.id.callforhelp_BT);
-        mFab = view.findViewById(R.id.addAPost_FAB);
     }
 
 }

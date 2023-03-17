@@ -1,6 +1,9 @@
 package com.google.hemmah.view;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,11 +40,17 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         mSharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, MODE_PRIVATE);
-        if (SharedPrefUtils.haveToken(mSharedPreferences)) {
-            handleAfterSplashNavigation();
+        if (prefs.getBoolean("isFirstTime", true)) {
+            LaunchWalkthrough(prefs);
         } else {
-            fromSplashToActivity(LoginActivity.class);
+
+            if (SharedPrefUtils.haveToken(mSharedPreferences)) {
+                handleAfterSplashNavigation();
+            } else {
+                fromSplashToActivity(LoginActivity.class);
+            }
         }
     }
 
@@ -86,5 +95,13 @@ public class SplashActivity extends AppCompatActivity {
                 2000);
     }
 
-
+    private void LaunchWalkthrough(SharedPreferences defaultPrefrences) {
+        Intent intent = new Intent(this, WalkthroughActivity.class);
+        intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        SharedPreferences.Editor editor = defaultPrefrences.edit();
+        editor.putBoolean("isFirstTime", false);
+        editor.apply();
+    }
 }
+

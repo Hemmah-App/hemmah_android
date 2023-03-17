@@ -3,15 +3,16 @@
 <!--    <color name="primarycolor">#262783</color>-->
     <color name="colorPrimary">@color/colorPrimaryDark</color>
     <color name="colorPrimaryDark">#1a237e</color>
-    <color name="colorPrimaryLight">#232FA8</color>
+    <color name="colorPrimaryLight">#e8e9f2</color>
     <color name="colorOnPrimary">@color/colorWhite</color>
 
     <color name="colorAccent">@color/colorPrimaryDark</color>
     <color name="colorOnAccent">@color/colorWhite</color>
 
     <color name="colorText">@color/colorBlack</color>
+    <color name="colorTextOnPrimaryLight">#a3a7cb</color>
 
-    <color name="colorSurface">@color/colorPrimaryLight</color>
+    <color name="colorSurface">@color/colorWhite</color>
     <color name="colorBackground">@color/colorWhite</color>
     <color name="colorError">#b00020</color>
     <color name="transparent">#0000 </color>
@@ -20,6 +21,7 @@
     <color name="colorGreen">#00FF00</color>
     <color name="grayShade">#303030</color>
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#fff</color>
-    <color name="colorPrimaryLight1">#767bb2</color>
+    <color name="colorPrimaryLight1">#a3a7cb</color>
+    <color name="colorOnPressed">#404A8E</color>
 
 </resources>

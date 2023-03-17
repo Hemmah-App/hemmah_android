@@ -28,7 +28,7 @@
     <string name="help_notification_title">Help Request !</string>
     <string name="helprequest_title_ET">title</string>
     <string name="helprequest_description_ET">description</string>
-    <string name="volunteer_navbar_post">post</string>
+    <string name="volunteer_navbar_post">home</string>
     <string name="volunteer_navbar_history">history</string>
     <string name="volunteer_navbar_settings">settings</string>
     <string name="post_title_TV">Title</string>
@@ -62,8 +62,11 @@
     <string name="status_online_SWITCH">Online</string>
     <string name="volunteer_helps_counter">Number of helps\nyou have made</string>
     <string name="current_status">Current status</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="logout_prefrence_item">Logout</string>
+    <string name="describtion_language_prefrence">the volunteer\'s language is based on it</string>
+    <string name="prefrence_temporary_lang_describtion">Choose your preferred language</string>
+    <string name="requests_bottomnav_item">Requests</string>
+    <string name="disabled_requests_options_menu_item_delete">Delete</string>
 
 
 </resources>

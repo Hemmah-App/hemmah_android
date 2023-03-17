@@ -6,11 +6,6 @@
         app:title="Profile"
         app:iconSpaceReserved="false">
         <Preference
-            app:key="change_email"
-            app:title="Change Email"
-            app:iconSpaceReserved="false"
-            />
-        <Preference
             app:key="change_password"
             app:title="Change Password"
             app:iconSpaceReserved="false"/>
@@ -19,7 +14,7 @@
     <ListPreference
         app:key="language"
         app:title="Language"
-        app:summary="the volunteer's language is based on it"
+        app:summary="@string/prefrence_temporary_lang_describtion"
         app:allowDividerAbove="true"
         app:allowDividerBelow="true"
         app:iconSpaceReserved="false"
@@ -39,10 +34,14 @@
         app:title="Feedback"
         app:iconSpaceReserved="false">
         <Preference
-            app:key="feedback"
+            app:key="send_feedback"
             app:title="Send Feedback"
             app:summary="Report technical issues or suggest new features"
             app:iconSpaceReserved="false"/>
     </PreferenceCategory>
+    <Preference
+        app:key="logout"
+        app:layout="@layout/logout_prefrence_item"
+        />
 
 </PreferenceScreen>

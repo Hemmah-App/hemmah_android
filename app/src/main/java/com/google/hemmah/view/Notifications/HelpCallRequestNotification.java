@@ -41,7 +41,7 @@ public class HelpCallRequestNotification {
         RemoteViews collapsedNotification = new RemoteViews(mContext.getPackageName(), R.layout.incoming_expanded_call_notification);
         RemoteViews expandedNotification = new RemoteViews(mContext.getPackageName(), R.layout.incoming_expanded_call_notification);
         Notification notification = new NotificationCompat.Builder(mContext.getApplicationContext(), CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.hemmah_logo_nobg)
+                .setSmallIcon(R.mipmap.app_white_logo_round)
                 .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
                 .setCustomContentView(collapsedNotification)
                 .setCustomBigContentView(expandedNotification)

@@ -27,12 +27,23 @@
         <include layout="@layout/room_progressbar" />
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/disabled_video_progressText_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
+        android:layout_marginTop="5dp"
+        android:text="searching for volunteers.."
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/progressbar_frame"
+        app:layout_constraintStart_toStartOf="@+id/progressbar_frame"
+        app:layout_constraintTop_toBottomOf="@+id/progressbar_frame" />
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.75" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -47,7 +58,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/local_camera_corner"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline4"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="@+id/guideline3"
         app:layout_constraintStart_toEndOf="@id/guideline2"
         app:layout_constraintTop_toBottomOf="@id/guideline1" />
@@ -64,16 +75,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.98" />
+        app:layout_constraintBottom_toTopOf="@id/frameLayout"
+        app:layout_constraintGuide_percent="0.93" />
 
 
     <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/guideline4"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        android:id="@+id/frameLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0.9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline1">
+        app:layout_constraintTop_toBottomOf="@+id/local_video_view_disabled"
+        >
+
         <include layout="@layout/common_room_tools" />
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

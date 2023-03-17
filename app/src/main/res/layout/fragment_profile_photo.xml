@@ -5,31 +5,30 @@
     android:id="@+id/profilePhoto_MAIN_CONTAINER"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/colorWhite"
-    >
+    android:background="@color/colorWhite">
 
     <View
         android:id="@+id/view"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:background="@color/colorPrimaryLight1"
-        app:layout_constraintBottom_toTopOf="@id/guideline7"
+        app:layout_constraintBottom_toTopOf="@id/underProfile_GL"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileFragment_changeProfilePhoto_IB"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="30dp"
         android:alpha="0.9"
-        android:background="@drawable/profilephoto_postsfragment_backgrond"
+        android:background="@drawable/profilephotofragment_profilephoto_background"
         android:src="@drawable/bigperson_ic_54"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintBottom_toTopOf="@+id/underProfile_GL"
         app:layout_constraintEnd_toStartOf="@+id/guideline9"
         app:layout_constraintStart_toStartOf="@+id/guideline8"
-        app:layout_constraintTop_toTopOf="@+id/volunteerBack_IV" />
+        app:layout_constraintTop_toBottomOf="@+id/aboveProfile_GL" />
 
 
     <ImageView
@@ -37,7 +36,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="150dp"
-        android:background="@drawable/profilephoto_camerabutton_background"
+        android:background="@drawable/rounded_buttons_background_selector"
+        android:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/profileFragment_changeProfilePhoto_IB"
         app:layout_constraintEnd_toEndOf="@+id/profileFragment_changeProfilePhoto_IB"
         app:layout_constraintStart_toStartOf="@+id/guideline8" />
@@ -50,6 +50,7 @@
         app:layout_constraintEnd_toEndOf="@+id/profileFragment_changeprofilephoto_IV"
         app:layout_constraintStart_toStartOf="@+id/profileFragment_changeprofilephoto_IV"
         app:layout_constraintTop_toTopOf="@+id/profileFragment_changeprofilephoto_IV" />
+
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
@@ -130,7 +131,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline7"
+        android:id="@+id/underProfile_GL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -149,6 +150,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.75" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/aboveProfile_GL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.0555" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

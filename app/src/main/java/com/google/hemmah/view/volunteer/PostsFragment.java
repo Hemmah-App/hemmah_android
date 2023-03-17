@@ -8,7 +8,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,27 +23,29 @@ import android.widget.Toast;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.hemmah.R;
+import com.google.hemmah.dataManager.RecyclerVIewItemListener;
 import com.google.hemmah.service.VolunteerCallService;
-import com.google.hemmah.dataManager.PostsAdapter;
+import com.google.hemmah.dataManager.AppAdapter;
 
 import com.google.hemmah.model.Post;
+import com.google.hemmah.view.NotificationAllFragment;
 import com.google.hemmah.view.ProfilePhotoFragment;
 
 
 import java.util.ArrayList;
 
-import dagger.hilt.processor.internal.definecomponent.codegen._dagger_hilt_android_components_ActivityComponent;
 
-
-public class PostsFragment extends Fragment {
+public class PostsFragment extends Fragment implements RecyclerVIewItemListener {
     private ImageButton mProfilephotoImageButton;
     private RecyclerView mRecyclerView;
-    private PostsAdapter mPostAdapter;
+    private AppAdapter mPostAdapter;
     private ArrayList<Post> mPostsArrayList;
     private SwitchMaterial mStatusSwitchable;
     private TextView status_TV;
-    private FrameLayout mProfilePhotoFragmentLayout;
+    private FrameLayout mProfilePhotoFragmentLayout,mNotificationAllFragmentLayout,mExpandedPostContainer;
     public static final String PROFILE_FRAGMENT_TAG = "PROFILE_FRAGMENT";
+    public static final String NOTIFICATION_FRAGMENT_TAG = "NOTIFICATION_FRAGMENT";
+    private ImageView mNotificationBellImageView;
 
 
 
@@ -63,7 +64,7 @@ public class PostsFragment extends Fragment {
         mPostsArrayList = new ArrayList<>();
         //for testing purpose
         intializePosts(mPostsArrayList);
-        mPostAdapter = new PostsAdapter(mPostsArrayList, R.layout.posts_recycler_item);
+        mPostAdapter = new AppAdapter( mPostsArrayList, R.layout.posts_recycler_item,this);
         mRecyclerView.setAdapter(mPostAdapter);
         handleButtonsClick();
         mPostAdapter.notifyDataSetChanged();
@@ -88,12 +89,10 @@ public class PostsFragment extends Fragment {
                     requireContext().stopService(new Intent(requireContext(), VolunteerCallService.class));
                     status_TV.setText(R.string.status_offline_SWITCH);
                     status_TV.setTextColor(getResources().getColor(R.color.colorError));
-                }
-                else if (!isInternetConnected(requireContext()) && mStatusSwitchable.isChecked()) {
+                } else {
                     Toast.makeText(requireContext(), "Failed to connect", Toast.LENGTH_SHORT).show();
+                    mStatusSwitchable.setChecked(false);
                 }
-
-
             }
         });
         mProfilephotoImageButton.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +104,17 @@ public class PostsFragment extends Fragment {
             }
         });
 
+        mNotificationBellImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mNotificationAllFragmentLayout.setVisibility(View.VISIBLE);
+                getChildFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
+                        .replace(R.id.notification_all_FragmentContainer,new NotificationAllFragment(),NOTIFICATION_FRAGMENT_TAG)
+                        .commit();
+            }
+        });
+
+
     }
 
 
@@ -114,19 +124,42 @@ public class PostsFragment extends Fragment {
         status_TV = view.findViewById(R.id.status_switchable_TV);
         mProfilephotoImageButton = view.findViewById(R.id.profilePhoto_IB);
         mProfilePhotoFragmentLayout = view.findViewById(R.id.profilePhoto_CONTAINER);
+        mNotificationAllFragmentLayout = view.findViewById(R.id.notification_all_FragmentContainer);
+        mNotificationBellImageView = view.findViewById(R.id.notificationBell_IV);
+        mExpandedPostContainer  = view.findViewById(R.id.expandedRequest_fragment_CONTAINER);
 
     }
 
-    protected void intializePosts(ArrayList<Post> posts) {
-        posts.add(new Post("hello this my 1 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 1", "25/1/2023"));
-        posts.add(new Post("hello this my 2 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 2", "25/1/2023"));
-        posts.add(new Post("hello this my 3 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 3", "25/1/2023"));
-        posts.add(new Post("hello this my 4 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 4", "25/1/2023"));
-        posts.add(new Post("hello this my 5 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 5", "25/1/2023"));
-        posts.add(new Post("hello this my 6 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 6", "25/1/2023"));
-        posts.add(new Post("hello this my 7 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 7", "25/1/2023"));
-        posts.add(new Post("hello this my 8 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 8", "25/1/2023"));
+    public static void intializePosts(ArrayList<Post> posts) {
+        posts.add(new Post("I want help when going to the mosque",
+                "Hi, my name is Hazem its good to see you,as you might know i have a visual impairment and i'am a muslim too so i need to pray 5 times a day so i need someone who lives near to me so that he can take me with him to the mosque every day my address provided below and thanks in advance",
+                "25/1/2023","naser city"));
+        posts.add(new Post("hello this my 2 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 2", "25/1/2023","naser city"));
+        posts.add(new Post("hello this my 3 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 3", "25/1/2023","naser city"));
+        posts.add(new Post("hello this my 4 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 4", "25/1/2023","naser city"));
+        posts.add(new Post("hello this my 5 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 5", "25/1/2023","naser city"));
+        posts.add(new Post("hello this my 6 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 6", "25/1/2023","naser city"));
+        posts.add(new Post("hello this my 7 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 7", "25/1/2023","naser city"));
+        posts.add(new Post("hello this my 8 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 8", "25/1/2023","naser city"));
     }
 
 
+    @Override
+    public void onItemClick(int position) {
+        mExpandedPostContainer.setVisibility(View.VISIBLE);
+        //temp will be replaced by  a parcel
+        ExpandedPostFragment expandedPostFragment = new ExpandedPostFragment();
+        loadFragmentWithFullPost(expandedPostFragment,position);
+        getChildFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                .replace(R.id.expandedRequest_fragment_CONTAINER, expandedPostFragment).commit();
+    }
+
+    private void loadFragmentWithFullPost(ExpandedPostFragment expandedPostFragment,int pos) {
+        Bundle args = new Bundle();
+        args.putString("TITLE", mPostsArrayList.get(pos).getTitle());
+        args.putString("DESCRIPTION", mPostsArrayList.get(pos).getDescription());
+        args.putString("DATE", mPostsArrayList.get(pos).getDate());
+        args.putString("ADDRESS", mPostsArrayList.get(pos).getAddress());
+        expandedPostFragment.setArguments(args);
+    }
 }

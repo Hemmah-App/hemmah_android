@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/list" android:title="@string/volunteer_navbar_post"
-        android:icon="@drawable/ic_list"
+        android:icon="@drawable/ic_baseline_home"
         />
     <item android:id="@+id/history" android:title="@string/volunteer_navbar_history"
         android:icon="@drawable/ic_history"

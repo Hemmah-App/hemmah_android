@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@color/colorPrimaryLight1"
+    android:background="@drawable/expanded_post_background">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="0dp"
+        app:cardBackgroundColor="@color/colorPrimaryLight"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeWidth="0dp">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/expanded_requests_Title_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp"
+                android:text="Drive me to the mosque"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/expandedRequest_back_IV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:src="@drawable/back_primarycolored_ic_24"
+                android:background="@drawable/imageviews_selectors"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/expanded_requests_Title_TV" />
+
+
+            <TextView
+                android:id="@+id/expanded_date_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Date of the post"
+                android:textColor="@color/colorTextOnPrimaryLight"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/expanded_description_TV" />
+
+            <TextView
+                android:id="@+id/expanded_address_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Address"
+                android:textColor="@color/colorTextOnPrimaryLight"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/expanded_description_TV" />
+
+            <TextView
+                android:id="@+id/expanded_description_TV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="left"
+                android:minLines="10"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="Hi, my name is Hazem its good to see you,as you might know i have a visual impairment and i'am a muslim too so i need to pray 5 times a day so i need someone who lives near to me so that he can take me with him to the mosque every day my address provided below and thanks in advance"
+                android:textColor="@color/colorTextOnPrimaryLight"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/expanded_requests_Title_TV" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:text="Contact by: "
+        android:textColor="@color/colorText"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/textView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toTopOf="@+id/textView5">
+
+        <ImageButton
+            android:id="@+id/expandedRequest_phonecall_BT"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/rounded_buttons_background_selector"
+            android:backgroundTint="@color/colorPrimary"
+            android:src="@drawable/white_phone_ic_24" />
+
+        <ImageButton
+            android:id="@+id/expandedRequest_message_BT"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/rounded_buttons_background_selector"
+            android:backgroundTint="#FF9800"
+            android:src="@drawable/sms_ic_24" />
+
+
+        <ImageButton
+            android:id="@+id/expandedRequest_whatsapp_BT"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/rounded_buttons_background_selector"
+            android:backgroundTint="#25d366"
+            android:src="@drawable/whatsapp_ic" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

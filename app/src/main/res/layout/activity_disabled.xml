@@ -31,13 +31,11 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_bias="1.0"
+        app:itemRippleColor="@color/colorWhite"
         android:background="@color/colorPrimary"
         app:menu="@menu/bottom_nav_items"
         app:itemIconTint="@drawable/bottom_navigation_item_color"
         app:itemTextColor="@color/colorOnPrimary"
-        android:elevation="250dp"
-
-
         />
 
 

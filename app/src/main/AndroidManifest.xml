@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.camera.autofocus"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.camera.flash"
-        android:required="false" />
-    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature android:name="android.hardware.audio.output"
+        android:required="true"/>
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
-    <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT"
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission
+        android:name="android.permission.CAPTURE_AUDIO_OUTPUT"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
-    <uses-feature android:name="android.hardware.audio.output"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
 
 
     <application
@@ -37,8 +33,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="33">
         <activity
-            android:name=".view.disabled.MakePostActivity"
-            android:exported="false">
+            android:name=".view.WalkthroughActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Hemmah.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -67,7 +64,8 @@
         </activity>
         <activity
             android:name=".view.RegisterActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Hemmah.NoActionBar"/>
         <activity
             android:name=".view.LoginActivity"
             android:exported="false"
@@ -93,13 +91,12 @@
         <activity
             android:name=".view.volunteer.VolunteerActivity"
             android:exported="true"
-            android:theme="@style/Theme.Hemmah.NoActionBar"/>
+            android:theme="@style/Theme.Hemmah.NoActionBar" />
 
         <service
             android:name=".service.VolunteerCallService"
             android:enabled="true"
-            android:exported="false">
-        </service>
+            android:exported="false"/>
     </application>
 
 </manifest>

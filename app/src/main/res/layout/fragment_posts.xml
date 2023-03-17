@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,11 +28,11 @@
         </FrameLayout>
 
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/volunteer_CV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/gradient_posts_fragment"
+            app:cardBackgroundColor="#F5F5F8"
             app:cardCornerRadius="20dp"
             app:cardElevation="9dp"
             app:layout_constraintBottom_toBottomOf="@+id/belowCard_GL"
@@ -76,7 +77,7 @@
 
                 <TextView
                     android:id="@+id/currentState_TV"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:autoSizeTextType="uniform"
                     android:gravity="center"
@@ -86,44 +87,37 @@
                     app:layout_constraintStart_toStartOf="@+id/numberOfHelps_TV"
                     app:layout_constraintTop_toBottomOf="@+id/helps_counter_TV" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
+
+                <TextView
+                    android:id="@+id/status_switchable_TV"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="@+id/numberOfHelps_TV"
-                    app:layout_constraintStart_toStartOf="@+id/numberOfHelps_TV"
-                    app:layout_constraintTop_toBottomOf="@+id/currentState_TV">
-                    <TextView
-                        android:id="@+id/status_switchable_TV"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:autoSizeTextType="uniform"
-                        android:gravity="right"
-                        android:paddingEnd="5dp"
-                        android:paddingBottom="5dp"
-                        android:text="@string/status_offline_SWITCH"
-                        android:textColor="@color/colorError"
-                        android:textSize="15sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/switchMaterial"
-                        app:layout_constraintEnd_toEndOf="@+id/currentState_TV"
-                        app:layout_constraintStart_toEndOf="@+id/switchMaterial"
-                        app:layout_constraintTop_toTopOf="@+id/switchMaterial" />
+                    android:text="@string/status_offline_SWITCH"
+                    android:textColor="@color/colorError"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/switchMaterial"
+                    app:layout_constraintEnd_toStartOf="@+id/switchMaterial"
+                    app:layout_constraintStart_toStartOf="@+id/currentState_TV"
+                    app:layout_constraintTop_toTopOf="@+id/switchMaterial" />
 
-                    <com.google.android.material.switchmaterial.SwitchMaterial
-                        android:id="@+id/switchMaterial"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingEnd="60dp"
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchMaterial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/currentState_TV"
+                    app:layout_constraintStart_toEndOf="@+id/middleOfCard_GL"
+                    app:layout_constraintTop_toBottomOf="@+id/currentState_TV" />
 
-                        />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/middleOfCard_GL"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5" />
 
-                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
 
         <androidx.constraintlayout.widget.Guideline
@@ -141,17 +135,67 @@
             app:layout_constraintGuide_percent="0.85" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/post_RV"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/volunteerHome_right_GL"
+            app:layout_constraintStart_toStartOf="@+id/volunteerHome_left_GL"
+            app:layout_constraintTop_toBottomOf="@+id/volunteer_CV">
+
+            <ImageView
+                android:id="@+id/empty_history_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingStart="30dp"
+                android:src="@drawable/empty_requests" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="18dp"
+                android:gravity="center"
+                android:text="No Requests Found Yet"
+                android:textColor="@color/colorPrimaryLight1"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:gravity="center"
+                android:text="There is no help requests posted yet \n thanks for your effort"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/colorWhite"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recyclerView_GL"
-            tools:listitem="@layout/posts_recycler_item" />
+            app:layout_constraintVertical_bias="1.0">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/post_RV"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:backgroundTint="@color/colorPrimaryLight1"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/posts_recycler_item" />
+
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
@@ -185,6 +229,33 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
+        android:id="@+id/notification_all_FragmentContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="200dp"
+        android:background="@color/colorWhite"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline11">
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/expandedRequest_fragment_CONTAINER"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:background="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline11" />
+
+    <FrameLayout
         android:id="@+id/profilePhoto_CONTAINER"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -193,7 +264,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline11"
@@ -201,4 +273,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.15" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

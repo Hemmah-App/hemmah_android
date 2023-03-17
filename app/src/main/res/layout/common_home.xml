@@ -32,6 +32,7 @@
             android:id="@+id/profilephotoImageView_LAYOUT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/imageviews_selectors"
             app:layout_constraintBottom_toBottomOf="@+id/volunteer_welcome_TV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/volunteer_welcome_TV">
@@ -46,6 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:src="@drawable/bell_ic_24"
+            android:background="@drawable/imageviews_selectors"
             app:layout_constraintBottom_toBottomOf="@+id/profilephotoImageView_LAYOUT"
             app:layout_constraintEnd_toStartOf="@+id/profilephotoImageView_LAYOUT"
             app:layout_constraintTop_toTopOf="@+id/profilephotoImageView_LAYOUT" />

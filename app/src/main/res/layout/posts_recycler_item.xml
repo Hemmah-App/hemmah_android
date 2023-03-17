@@ -5,12 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:elevation="50dp"
-    app:cardBackgroundColor="@color/colorBackground"
-    app:cardCornerRadius="8dp"
-    app:strokeColor="@color/grayShade"
-    app:strokeWidth="0.4dp">
+    android:layout_marginBottom="2dp"
+    app:cardBackgroundColor="@color/colorPrimaryLight"
+    app:strokeWidth="0dp"
+    app:cardElevation="0dp"
+    android:elevation="0dp"
+    android:clickable="true"
+    android:focusable="true"
+    >
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,108 +34,123 @@
             app:layout_constraintGuide_percent="1.0" />
 
         <TextView
-            android:id="@+id/postAddress_TV"
+            android:id="@+id/expanded_requests_Title_TV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryLight1"
             android:gravity="left"
-            android:padding="10dp"
-            android:text="This is the address of the post"
-            android:textColor="@color/colorText"
-            android:textSize="20sp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:text="Drive me to the mosque"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/right_GL"
             app:layout_constraintStart_toStartOf="@+id/left_GL"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/addressDivider_MD"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@id/postAddress_TV"
-            app:layout_constraintStart_toStartOf="@+id/postAddress_TV"
-            app:layout_constraintTop_toBottomOf="@+id/postAddress_TV" />
+<!--        <com.google.android.material.divider.MaterialDivider-->
+<!--            android:id="@+id/addressDivider_MD"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:dividerColor="@color/colorWhite"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/postAddress_TV"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/postAddress_TV"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/postAddress_TV" />-->
 
         <TextView
-            android:id="@+id/date_TV"
+            android:id="@+id/expanded_date_TV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Date of the post"
-            android:textSize="18sp"
+            android:textSize="15sp"
+            android:textColor="@color/colorTextOnPrimaryLight"
             app:layout_constraintEnd_toStartOf="@+id/right_GL"
-            app:layout_constraintTop_toBottomOf="@+id/describtion_TV" />
+            app:layout_constraintTop_toBottomOf="@+id/expanded_description_TV" />
 
         <TextView
-            android:id="@+id/address_TV"
+            android:id="@+id/expanded_address_TV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Address"
-            android:textSize="18sp"
+            android:textSize="15sp"
+            android:textColor="@color/colorTextOnPrimaryLight"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/describtion_TV" />
+            app:layout_constraintTop_toBottomOf="@+id/expanded_description_TV" />
 
         <TextView
-            android:id="@+id/describtion_TV"
+            android:id="@+id/expanded_description_TV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:lines="6"
-            android:padding="10dp"
-            android:text="here is the descibtion of the post"
+            android:lines="2"
+            android:maxLines="2"
+            android:paddingStart="10dp"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:paddingEnd="10dp"
+            android:text="Hi, my name is Hazem its good to see you,as you might know i have a visual impairment and i'am a muslim too so i need to pray 5 times a day so i need someone who lives near to me so that he can take me with him to the mosque every day my address provided below and thanks in advance"
             android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="@+id/postAddress_TV"
-            app:layout_constraintStart_toStartOf="@+id/postAddress_TV"
-            app:layout_constraintTop_toBottomOf="@+id/addressDivider_MD" />
+            android:textColor="@color/colorTextOnPrimaryLight"
+            app:layout_constraintEnd_toEndOf="@+id/expanded_requests_Title_TV"
+            app:layout_constraintStart_toStartOf="@+id/expanded_requests_Title_TV"
+            app:layout_constraintTop_toBottomOf="@+id/expanded_requests_Title_TV" />
 
+<!--        <com.google.android.material.divider.MaterialDivider-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/linearLayout"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/date_TV" />-->
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/linearLayout"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@color/colorWhite"-->
+<!--            android:orientation="horizontal"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/postAddress_TV"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/postAddress_TV"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/date_TV">-->
+
+<!--            <FrameLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                >-->
+<!--                <ImageButton-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/posts_buttons_background"-->
+<!--                    android:src="@drawable/share_ic_24"-->
+<!--                    android:layout_gravity="center"/>-->
+
+<!--            </FrameLayout>-->
+
+<!--            <FrameLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1">-->
+<!--                <ImageButton-->
+<!--                    android:id="@+id/fortestfragment"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/posts_buttons_background"-->
+<!--                    android:src="@drawable/chat_ic_24"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    />-->
+
+<!--            </FrameLayout>-->
+<!--        </LinearLayout>-->
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date_TV" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
-            android:orientation="horizontal"
+            android:layout_height="0.5dp"
+            app:dividerColor="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/postAddress_TV"
-            app:layout_constraintStart_toStartOf="@+id/postAddress_TV"
-            app:layout_constraintTop_toBottomOf="@+id/date_TV">
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                >
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/posts_buttons_background"
-                    android:src="@drawable/share_ic_24"
-                    android:layout_gravity="center"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-                <ImageButton
-                    android:id="@+id/fortestfragment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/posts_buttons_background"
-                    android:src="@drawable/chat_ic_24"
-                    android:layout_gravity="center"
-                    />
-
-            </FrameLayout>
-        </LinearLayout>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

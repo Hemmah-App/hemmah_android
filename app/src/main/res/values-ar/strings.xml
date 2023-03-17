@@ -29,7 +29,7 @@
     <string name="help_notification_title">طلب مساعدة</string>
     <string name="helprequest_title_ET">العنوان</string>
     <string name="helprequest_description_ET">الوصف</string>
-    <string name="volunteer_navbar_post">المنشورات</string>
+    <string name="volunteer_navbar_post">الرئيسية</string>
     <string name="volunteer_navbar_history">السجل</string>
     <string name="volunteer_navbar_settings">الاعدادات</string>
     <string name="post_title_TV">العنوان</string>
@@ -52,6 +52,10 @@
     <string name="status_online_SWITCH">متاح</string>
     <string name="volunteer_helps_counter">عدد المساعدات\n التي قدمتها</string>
     <string name="current_status">الحالة</string>
+    <string name="logout_prefrence_item">تسجيل الخروج</string>
+    <string name="describtion_language_prefrence">لغة المتطوع تعتمد عليها</string>
+    <string name="requests_bottomnav_item">طلب مساعدة</string>
+    <string name="disabled_requests_options_menu_item_delete">حذف</string>
 
 
 </resources>

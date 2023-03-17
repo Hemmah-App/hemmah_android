@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:id="@+id/disabled_requests_options_menu_item_delete"
+    android:title="@string/disabled_requests_options_menu_item_delete"
+    android:icon="@drawable/delete_ic_24"
+    />
+</menu>
