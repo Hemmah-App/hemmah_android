@@ -1,7 +1,7 @@
 package com.google.hemmah.Utils;
 
-import com.google.hemmah.api.ApiClient;
-import com.google.hemmah.api.AuthApi;
+import com.google.hemmah.data.ApiClient;
+import com.google.hemmah.data.remote.AuthApi;
 
 import javax.inject.Singleton;
 

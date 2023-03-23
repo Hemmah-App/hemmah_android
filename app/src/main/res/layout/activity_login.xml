@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".view.LoginActivity">
+    tools:context=".presentation.registration.LoginActivity">
 
     <View
         android:id="@+id/rectangleLoginView"

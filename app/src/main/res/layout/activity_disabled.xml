@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.disabled.DisabledActivity">
+    tools:context=".presentation.common.common.DisabledActivity">
 <!--    textsize header 28sp , 10dp margin ,bold , color black -->
 
 

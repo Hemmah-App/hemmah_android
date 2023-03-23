@@ -1,26 +1,14 @@
 package com.google.hemmah;
 
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-import static com.google.hemmah.view.Notifications.HelpCallRequestNotification.CHANNEL_1_DESCRIPTION;
-import static com.google.hemmah.view.Notifications.HelpCallRequestNotification.CHANNEL_1_ID;
-import static com.google.hemmah.view.Notifications.HelpCallRequestNotification.CHANNEL_1_NAME;
+import static com.google.hemmah.presentation.videocall.HelpCallRequestNotification.CHANNEL_1_DESCRIPTION;
+import static com.google.hemmah.presentation.videocall.HelpCallRequestNotification.CHANNEL_1_ID;
+import static com.google.hemmah.presentation.videocall.HelpCallRequestNotification.CHANNEL_1_NAME;
 
 import android.app.Application;
 import android.app.NotificationChannel;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Build;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-import androidx.preference.PreferenceManager;
-
-import com.google.hemmah.view.WalkthroughActivity;
 
 import dagger.hilt.android.HiltAndroidApp;
-import timber.log.Timber;
-import timber.log.Timber.DebugTree;
 
 @HiltAndroidApp
 public final class HemmahApp extends Application {
