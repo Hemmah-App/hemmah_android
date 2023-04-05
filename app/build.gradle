@@ -97,6 +97,8 @@ dependencies {
 
     // ViewModel and live data
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation 'com.google.guava:guava:30.1-jre'
+
 
 
     testImplementation 'junit:junit:4.13.2'

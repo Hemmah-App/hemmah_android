@@ -7,10 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
+
 public class HelpRequest {
     @SerializedName("latitude")
     private double latitude;
@@ -25,5 +22,43 @@ public class HelpRequest {
     @SerializedName("title")
     private String title;
 
+    public double getLatitude() {
+        return latitude;
+    }
 
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public HelpRequest(String location, String date, String description, String title) {
+        this.location = location;
+        this.date = date;
+        this.description = description;
+        this.title = title;
+    }
+
+    public HelpRequest(double latitude, double longitude, String location, String date, String description, String title) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.location = location;
+        this.date = date;
+        this.description = description;
+        this.title = title;
+    }
 }

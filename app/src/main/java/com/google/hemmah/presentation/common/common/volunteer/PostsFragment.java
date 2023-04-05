@@ -25,6 +25,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.hemmah.R;
 import com.google.hemmah.data.remote.dto.HelpRequestResponse;
 import com.google.hemmah.domain.model.HelpRequest;
+import com.google.hemmah.domain.model.User;
 import com.google.hemmah.presentation.common.common.RecyclerVIewItemListener;
 import com.google.hemmah.data.VolunteerCallService;
 import com.google.hemmah.presentation.common.common.AppAdapter;
@@ -41,14 +42,14 @@ public class PostsFragment extends Fragment implements RecyclerVIewItemListener 
     private ImageButton mProfilephotoImageButton;
     private RecyclerView mRecyclerView;
     private AppAdapter mPostAdapter;
-    private ArrayList<HelpRequestResponse> mPostsArrayList;
+    private ArrayList<HelpRequest> mPostsArrayList;
     private SwitchMaterial mStatusSwitchable;
-    private TextView status_TV;
+    private TextView status_TV,commonhome_welcome_TV;
     private FrameLayout mProfilePhotoFragmentLayout,mNotificationAllFragmentLayout,mExpandedPostContainer;
     public static final String PROFILE_FRAGMENT_TAG = "PROFILE_FRAGMENT";
     public static final String NOTIFICATION_FRAGMENT_TAG = "NOTIFICATION_FRAGMENT";
     private ImageView mNotificationBellImageView;
-
+    User mUser;
 
 
     @Override
@@ -57,7 +58,11 @@ public class PostsFragment extends Fragment implements RecyclerVIewItemListener 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_posts, container, false);
     }
-
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        receiveUser();
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -70,6 +75,10 @@ public class PostsFragment extends Fragment implements RecyclerVIewItemListener 
         mRecyclerView.setAdapter(mPostAdapter);
         handleButtonsClick();
         mPostAdapter.notifyDataSetChanged();
+        if(mUser!=null){
+            commonhome_welcome_TV.append(mUser.getFirstName());
+        }
+
 
     }
 
@@ -129,20 +138,21 @@ public class PostsFragment extends Fragment implements RecyclerVIewItemListener 
         mNotificationAllFragmentLayout = view.findViewById(R.id.notification_all_FragmentContainer);
         mNotificationBellImageView = view.findViewById(R.id.notificationBell_IV);
         mExpandedPostContainer  = view.findViewById(R.id.expandedRequest_fragment_CONTAINER);
+        commonhome_welcome_TV = view.findViewById(R.id.commonhome_welcome_TV);
 
     }
 
-    public static void intializePosts(ArrayList<HelpRequestResponse> helpRequests) {
-        helpRequests.add(new HelpRequestResponse("I want help when going to the mosque",
+    public static void intializePosts(ArrayList<HelpRequest> helpRequests) {
+        helpRequests.add(new HelpRequest("I want help when going to the mosque",
                 "Hi, my name is Hazem its good to see you,as you might know i have a visual impairment and i'am a muslim too so i need to pray 5 times a day so i need someone who lives near to me so that he can take me with him to the mosque every day my address provided below and thanks in advance",
                 "25/1/2023","naser city"));
-        helpRequests.add(new HelpRequestResponse("hello this my 2 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 2", "25/1/2023","naser city"));
-        helpRequests.add(new HelpRequestResponse("hello this my 3 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 3", "25/1/2023","naser city"));
-        helpRequests.add(new HelpRequestResponse("hello this my 4 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 4", "25/1/2023","naser city"));
-        helpRequests.add(new HelpRequestResponse("hello this my 5 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 5", "25/1/2023","naser city"));
-        helpRequests.add(new HelpRequestResponse("hello this my 6 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 6", "25/1/2023","naser city"));
-        helpRequests.add(new HelpRequestResponse("hello this my 7 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 7", "25/1/2023","naser city"));
-        helpRequests.add(new HelpRequestResponse("hello this my 8 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 8", "25/1/2023","naser city"));
+        helpRequests.add(new HelpRequest("hello this my 2 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 2", "25/1/2023","naser city"));
+        helpRequests.add(new HelpRequest("hello this my 3 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 3", "25/1/2023","naser city"));
+        helpRequests.add(new HelpRequest("hello this my 4 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 4", "25/1/2023","naser city"));
+        helpRequests.add(new HelpRequest("hello this my 5 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 5", "25/1/2023","naser city"));
+        helpRequests.add(new HelpRequest("hello this my 6 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 6", "25/1/2023","naser city"));
+        helpRequests.add(new HelpRequest("hello this my 7 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 7", "25/1/2023","naser city"));
+        helpRequests.add(new HelpRequest("hello this my 8 post", "hello descrp asdoqwjwbrkqwrqwuirbksahbfigwqribskabfahsvfiyqvyqwvryqwrvqwyrgqwhorubivugsuaifgigqwirgi 8", "25/1/2023","naser city"));
     }
 
 
@@ -161,7 +171,13 @@ public class PostsFragment extends Fragment implements RecyclerVIewItemListener 
         args.putString("TITLE", mPostsArrayList.get(pos).getTitle());
         args.putString("DESCRIPTION", mPostsArrayList.get(pos).getDescription());
         args.putString("DATE", mPostsArrayList.get(pos).getDate());
-        args.putString("ADDRESS", mPostsArrayList.get(pos).getMeetingLocation());
+        args.putString("ADDRESS", mPostsArrayList.get(pos).getLocation());
         expandedPostFragment.setArguments(args);
+    }
+
+    private void receiveUser() {
+        Bundle bundle = getActivity().getIntent().getExtras();
+        if(bundle!=null)
+            mUser = bundle.getParcelable("USER");
     }
 }

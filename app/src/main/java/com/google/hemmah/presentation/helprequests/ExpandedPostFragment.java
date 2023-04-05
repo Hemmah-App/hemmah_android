@@ -63,6 +63,7 @@ public class ExpandedPostFragment extends Fragment {
     }
 
     private void binidingData() {
+
         mExpandedPostTitleTextView.setText(mHelpRequest.getTitle());
         mExpandedPostDescriptionTextView.setText(mHelpRequest.getDescription());
         mExpandedPostDateTextView.setText(mHelpRequest.getDate());

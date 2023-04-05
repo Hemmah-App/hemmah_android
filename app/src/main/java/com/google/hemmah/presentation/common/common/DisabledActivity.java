@@ -9,8 +9,9 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.hemmah.R;
+import com.google.hemmah.domain.model.User;
 import com.google.hemmah.presentation.helprequest.DisabledRequestsFragment;
-import com.google.hemmah.presentation.videocall.VideoPostFragment;
+import com.google.hemmah.presentation.videocall.HelpVideoFragment;
 
 public class DisabledActivity extends AppCompatActivity {
     private BottomNavigationView mBottomNavigationView;
@@ -23,9 +24,13 @@ public class DisabledActivity extends AppCompatActivity {
         mBottomNavigationView = (BottomNavigationView) findViewById(R.id.nav_bar);
         intializeFragments();
 
+
     }
+
+
+
     private void intializeFragments() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragments_frame, new VideoPostFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragments_frame, new HelpVideoFragment()).commit();
         mBottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -37,7 +42,7 @@ public class DisabledActivity extends AppCompatActivity {
 
     private void handleBottomNavBarSelection(MenuItem item) {
         if (item.getItemId() == R.id.home) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragments_frame, new VideoPostFragment())
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragments_frame, new HelpVideoFragment())
                     .commit();
         } else if (item.getItemId() == R.id.disabled_settings) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragments_frame, new PreferenceFragment())

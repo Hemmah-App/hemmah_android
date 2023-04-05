@@ -51,7 +51,7 @@ public class AppAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             ((PostHolder) holder).titleTextView.setText(helpRequest.getTitle());
             ((PostHolder) holder).descriptionTextView.setText(helpRequest.getDescription());
             ((PostHolder) holder).dateTextView.setText(helpRequest.getDate());
-            ((PostHolder) holder).addressTextView.setText(helpRequest.getAddress());
+            ((PostHolder) holder).addressTextView.setText(helpRequest.getLocation());
         } else if (holder instanceof ImagesViewHolder) {
             WalkthroughItem walkthroughItem = (WalkthroughItem) dataList.get(position);
             ((ImagesViewHolder) holder).imageView.setImageResource(walkthroughItem.getImageResourceId());
@@ -64,7 +64,7 @@ public class AppAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             ((DisabledRequestsViewHolder) holder).titleTextView.setText(helpRequest.getTitle());
             ((DisabledRequestsViewHolder) holder).descriptionTextView.setText(helpRequest.getDescription());
             ((DisabledRequestsViewHolder) holder).dateTextView.setText(helpRequest.getDate());
-            ((DisabledRequestsViewHolder) holder).addressTextView.setText(helpRequest.getAddress());
+            ((DisabledRequestsViewHolder) holder).addressTextView.setText(helpRequest.getLocation());
         }
 
     }

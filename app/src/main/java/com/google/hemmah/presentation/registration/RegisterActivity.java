@@ -1,6 +1,8 @@
 package com.google.hemmah.presentation.registration;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -18,22 +20,17 @@ import com.google.hemmah.Utils.Validator;
 import com.google.hemmah.domain.model.User;
 import com.google.hemmah.data.remote.dto.ApiResponse;
 import com.google.hemmah.domain.model.enums.UserType;
-import com.google.hemmah.domain.AuthService;
 import com.google.hemmah.presentation.common.common.DisabledActivity;
 import com.google.hemmah.presentation.common.common.volunteer.VolunteerActivity;
-import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Response;
 import timber.log.Timber;
 
 @AndroidEntryPoint
 public class RegisterActivity extends AppCompatActivity {
-
-    @Inject
-    AuthService authService;
+    RegisterViewModel mRegisterViewModel;
     private TextInputLayout mUserNameTextInput,mEmailTextInput,
             mPhoneNumberTextInput ,mFirstNameTextInput ,
             mLastNameTextInput, mPasswordTextInput;
@@ -46,14 +43,42 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initViews();
+        mRegisterViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
+        saveDataFeilds();
+        retrieveSavedData();
         mSharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
         setButtonsListeners();
 
     }
 
+    private void retrieveSavedData() {
+        if (mRegisterViewModel.getUser() != null) {
+            mFirstNameTextInput.getEditText().setText(mRegisterViewModel.getUser().getFirstName());
+            mLastNameTextInput.getEditText().setText(mRegisterViewModel.getUser().getLastName());
+            mUserNameTextInput.getEditText().setText(mRegisterViewModel.getUser().getUserName());
+            mPhoneNumberTextInput.getEditText().setText(mRegisterViewModel.getUser().getPhoneNumber());
+            mEmailTextInput.getEditText().setText(mRegisterViewModel.getUser().getEmail());
+            mPasswordTextInput.getEditText().setText(mRegisterViewModel.getUser().getPassword());
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        saveDataFeilds();
+    }
+
+    private void saveDataFeilds(){
+        String firstName  = mFirstNameTextInput.getEditText().getText().toString();
+        String lastName  = mLastNameTextInput.getEditText().getText().toString();
+        String userName  = mUserNameTextInput.getEditText().getText().toString();
+        String phoneNumber  = mPhoneNumberTextInput.getEditText().getText().toString();
+        String email  = mEmailTextInput.getEditText().getText().toString();
+        String password  = mPasswordTextInput.getEditText().getText().toString();
+        if(!firstName.isEmpty()||!lastName.isEmpty()||!userName.isEmpty()||!phoneNumber.isEmpty()
+                ||!email.isEmpty()||!password.isEmpty()){
+            mRegisterViewModel.setUser(new User(userName,email,password,phoneNumber,firstName,lastName));
+        }
     }
 
     public void initViews() {
@@ -77,10 +102,10 @@ public class RegisterActivity extends AppCompatActivity {
                     //setting the progress bar to be visible when clicking on create volunteer button
                     mLogInProgressBar.setVisibility(View.VISIBLE);
                     //passing volunteer's  data to a map in order to post it
-                    User user = populateUser(UserType.VOLUNTEER);
-                    Timber.d("Registring user data from ui with info:\n"+user.toString());
+                    mRegisterViewModel.setUser(populateUser(UserType.VOLUNTEER));
+                    Timber.d("Registring user data from ui with info:\n"+mRegisterViewModel.getUser().toString());
                     //posting the user to the server
-                    signUp(user, VolunteerActivity.class);
+                    signUp(mRegisterViewModel.getUser(), VolunteerActivity.class);
                 }
             }
         });
@@ -92,10 +117,11 @@ public class RegisterActivity extends AppCompatActivity {
                     //setting the progress bad to be visible when clicking on create disabled button
                     mLogInProgressBar.setVisibility(View.VISIBLE);
                     //passing disabled's data to a map in order to post it
-                    User user = populateUser(UserType.DISABLED);
-                    Timber.d("Registring user data from ui with info:\n"+user.toString());
+                    mRegisterViewModel.setUser(populateUser(UserType.DISABLED));
+                    Timber.d("Registring user data from ui with info:\n"+ mRegisterViewModel.getUser().toString());
                     //posting the user to the server
-                    signUp(user, DisabledActivity.class);
+//                    signUp(new User("asdasdasdasd","frankcoper2@gmail.com","Password@1","01140305622","hazem","hazem",UserType.DISABLED), DisabledActivity.class);
+                    signUp(mRegisterViewModel.getUser(),DisabledActivity.class);
                 }
             }
         });
@@ -173,17 +199,16 @@ public class RegisterActivity extends AppCompatActivity {
 
     @SuppressLint("CheckResult")
     public void signUp(User user, Class intentedClass) {
-
-        Observable<Response<ApiResponse>> responseObservable = authService.signUp(user)
+        mRegisterViewModel.signUpUser(user)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-
-        responseObservable.subscribe((res) -> {
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((res) -> {
             if (res.code() == 200) {
                 mLogInProgressBar.setVisibility(View.GONE);
                 Timber.d("get token on successful register response :\n"+res.body().getData().getToken());
                 //store the token in a shared preferences file
-                SharedPrefUtils.saveToShared(mSharedPreferences, SharedPrefUtils.TOKEN_KEY, res.body().getData().getToken());
+                mRegisterViewModel.setToken(res.body().getData().getToken());
+                SharedPrefUtils.saveToShared(mSharedPreferences, SharedPrefUtils.TOKEN_KEY, mRegisterViewModel.getToken());
                 //got to the needed activity volunteer or disabled
                 Intent intent = new Intent(RegisterActivity.this, intentedClass);
                 startActivity(intent);

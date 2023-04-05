@@ -1,10 +1,14 @@
 package com.google.hemmah.presentation.videocall;
 
+import static com.google.hemmah.Utils.Constants.CHANNEL_1_ID;
+
+import android.Manifest;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.widget.RemoteViews;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
@@ -13,9 +17,7 @@ import com.google.hemmah.R;
 
 public class HelpCallRequestNotification {
 
-    public static final String CHANNEL_1_ID = "call notification";
-    public static final String CHANNEL_1_NAME = "Call Notification";
-    public static final String CHANNEL_1_DESCRIPTION = "This notification appears when a disabled needs a video call help";
+
     protected Context mContext;
     private final NotificationManagerCompat mNotificationManagerCompat;
     private PendingIntent mPendingIntent;
@@ -43,7 +45,6 @@ public class HelpCallRequestNotification {
         collapsedNotification.setTextViewText(R.id.callType, notificationContentText);
         expandedNotification.setTextViewText(R.id.callType, notificationContentText);
         expandedNotification.setOnClickPendingIntent(R.id.btnAnswer, mPendingIntent);
-
         mNotificationManagerCompat.notify(notificationId, notification);
     }
 

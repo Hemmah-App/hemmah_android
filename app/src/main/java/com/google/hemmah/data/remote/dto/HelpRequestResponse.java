@@ -7,10 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
+
 public class HelpRequestResponse {
     @SerializedName("latitude")
     private double latitude;
@@ -30,12 +27,59 @@ public class HelpRequestResponse {
     private String createdAt;
     @SerializedName("id")
     private int id;
-    public HelpRequestResponse(String title, String description, String date, String meetingLocation) {
-        this.title = title;
-        this.description = description;
-        this.date = date;
+
+    public HelpRequestResponse(String meetingLocation, String date, String description, String title) {
         this.meetingLocation = meetingLocation;
+        this.date = date;
+        this.description = description;
+        this.title = title;
     }
 
+    public HelpRequestResponse(double latitude, double longitude, String meetingLocation, String status, String date, String description, String title, String createdAt, int id) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.meetingLocation = meetingLocation;
+        this.status = status;
+        this.date = date;
+        this.description = description;
+        this.title = title;
+        this.createdAt = createdAt;
+        this.id = id;
+    }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public String getMeetingLocation() {
+        return meetingLocation;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public int getId() {
+        return id;
+    }
 }

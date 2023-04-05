@@ -10,11 +10,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,45 +21,52 @@ import com.google.hemmah.Utils.Validator;
 import com.google.hemmah.domain.model.User;
 import com.google.hemmah.data.remote.dto.ApiResponse;
 import com.google.hemmah.domain.model.enums.UserType;
-import com.google.hemmah.domain.AuthService;
-import com.google.hemmah.domain.usecase.LoginUserUseCase;
 import com.google.hemmah.presentation.common.common.DisabledActivity;
 import com.google.hemmah.presentation.common.common.volunteer.VolunteerActivity;
-
-import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Response;
 import timber.log.Timber;
-
 @AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
-    private LoginUserUseCase mLoginUserUseCase;
     private LoginViewModel mLoginViewModel;
-//    @Inject
-//    AuthService authService;
     private Button logInButton;
     private TextView registerTV;
-    private TextInputLayout emailTextInput;
-    private TextInputLayout passwordTextInput;
+    private TextInputLayout emailTextInput, passwordTextInput;
     private ProgressBar logInProgressBar;
     private Gson gson;
-    @Inject
-    public LoginActivity(LoginUserUseCase loginUserUseCase) {
-        mLoginUserUseCase = loginUserUseCase;
-    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initViews();
-        mLoginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+        mLoginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        saveDataFeilds();
+        retrieveSavedData();
         gson = new GsonBuilder().create();
         setButtonsListeners();
     }
 
+    private void retrieveSavedData() {
+        if (mLoginViewModel.getUser() != null) {
+            emailTextInput.getEditText().setText(mLoginViewModel.getUser().getEmail());
+            passwordTextInput.getEditText().setText(mLoginViewModel.getUser().getPassword());
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        saveDataFeilds();
+    }
+
+    private void saveDataFeilds() {
+        String email = emailTextInput.getEditText().getText().toString();
+        String password = passwordTextInput.getEditText().getText().toString();
+        mLoginViewModel.setUser(new User(email, password));
+    }
 
     private void initViews() {
         logInProgressBar = findViewById(R.id.login_Pb);
@@ -86,14 +90,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validLogin()) {
-                    //setting the progress bad to be visible
                     logInProgressBar.setVisibility(View.VISIBLE);
-
-                    String email = emailTextInput.getEditText().getText().toString();
-                    String password = passwordTextInput.getEditText().getText().toString();
-
-                    loginUser(email, password);
-                    Timber.d("Logging in user from ui with info :\n email: "+ email+"\npassword: "+password);
+                    mLoginViewModel.setUser(new User(emailTextInput.getEditText().getText().toString(),
+                            passwordTextInput.getEditText().getText().toString()));
+                    loginUser(mLoginViewModel.getUser());
+                    Timber.d("Logging in user from ui with info :\n" +
+                            " email: " + mLoginViewModel.getUser().getEmail() +
+                            "\npassword: " + mLoginViewModel.getUser().getPassword());
                 }
             }
         });
@@ -126,47 +129,67 @@ public class LoginActivity extends AppCompatActivity {
         }
         return valid;
     }
+
     private void toActivity(Class activity) {
-        Intent intent = new Intent(getApplicationContext(),activity);
+        Intent intent = new Intent(getApplicationContext(), activity);
         startActivity(intent);
     }
-    private void navigateByUserType(String token){
-        mLoginViewModel.getUser(token);
+
+    private void navigateByUserType(String token) {
+        mLoginViewModel.loadUserData(token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(res -> {
+                    if (res.code() == 200) {
+                        User user = res.body().getData().getUser();
+                        Timber.d("This token is valid with user's info : \n " + user.toString());
+                        if (user.getUserType().equals(UserType.DISABLED)) {
+                            toActivity(DisabledActivity.class);
+                        } else {
+                            toActivity(VolunteerActivity.class);
+                        }
+                    } else {
+                        //no message on error here
+                        Timber.d("This token from the sign in is inValid:\n" + token);
+
+                    }
+                }, err -> {
+                    Timber.e(err, "@me from sign in request failed :\n" + err.getMessage());
+                });
     }
 
     @SuppressLint("CheckResult")
-    private void loginUser(String email, String password) {
+    private void loginUser(User user) {
 
-        Observable<Response<ApiResponse>> observable = mLoginUserUseCase.execute(email, password)
+        mLoginViewModel.loginUser(user)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((res) -> {
 
-        observable.subscribe((res) -> {
+                    if (res.code() == 200) {
+                        //setting the progress bar to be gone(invisible) on getting a response
+                        logInProgressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), R.string.signin_toastmessage, Toast.LENGTH_SHORT).show();
+                        String token = res.body().getData().getToken();
+                        Timber.d("get token on successful login response :\n" + token);
+                        // save token in the sharedpref
+                        SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
+                        SharedPrefUtils.saveToShared(sharedPreferences, SharedPrefUtils.TOKEN_KEY, token);
+                        Timber.d("getting user type  to navigate user");
+                        navigateByUserType(token);
 
-            if (res.code() == 200) {
-                //setting the progress bar to be gone(invisible) on getting a response
-                logInProgressBar.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(), R.string.signin_toastmessage, Toast.LENGTH_SHORT).show();
-                String token = res.body().getData().getToken();
-                Timber.d("get token on successful login response :\n"+token);
-                // save token in the sharedpref
-                SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
-                SharedPrefUtils.saveToShared(sharedPreferences, SharedPrefUtils.TOKEN_KEY, token);
-                Timber.d("getting user type  to navigate user");
-                navigateByUserType(token);
+                    } else {
+                        logInProgressBar.setVisibility(View.GONE);
+                        ApiResponse apiResponseError = gson.fromJson(res.errorBody().string(), ApiResponse.class);
+                        Timber.d("Not getting 200 code:\n" + apiResponseError.getMessage());
+                        Toast.makeText(LoginActivity.this, apiResponseError.getReason(), Toast.LENGTH_SHORT).show();
+                    }
 
-            } else {
-                logInProgressBar.setVisibility(View.GONE);
-                ApiResponse apiResponseError = gson.fromJson(res.errorBody().string(), ApiResponse.class);
-                Timber.d("Not getting 200 code:\n"+apiResponseError.getMessage());
-                Toast.makeText(LoginActivity.this, apiResponseError.getReason(), Toast.LENGTH_SHORT).show();
-            }
-
-        }, (err) -> {
-            logInProgressBar.setVisibility(View.GONE);
-            Toast.makeText(LoginActivity.this, R.string.failedtoconnect_toastmessage, Toast.LENGTH_SHORT).show();
-            Timber.e("Error  posting to login api: \n"+err.getMessage());
-        });
+                }, (err) -> {
+                    logInProgressBar.setVisibility(View.GONE);
+                    Toast.makeText(LoginActivity.this, R.string.failedtoconnect_toastmessage, Toast.LENGTH_SHORT).show();
+                    Timber.e("Error  posting to login api: \n" + err.getMessage());
+                });
 
     }
 

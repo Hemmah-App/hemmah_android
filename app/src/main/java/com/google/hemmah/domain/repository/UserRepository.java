@@ -7,7 +7,7 @@ import io.reactivex.Observable;
 import retrofit2.Response;
 
 public interface UserRepository {
-    Observable<Response<ApiResponse>> loginUser(String email, String password);
+    Observable<Response<ApiResponse>> loginUser(User user);
     Observable<Response<ApiResponse>> registerUser(User user);
     Observable<Response<ApiResponse>> getUser(String token);
 }

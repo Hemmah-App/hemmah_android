@@ -92,10 +92,6 @@ public class VolunteerVideoActivity extends AppCompatActivity {
         initViews();
         requestAudioFocus(this);
         mStompHeaders = new ArrayList<>();
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.CAMERA,
-                        Manifest.permission.RECORD_AUDIO},
-                100);
         SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
         mStompClientManager = new StompClientManager(this, SharedPrefUtils.loadFromShared(sharedPreferences, SharedPrefUtils.TOKEN_KEY));
         handleButtonsClick();

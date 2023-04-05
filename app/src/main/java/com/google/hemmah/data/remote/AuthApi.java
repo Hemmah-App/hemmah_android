@@ -8,6 +8,7 @@ import com.google.hemmah.domain.model.User;
 import com.google.hemmah.data.remote.dto.ApiResponse;
 
 import java.util.Map;
+
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -21,8 +22,10 @@ public interface AuthApi {
     @POST(signupPath)
     Observable<Response<ApiResponse>> userSignUp(@Body User user);
 
+    //    @POST(loginPath)
+//    Observable<Response<ApiResponse>> userLogin(@Body Map<String,Object> user);
     @POST(loginPath)
-    Observable<Response<ApiResponse>> userLogin(@Body Map<String,Object> user);
+    Observable<Response<ApiResponse>> userLogin(@Body User user);
 
     @GET(getUserPath)
     Observable<Response<ApiResponse>> getUser(@Header("Authorization") String token);

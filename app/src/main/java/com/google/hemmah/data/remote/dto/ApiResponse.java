@@ -10,10 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
+
 public class ApiResponse {
     private String timeStamp;
     private int statusCode;
@@ -23,18 +20,73 @@ public class ApiResponse {
     private String developerMessage;
     private data data;
 
+    public ApiResponse(String timeStamp, int statusCode, String status, String reason, String message, String developerMessage, ApiResponse.data data) {
+        this.timeStamp = timeStamp;
+        this.statusCode = statusCode;
+        this.status = status;
+        this.reason = reason;
+        this.message = message;
+        this.developerMessage = developerMessage;
+        this.data = data;
+    }
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @ToString
     public static class data{
         private User user;
         private ArrayList<HelpRequestResponse> myRequests;
         private String token;
         private int requestId;
+
+        public User getUser() {
+            return user;
+        }
+
+        public ArrayList<HelpRequestResponse> getMyRequests() {
+            return myRequests;
+        }
+
+        public String getToken() {
+            return token;
+        }
+
+        public int getRequestId() {
+            return requestId;
+        }
+
+        public data(User user, ArrayList<HelpRequestResponse> myRequests, String token, int requestId) {
+            this.user = user;
+            this.myRequests = myRequests;
+            this.token = token;
+            this.requestId = requestId;
+
+        }
     }
 
+    public String getTimeStamp() {
+        return timeStamp;
+    }
 
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getDeveloperMessage() {
+        return developerMessage;
+    }
+
+    public ApiResponse.data getData() {
+        return data;
+    }
 }
 

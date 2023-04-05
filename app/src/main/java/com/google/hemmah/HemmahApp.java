@@ -1,8 +1,9 @@
 package com.google.hemmah;
 
-import static com.google.hemmah.presentation.videocall.HelpCallRequestNotification.CHANNEL_1_DESCRIPTION;
-import static com.google.hemmah.presentation.videocall.HelpCallRequestNotification.CHANNEL_1_ID;
-import static com.google.hemmah.presentation.videocall.HelpCallRequestNotification.CHANNEL_1_NAME;
+
+import static com.google.hemmah.Utils.Constants.CHANNEL_1_DESCRIPTION;
+import static com.google.hemmah.Utils.Constants.CHANNEL_1_ID;
+import static com.google.hemmah.Utils.Constants.CHANNEL_1_NAME;
 
 import android.app.Application;
 import android.app.NotificationChannel;

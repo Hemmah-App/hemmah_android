@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:gravity="start"
         android:paddingStart="15dp"
-        android:paddingTop="10dp"
+        android:layout_marginTop="20dp"
         android:text="Drive me to the mosque"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
@@ -27,7 +27,7 @@
         android:id="@+id/expandedRequest_back_IV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:background="@drawable/imageviews_selectors"
         android:src="@drawable/back_primarycolored_ic_24"
         app:layout_constraintStart_toStartOf="@+id/expanded_requests_Title_TV"
@@ -42,8 +42,8 @@
         android:text="Date of the helpRequest"
         android:textColor="@color/colorText"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expanded_description_TV" />
+        app:layout_constraintStart_toStartOf="@+id/expanded_address_TV"
+        app:layout_constraintTop_toBottomOf="@+id/expanded_address_TV" />
 
     <TextView
         android:id="@+id/expanded_address_TV"

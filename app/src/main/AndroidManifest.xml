@@ -41,6 +41,14 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".presentation.registration.LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Hemmah.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".presentation.videocall.DisabledVideoActivity"
             android:exported="false">
             <meta-data
@@ -66,14 +74,6 @@
             android:name=".presentation.registration.RegisterActivity"
             android:exported="false"
             android:theme="@style/Theme.Hemmah.NoActionBar"/>
-        <activity
-            android:name=".presentation.registration.LoginActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Hemmah.NoActionBar">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
         <activity
             android:name=".presentation.registration.SplashActivity"
             android:exported="true"

@@ -16,7 +16,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/volunteer_welcome_TV"
+            android:id="@+id/commonhome_welcome_TV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -33,9 +33,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/imageviews_selectors"
-            app:layout_constraintBottom_toBottomOf="@+id/volunteer_welcome_TV"
+            app:layout_constraintBottom_toBottomOf="@+id/commonhome_welcome_TV"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/volunteer_welcome_TV">
+            app:layout_constraintTop_toTopOf="@+id/commonhome_welcome_TV">
 
             <include
                 layout="@layout/common_profilephoto" />

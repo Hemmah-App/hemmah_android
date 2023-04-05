@@ -85,7 +85,6 @@ public class DisabledVideoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_disabled_video);
         initViews();
         requestAudioFocus(this);
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO}, 100);
         // Api call to get the room details using a service goes here
         mCameraDirection = CameraDirection.BACK;
         handleButtonsClick();
@@ -110,8 +109,8 @@ public class DisabledVideoActivity extends AppCompatActivity {
                     localAudioTrack.release();
                 }
                 if (localVideoTrack != null) {
-                    localVideoTrack.removeSink(localVideoView);
                     localVideoTrack.release();
+                    localVideoTrack.removeSink(localVideoView);
                 }
                 Intent intent = new Intent(getApplicationContext(), DisabledActivity.class);
                 startActivity(intent);

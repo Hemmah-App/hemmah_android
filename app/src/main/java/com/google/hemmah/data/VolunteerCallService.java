@@ -1,6 +1,7 @@
 package com.google.hemmah.data;
 
 
+import static com.google.hemmah.Utils.Constants.CHANNEL_1_ID;
 import static com.google.hemmah.Utils.Constants.VOLUNTEER_SUBSCRIBE_TOPIC;
 
 import android.app.NotificationManager;
@@ -62,7 +63,7 @@ public class VolunteerCallService extends Service {
 
     private void makeServiceIndicationNotification() {
         NotificationCompat.Builder builder = new NotificationCompat
-                .Builder(this,HelpCallRequestNotification.CHANNEL_1_ID )
+                .Builder(this,CHANNEL_1_ID )
                 .setSmallIcon(R.drawable.hemmah_logo_nobg)
                 .setContentTitle("You Are Online Now !")
                 .setContentText("Waiting For Help Requests...")
