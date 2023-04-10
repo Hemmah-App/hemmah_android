@@ -1,10 +1,5 @@
 package com.google.hemmah.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-
 
 public class WalkthroughItem {
     private int imageResourceId;

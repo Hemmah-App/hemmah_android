@@ -1,96 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/materialCardView"
-    android:layout_width="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:elevation="0dp"
-    android:layout_margin="3dp"
-    app:cardBackgroundColor="@color/colorPrimaryLight"
-    app:cardElevation="0dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:strokeWidth="0dp">
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-        <TextView
-            android:id="@+id/disabled_requests_Title_TV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="10dp"
-            android:paddingTop="10dp"
-            android:text="Drive me to the mosque"
-            android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/disabled_requests_options_IV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/imageviews_selectors"
-            android:src="@drawable/options_ic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline6"
-            app:layout_constraintTop_toTopOf="@+id/disabled_requests_Title_TV" />
-
-
-        <TextView
-            android:id="@+id/disabled_requests_Date_TV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Date of the helpRequest"
-            android:textColor="@color/colorTextOnPrimaryLight"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/disabled_requests_Description_TV" />
-
-        <TextView
-            android:id="@+id/disabled_requests_Address_TV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Address"
-            android:textColor="@color/colorTextOnPrimaryLight"
-            android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/disabled_requests_Description_TV" />
-
-        <TextView
-            android:id="@+id/disabled_requests_Description_TV"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="left"
-            android:minLines="10"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:text="Hi, my name is Hazem its good to see you,as you might know i have a visual impairment and i'am a muslim too so i need to pray 5 times a day so i need someone who lives near to me so that he can take me with him to the mosque every day my address provided below and thanks in advance"
-            android:textColor="@color/colorTextOnPrimaryLight"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/disabled_requests_Title_TV" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.93" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>
+    >
+    <include layout="@layout/posts_recycler_item"/>
+    <ImageView
+        android:id="@+id/disabled_requests_options_IV"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/options_ic"
+        android:layout_gravity="end"
+        android:layout_margin="10dp"
+        />
+</FrameLayout>
 

@@ -136,6 +136,7 @@
 
 
         <LinearLayout
+            android:id="@+id/volunteer_empty_requests_LAYOUT"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -146,7 +147,7 @@
             app:layout_constraintTop_toBottomOf="@+id/volunteer_CV">
 
             <ImageView
-                android:id="@+id/empty_history_icon"
+                android:id="@+id/volunteer_empty_requests_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -168,14 +169,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-
                 android:gravity="center"
                 android:text="There is no help requests posted yet \n thanks for your effort"
                 android:textSize="13sp" />
         </LinearLayout>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_layout"
+            android:id="@+id/volunteer_swipe_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:visibility="visible"
@@ -225,7 +225,17 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.47" />
 
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/volunteer_swipe_layout">
 
+            <include layout="@layout/common_progressbar_tv" />
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
@@ -253,8 +263,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-         />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:id="@+id/profilePhoto_CONTAINER"
@@ -274,6 +283,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.15" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

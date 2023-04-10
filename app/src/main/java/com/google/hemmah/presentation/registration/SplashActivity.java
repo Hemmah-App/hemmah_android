@@ -18,6 +18,8 @@ import com.google.hemmah.presentation.common.common.WalkthroughActivity;
 import com.google.hemmah.presentation.common.common.DisabledActivity;
 import com.google.hemmah.presentation.common.common.volunteer.VolunteerActivity;
 
+import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -25,22 +27,19 @@ import timber.log.Timber;
 
 @AndroidEntryPoint
 public class SplashActivity extends AppCompatActivity {
-    private SplashViewModel mSplashViewModel;
+    @Inject
+    SplashViewModel mSplashViewModel;
     private SharedPreferences mSharedPreferences, mDefaultSharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        mSplashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
+//        mSplashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
         mDefaultSharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         mSharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, MODE_PRIVATE);
         handleBeforeSplashNavigation();
     }
-
-
-
-
 
 
     private void handleBeforeSplashNavigation() {
@@ -55,6 +54,7 @@ public class SplashActivity extends AppCompatActivity {
         }
 
     }
+
     private void handleAfterSplashNavigation() {
         String token = SharedPrefUtils.loadFromShared(mSharedPreferences, SharedPrefUtils.TOKEN_KEY);
         mSplashViewModel.loadUser(token);
@@ -91,7 +91,7 @@ public class SplashActivity extends AppCompatActivity {
                     public void run() {
                         Intent intent = new Intent(getApplicationContext(), Activity);
                         Bundle bundle = new Bundle();
-                        bundle.putParcelable("USER",mSplashViewModel.getUser());
+                        bundle.putParcelable("USER", mSplashViewModel.getUser());
                         intent.putExtras(bundle);
                         startActivity(intent);
                         finish();

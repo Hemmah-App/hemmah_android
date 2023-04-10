@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/empty_history_icon"
+            android:id="@+id/disabled_empty_requests_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="You did not proceed in any help request yet"
+            android:text="You did not proceed in any help request"
             android:textSize="13sp" />
     </LinearLayout>
 

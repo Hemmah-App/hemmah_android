@@ -82,8 +82,8 @@ public class ExpandedPostFragment extends Fragment {
     private void loadingPostFromCollapsedItem() {
         Bundle args = getArguments();
         try {
-            mHelpRequest = new HelpRequestResponse(args.getString("TITLE"), args.getString("DESCRIPTION"),
-                    args.getString("DATE"), args.getString("ADDRESS"));
+            mHelpRequest = new HelpRequestResponse(args.getString("ADDRESS"),args.getString("DATE"), args.getString("DESCRIPTION"),
+                    args.getString("TITLE"));
         } catch (NullPointerException e) {
             Timber.e(e);
         }

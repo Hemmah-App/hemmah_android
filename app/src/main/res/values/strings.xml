@@ -67,6 +67,9 @@
     <string name="prefrence_temporary_lang_describtion">Choose your preferred language</string>
     <string name="requests_bottomnav_item">Requests</string>
     <string name="disabled_requests_options_menu_item_delete">Delete</string>
+    <string name="disabled_requests_OMI_edit">Edit</string>
+    <string name="disabled_helprequest_mark_as_complete">Mark as complete</string>
+    <string name="please_wait">Please Wait ...</string>
 
 
 </resources>

@@ -20,7 +20,6 @@ public class LoginViewModel extends ViewModel {
     private User mUser;
     private String token;
 
-
     @Inject
     public LoginViewModel(LoginUserUseCase loginUserUseCase, GetUserUseCase getUserUseCase) {
         this.loginUserUseCase = loginUserUseCase;
@@ -30,7 +29,8 @@ public class LoginViewModel extends ViewModel {
     public String getToken() {
         return token;
     }
-    public void setToken(String token){
+
+    public void setToken(String token) {
         this.token = token;
     }
 

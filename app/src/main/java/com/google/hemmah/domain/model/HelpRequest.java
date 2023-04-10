@@ -1,26 +1,20 @@
 package com.google.hemmah.domain.model;
 
-import com.google.gson.annotations.SerializedName;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import android.widget.ArrayAdapter;
 
+import com.google.hemmah.data.remote.dto.HelpRequestResponse;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HelpRequest {
-    @SerializedName("latitude")
-    private double latitude;
-    @SerializedName("longitude")
-    private double longitude;
-    @SerializedName("location")
-    private String location;
-    @SerializedName("date")
-    private String date;
-    @SerializedName("description")
-    private String description;
-    @SerializedName("title")
     private String title;
+    private String description;
+    private String date;
+    private String location;
+    private double longitude;
+    private double latitude;
 
     public double getLatitude() {
         return latitude;
@@ -46,19 +40,29 @@ public class HelpRequest {
         return title;
     }
 
-    public HelpRequest(String location, String date, String description, String title) {
-        this.location = location;
-        this.date = date;
-        this.description = description;
+    public HelpRequest(String title, String description, String date, String location) {
         this.title = title;
+        this.description = description;
+        this.date = date;
+        this.location = location;
     }
 
-    public HelpRequest(double latitude, double longitude, String location, String date, String description, String title) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.location = location;
-        this.date = date;
-        this.description = description;
+    public HelpRequest(String title, String description, String date, String location, double longitude, double latitude) {
         this.title = title;
+        this.description = description;
+        this.date = date;
+        this.location = location;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
+
+    public static ArrayList<HelpRequest> fromDto(ArrayList<HelpRequestResponse> helpRequestsResponse) {
+        ArrayList<HelpRequest> helpRequests = new ArrayList<>();
+        for(HelpRequestResponse request : helpRequestsResponse) {
+            helpRequests.add(new HelpRequest(request.getTitle(),request.getDescription()
+                    ,request.getDate(),request.getMeetingLocation()));
+        }
+        return helpRequests;
     }
 }

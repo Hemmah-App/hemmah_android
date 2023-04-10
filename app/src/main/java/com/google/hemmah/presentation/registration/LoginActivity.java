@@ -11,7 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,13 +23,17 @@ import com.google.hemmah.data.remote.dto.ApiResponse;
 import com.google.hemmah.domain.model.enums.UserType;
 import com.google.hemmah.presentation.common.common.DisabledActivity;
 import com.google.hemmah.presentation.common.common.volunteer.VolunteerActivity;
+
+import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 @AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
-    private LoginViewModel mLoginViewModel;
+    @Inject
+    LoginViewModel mLoginViewModel;
     private Button logInButton;
     private TextView registerTV;
     private TextInputLayout emailTextInput, passwordTextInput;
@@ -42,8 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initViews();
-        mLoginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-        saveDataFeilds();
+        saveDataFields();
         retrieveSavedData();
         gson = new GsonBuilder().create();
         setButtonsListeners();
@@ -59,10 +62,10 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        saveDataFeilds();
+        saveDataFields();
     }
 
-    private void saveDataFeilds() {
+    private void saveDataFields() {
         String email = emailTextInput.getEditText().getText().toString();
         String password = passwordTextInput.getEditText().getText().toString();
         mLoginViewModel.setUser(new User(email, password));
@@ -101,7 +104,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private boolean validLogin() {
         boolean valid = true;
@@ -151,7 +153,6 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         //no message on error here
                         Timber.d("This token from the sign in is inValid:\n" + token);
-
                     }
                 }, err -> {
                     Timber.e(err, "@me from sign in request failed :\n" + err.getMessage());
@@ -160,12 +161,10 @@ public class LoginActivity extends AppCompatActivity {
 
     @SuppressLint("CheckResult")
     private void loginUser(User user) {
-
         mLoginViewModel.loginUser(user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((res) -> {
-
                     if (res.code() == 200) {
                         //setting the progress bar to be gone(invisible) on getting a response
                         logInProgressBar.setVisibility(View.GONE);

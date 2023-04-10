@@ -33,6 +33,7 @@ public class ApiResponse {
     public static class data{
         private User user;
         private ArrayList<HelpRequestResponse> myRequests;
+        private ArrayList<HelpRequestResponse> requests;
         private String token;
         private int requestId;
 
@@ -42,6 +43,14 @@ public class ApiResponse {
 
         public ArrayList<HelpRequestResponse> getMyRequests() {
             return myRequests;
+        }
+
+        public ArrayList<HelpRequestResponse> getRequests() {
+            return requests;
+        }
+
+        public void setRequests(ArrayList<HelpRequestResponse> requests) {
+            this.requests = requests;
         }
 
         public String getToken() {
@@ -55,6 +64,7 @@ public class ApiResponse {
         public data(User user, ArrayList<HelpRequestResponse> myRequests, String token, int requestId) {
             this.user = user;
             this.myRequests = myRequests;
+            this.requests = myRequests;
             this.token = token;
             this.requestId = requestId;
 

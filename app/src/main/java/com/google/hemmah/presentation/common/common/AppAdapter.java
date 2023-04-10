@@ -18,13 +18,13 @@ import java.util.ArrayList;
 
 public class AppAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<T> dataList;
-    protected RecyclerVIewItemListener mRecyclerVIewItemListener;
+    protected RecyclerVIewListeners mRecyclerVIewListeners;
     protected int layoutResourceId;
 
-    public AppAdapter(ArrayList<T> dataList, int layoutResourceId, RecyclerVIewItemListener recyclerVIewItemListener) {
+    public AppAdapter(ArrayList<T> dataList, int layoutResourceId, RecyclerVIewListeners recyclerVIewListeners) {
         this.dataList = dataList;
         this.layoutResourceId = layoutResourceId;
-        this.mRecyclerVIewItemListener = recyclerVIewItemListener;
+        this.mRecyclerVIewListeners = recyclerVIewListeners;
         notifyDataSetChanged();
 
     }
@@ -35,11 +35,11 @@ public class AppAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(layoutResourceId, parent, false);
         if (layoutResourceId == R.layout.posts_recycler_item)
-            return new AppAdapter.PostHolder(view, mRecyclerVIewItemListener);
+            return new AppAdapter.PostHolder(view, mRecyclerVIewListeners);
         else if (layoutResourceId == R.layout.walkthrougth_item)
             return new AppAdapter.ImagesViewHolder(view);
-        else if(layoutResourceId == R.layout.disabled_request_recycler_item)
-            return new AppAdapter.DisabledRequestsViewHolder(view);
+        else if (layoutResourceId == R.layout.disabled_request_recycler_item)
+            return new AppAdapter.DisabledRequestsViewHolder(view, mRecyclerVIewListeners);
         else
             return null;
     }
@@ -58,8 +58,7 @@ public class AppAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             ((ImagesViewHolder) holder).headerTextView.setText(walkthroughItem.getTitle());
             ((ImagesViewHolder) holder).describtionTextView.setText(walkthroughItem.getDescription());
 
-        }
-        else if (holder instanceof DisabledRequestsViewHolder){
+        } else if (holder instanceof DisabledRequestsViewHolder) {
             HelpRequest helpRequest = (HelpRequest) this.dataList.get(position);
             ((DisabledRequestsViewHolder) holder).titleTextView.setText(helpRequest.getTitle());
             ((DisabledRequestsViewHolder) holder).descriptionTextView.setText(helpRequest.getDescription());
@@ -76,7 +75,7 @@ public class AppAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public static class ImagesViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView headerTextView,describtionTextView;
+        TextView headerTextView, describtionTextView;
 
         public ImagesViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -88,37 +87,44 @@ public class AppAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public static class PostHolder extends RecyclerView.ViewHolder {
-        TextView titleTextView,addressTextView,descriptionTextView,dateTextView;
-        public PostHolder(@NonNull View itemView, RecyclerVIewItemListener recyclerVIewItemListener) {
+        TextView titleTextView, addressTextView, descriptionTextView, dateTextView;
+
+        public PostHolder(@NonNull View itemView, RecyclerVIewListeners recyclerVIewListeners) {
             super(itemView);
-            titleTextView = itemView.findViewById(R.id.expanded_requests_Title_TV);
-            descriptionTextView = itemView.findViewById(R.id.expanded_description_TV);
-            dateTextView = itemView.findViewById(R.id.expanded_date_TV);
-            addressTextView = itemView.findViewById(R.id.expanded_address_TV);
-            if (recyclerVIewItemListener != null) {
+            titleTextView = itemView.findViewById(R.id.collapsed_requests_Title_TV);
+            descriptionTextView = itemView.findViewById(R.id.collapsed_description_TV);
+            dateTextView = itemView.findViewById(R.id.collapsed_date_TV);
+            addressTextView = itemView.findViewById(R.id.collapsed_address_TV);
+            if (recyclerVIewListeners != null) {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         int pos = getAbsoluteAdapterPosition();
                         if (pos != RecyclerView.NO_POSITION)
-                            recyclerVIewItemListener.onItemClick(pos);
+                            recyclerVIewListeners.onItemClick(pos);
                     }
                 });
             }
         }
     }
-    public static class DisabledRequestsViewHolder extends RecyclerView.ViewHolder{
-        TextView titleTextView,addressTextView,descriptionTextView,dateTextView;
-        public DisabledRequestsViewHolder(@NonNull View itemView) {
+
+    public static class DisabledRequestsViewHolder extends RecyclerView.ViewHolder {
+        TextView titleTextView, addressTextView, descriptionTextView, dateTextView;
+        ImageView optionsImageView;
+
+        public DisabledRequestsViewHolder(@NonNull View itemView, RecyclerVIewListeners recyclerVIewListeners) {
             super(itemView);
-            titleTextView = itemView.findViewById(R.id.disabled_requests_Title_TV);
-            descriptionTextView = itemView.findViewById(R.id.disabled_requests_Description_TV);
-            addressTextView = itemView.findViewById(R.id.disabled_requests_Address_TV);
-            dateTextView = itemView.findViewById(R.id.disabled_requests_Date_TV);
+            titleTextView = itemView.findViewById(R.id.collapsed_requests_Title_TV);
+            descriptionTextView = itemView.findViewById(R.id.collapsed_description_TV);
+            addressTextView = itemView.findViewById(R.id.collapsed_address_TV);
+            dateTextView = itemView.findViewById(R.id.collapsed_date_TV);
+            optionsImageView = itemView.findViewById(R.id.disabled_requests_options_IV);
+            optionsImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    recyclerVIewListeners.onViewInItemClick(v, getBindingAdapterPosition());
+                }
+            });
         }
-
     }
-
-
 }
-

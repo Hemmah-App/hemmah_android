@@ -17,8 +17,10 @@ public class Constants {
     public static final String markHelpRequestPath = helpRequestPath+"/complete";
     public static final String helpRequestsFeedPath = helpRequestPath+"/feed";
 
-
+    public static final String getProfilePicturePath = "/v1/user/profile-pic";
+    public static final String updateProfilePicturePath = "/v1/user/profile-pic";
     public static final String CHANNEL_1_ID = "call notification";
     public static final String CHANNEL_1_NAME = "Call Notification";
-    public static final String CHANNEL_1_DESCRIPTION = "This notification appears when a disabled needs a video call help";
+    public static final String CHANNEL_1_DESCRIPTION = "This notification appears when a" +
+            " disabled needs a video call help";
 }

@@ -8,71 +8,99 @@
     android:backgroundTint="@color/colorSurface">
 
 
-    <TextView
-        android:id="@+id/expanded_requests_Title_TV"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        android:paddingStart="15dp"
-        android:layout_marginTop="20dp"
-        android:text="Drive me to the mosque"
-        android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expandedRequest_back_IV" />
 
     <ImageView
         android:id="@+id/expandedRequest_back_IV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/imageviews_selectors"
         android:src="@drawable/back_primarycolored_ic_24"
-        app:layout_constraintStart_toStartOf="@+id/expanded_requests_Title_TV"
+        app:layout_constraintStart_toStartOf="@+id/scrollView2"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <TextView
-        android:id="@+id/expanded_date_TV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="Date of the helpRequest"
-        android:textColor="@color/colorText"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@+id/expanded_address_TV"
-        app:layout_constraintTop_toBottomOf="@+id/expanded_address_TV" />
-
-    <TextView
-        android:id="@+id/expanded_address_TV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="Address"
-        android:textColor="@color/colorText"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expanded_description_TV" />
-
-    <TextView
-        android:id="@+id/expanded_description_TV"
+    <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        android:paddingTop="10dp"
-        android:paddingStart="15dp"
-        android:paddingEnd="10dp"
-        android:lineSpacingExtra="4dp"
-        android:text="Hi, my name is Hazem its good to see you,as you might know i have a visual impairment and i'am a muslim too so i need to pray 5 times a day so i need someone who lives near to me so that he can take me with him to the mosque every day my address provided below and thanks in advance"
-        android:textColor="@color/colorText"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expanded_requests_Title_TV" />
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/view3"
+        app:layout_constraintTop_toBottomOf="@+id/expandedRequest_back_IV">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/expanded_requests_Title_TV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingStart="15dp"
+                android:text="Drive me to the mosque"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/expanded_description_TV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:lineSpacingExtra="4dp"
+                android:paddingStart="15dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp"
+                android:text="Hi, my name is Hazem its good to see you,as you might know i have a visual impairment and i'am a muslim too so i need to pray 5 times a day so i need someone who lives near to me so that he can take me with him to the mosque every day my address provided below and thanks in advance"
+                android:textColor="@color/colorText"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/expanded_requests_Title_TV" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/materialDivider2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/expanded_description_TV" />
+
+
+            <TextView
+                android:id="@+id/expanded_date_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="15dp"
+                android:text="Date of the helpRequest"
+                android:textColor="@color/colorPrimaryLight1"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/expanded_address_TV"
+                app:layout_constraintTop_toBottomOf="@+id/expanded_address_TV" />
+
+            <TextView
+                android:id="@+id/expanded_address_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="Address"
+                android:textColor="@color/colorPrimaryLight1"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/materialDivider2"
+                tools:layout_editor_absoluteY="173dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
     <View
         android:id="@+id/view3"
         android:layout_width="match_parent"

@@ -5,13 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.hemmah.R;
 import com.google.hemmah.presentation.common.common.PreferenceFragment;
-;
+;import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class VolunteerActivity extends AppCompatActivity {
     private BottomNavigationView mVolunteerBottomNavigation;
 
@@ -22,12 +24,10 @@ public class VolunteerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteer);
         mVolunteerBottomNavigation = findViewById(R.id.buttomNavigathion);
-        intializeFragments();
+        initializeFragments();
     }
 
-
-
-    private void intializeFragments() {
+    private void initializeFragments() {
         getSupportFragmentManager().beginTransaction().replace(R.id.framentContinar, new PostsFragment()).commit();
         mVolunteerBottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override

@@ -13,6 +13,9 @@ import com.google.hemmah.domain.model.User;
 import com.google.hemmah.presentation.helprequest.DisabledRequestsFragment;
 import com.google.hemmah.presentation.videocall.HelpVideoFragment;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class DisabledActivity extends AppCompatActivity {
     private BottomNavigationView mBottomNavigationView;
 

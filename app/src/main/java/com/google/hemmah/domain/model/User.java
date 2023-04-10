@@ -19,6 +19,7 @@ public class User implements Parcelable{
 	private String firstName;
 	private String lastName;
 	private UserType userType;
+	private String language;
 
 	public User(String email, String password) {
 		this.email = email;
@@ -42,6 +43,21 @@ public class User implements Parcelable{
 		this.phoneNumber = phoneNumber;
 		this.firstName = firstName;
 		this.lastName = lastName;
+	}
+
+	public User(String userName, String email, String password, String phoneNumber, String firstName, String lastName, UserType userType, String language) {
+		this.userName = userName;
+		this.email = email;
+		this.password = password;
+		this.phoneNumber = phoneNumber;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userType = userType;
+		this.language = language;
+	}
+
+	public String getLanguage() {
+		return language;
 	}
 
 	public String getUserName() {
@@ -99,6 +115,10 @@ public class User implements Parcelable{
 	public void setUserType(UserType userType) {
 		this.userType = userType;
 	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
 	protected User(Parcel in) {
 		userName = in.readString();
 		email = in.readString();
@@ -107,6 +127,7 @@ public class User implements Parcelable{
 		firstName = in.readString();
 		lastName = in.readString();
 		userType = UserType.valueOf(in.readString());
+		language = in.readString();
 	}
 	public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
 		@Override
@@ -132,5 +153,6 @@ public class User implements Parcelable{
 		dest.writeString(firstName);
 		dest.writeString(lastName);
 		dest.writeString(userType.name());
+		dest.writeString(language);
 	}
 }

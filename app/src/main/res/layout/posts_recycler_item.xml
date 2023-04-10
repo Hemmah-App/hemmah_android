@@ -34,7 +34,7 @@
             app:layout_constraintGuide_percent="1.0" />
 
         <TextView
-            android:id="@+id/expanded_requests_Title_TV"
+            android:id="@+id/collapsed_requests_Title_TV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="left"
@@ -58,29 +58,34 @@
 <!--            app:layout_constraintTop_toBottomOf="@+id/postAddress_TV" />-->
 
         <TextView
-            android:id="@+id/expanded_date_TV"
+            android:id="@+id/collapsed_date_TV"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="bottom"
             android:padding="10dp"
             android:text="Date of the helpRequest"
-            android:textSize="15sp"
             android:textColor="@color/colorTextOnPrimaryLight"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/collapsed_address_TV"
             app:layout_constraintEnd_toStartOf="@+id/right_GL"
-            app:layout_constraintTop_toBottomOf="@+id/expanded_description_TV" />
+            app:layout_constraintTop_toBottomOf="@+id/collapsed_description_TV" />
 
         <TextView
-            android:id="@+id/expanded_address_TV"
-            android:layout_width="wrap_content"
+            android:id="@+id/collapsed_address_TV"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Address"
-            android:textSize="15sp"
+            android:gravity="left"
+            android:maxLines="2"
             android:textColor="@color/colorTextOnPrimaryLight"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@+id/collapsed_date_TV"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/expanded_description_TV" />
+            app:layout_constraintTop_toBottomOf="@+id/collapsed_description_TV" />
 
         <TextView
-            android:id="@+id/expanded_description_TV"
+            android:id="@+id/collapsed_description_TV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="left"
@@ -93,58 +98,10 @@
             android:text="Hi, my name is Hazem its good to see you,as you might know i have a visual impairment and i'am a muslim too so i need to pray 5 times a day so i need someone who lives near to me so that he can take me with him to the mosque every day my address provided below and thanks in advance"
             android:textSize="15sp"
             android:textColor="@color/colorTextOnPrimaryLight"
-            app:layout_constraintEnd_toEndOf="@+id/expanded_requests_Title_TV"
-            app:layout_constraintStart_toStartOf="@+id/expanded_requests_Title_TV"
-            app:layout_constraintTop_toBottomOf="@+id/expanded_requests_Title_TV" />
+            app:layout_constraintEnd_toEndOf="@+id/collapsed_requests_Title_TV"
+            app:layout_constraintStart_toStartOf="@+id/collapsed_requests_Title_TV"
+            app:layout_constraintTop_toBottomOf="@+id/collapsed_requests_Title_TV" />
 
-<!--        <com.google.android.material.divider.MaterialDivider-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="1dp"-->
-<!--            android:layout_marginBottom="5dp"-->
-<!--            app:layout_constraintBottom_toTopOf="@+id/linearLayout"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/date_TV" />-->
-
-<!--        <LinearLayout-->
-<!--            android:id="@+id/linearLayout"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@color/colorWhite"-->
-<!--            android:orientation="horizontal"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="@+id/postAddress_TV"-->
-<!--            app:layout_constraintStart_toStartOf="@+id/postAddress_TV"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/date_TV">-->
-
-<!--            <FrameLayout-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                >-->
-<!--                <ImageButton-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:background="@drawable/posts_buttons_background"-->
-<!--                    android:src="@drawable/share_ic_24"-->
-<!--                    android:layout_gravity="center"/>-->
-
-<!--            </FrameLayout>-->
-
-<!--            <FrameLayout-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1">-->
-<!--                <ImageButton-->
-<!--                    android:id="@+id/fortestfragment"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:background="@drawable/posts_buttons_background"-->
-<!--                    android:src="@drawable/chat_ic_24"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    />-->
-
-<!--            </FrameLayout>-->
-<!--        </LinearLayout>-->
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="0.5dp"

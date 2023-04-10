@@ -1,7 +1,6 @@
 package com.google.hemmah.presentation.registration;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -23,6 +22,8 @@ import com.google.hemmah.domain.model.enums.UserType;
 import com.google.hemmah.presentation.common.common.DisabledActivity;
 import com.google.hemmah.presentation.common.common.volunteer.VolunteerActivity;
 
+import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -30,6 +31,7 @@ import timber.log.Timber;
 
 @AndroidEntryPoint
 public class RegisterActivity extends AppCompatActivity {
+    @Inject
     RegisterViewModel mRegisterViewModel;
     private TextInputLayout mUserNameTextInput,mEmailTextInput,
             mPhoneNumberTextInput ,mFirstNameTextInput ,
@@ -43,8 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initViews();
-        mRegisterViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
-        saveDataFeilds();
+        saveDataFields();
         retrieveSavedData();
         mSharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, Context.MODE_PRIVATE);
         setButtonsListeners();
@@ -65,10 +66,10 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        saveDataFeilds();
+        saveDataFields();
     }
 
-    private void saveDataFeilds(){
+    private void saveDataFields(){
         String firstName  = mFirstNameTextInput.getEditText().getText().toString();
         String lastName  = mLastNameTextInput.getEditText().getText().toString();
         String userName  = mUserNameTextInput.getEditText().getText().toString();
@@ -94,7 +95,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void setButtonsListeners() {
-
         mCreateAccountVolunteer_Bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -11,7 +11,6 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.Observable;
 import retrofit2.Response;
-@HiltViewModel
 public class RegisterViewModel extends ViewModel {
     private User mUser;
     private String mToken;
