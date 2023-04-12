@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.google.hemmah.R;
 import com.google.hemmah.presentation.common.common.AppAdapter;
 import com.google.hemmah.domain.model.HelpRequest;
+import com.google.hemmah.presentation.helprequests.PostsFragment;
 
 import java.util.ArrayList;
 

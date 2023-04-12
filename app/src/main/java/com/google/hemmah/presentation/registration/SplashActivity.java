@@ -4,6 +4,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
@@ -12,8 +13,11 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.google.hemmah.R;
+import com.google.hemmah.Utils.Constants;
 import com.google.hemmah.Utils.SharedPrefUtils;
+import com.google.hemmah.domain.model.User;
 import com.google.hemmah.domain.model.enums.UserType;
+import com.google.hemmah.presentation.common.common.MainViewModel;
 import com.google.hemmah.presentation.common.common.WalkthroughActivity;
 import com.google.hemmah.presentation.common.common.DisabledActivity;
 import com.google.hemmah.presentation.common.common.volunteer.VolunteerActivity;
@@ -35,7 +39,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-//        mSplashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
         mDefaultSharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         mSharedPreferences = getSharedPreferences(SharedPrefUtils.FILE_NAME, MODE_PRIVATE);
         handleBeforeSplashNavigation();
@@ -63,7 +66,8 @@ public class SplashActivity extends AppCompatActivity {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(res -> {
                         if (res.code() == 200) {
-                            mSplashViewModel.setUser(res.body().getData().getUser());
+                            User user = res.body().getData().getUser();
+                            mSplashViewModel.setUser(user);
                             Timber.d("This token is valid with user's info : \n " + mSplashViewModel.getUser().toString());
                             if (mSplashViewModel.getUser().getUserType().equals(UserType.DISABLED)) {
                                 fromSplashToActivity(DisabledActivity.class);
@@ -91,7 +95,7 @@ public class SplashActivity extends AppCompatActivity {
                     public void run() {
                         Intent intent = new Intent(getApplicationContext(), Activity);
                         Bundle bundle = new Bundle();
-                        bundle.putParcelable("USER", mSplashViewModel.getUser());
+                        bundle.putParcelable(Constants.USER_INTENT_TAG, mSplashViewModel.getUser());
                         intent.putExtras(bundle);
                         startActivity(intent);
                         finish();

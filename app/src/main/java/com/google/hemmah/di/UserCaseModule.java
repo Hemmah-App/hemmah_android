@@ -1,15 +1,18 @@
 package com.google.hemmah.di;
 
 import com.google.hemmah.domain.repository.HelpRequestsRepository;
+import com.google.hemmah.domain.repository.ProfilePictureRepository;
 import com.google.hemmah.domain.repository.UserRepository;
 import com.google.hemmah.domain.usecase.CreateHelpRequestsUseCase;
 import com.google.hemmah.domain.usecase.DeleteHelpRequestUseCase;
 import com.google.hemmah.domain.usecase.GetHelpRequestsFeedUseCase;
 import com.google.hemmah.domain.usecase.GetMyHelpRequestsUseCase;
+import com.google.hemmah.domain.usecase.GetProfilePictureUseCase;
 import com.google.hemmah.domain.usecase.GetUserUseCase;
 import com.google.hemmah.domain.usecase.LoginUserUseCase;
 import com.google.hemmah.domain.usecase.MarkHelpRequestUseCase;
 import com.google.hemmah.domain.usecase.RegisterUserUseCase;
+import com.google.hemmah.domain.usecase.UpdateProfilePictureUseCase;
 
 import dagger.Module;
 import dagger.Provides;
@@ -57,5 +60,13 @@ public class UserCaseModule {
     @Provides
     RegisterUserUseCase getRegisterUserUseCase(UserRepository userRepository) {
         return new RegisterUserUseCase(userRepository);
+    }
+    @Provides
+    GetProfilePictureUseCase getGetProfilePictureUseCase(ProfilePictureRepository profilePictureRepository){
+        return new GetProfilePictureUseCase(profilePictureRepository);
+    }
+    @Provides
+    UpdateProfilePictureUseCase getUpdateProfilePictureUseCase(ProfilePictureRepository profilePictureRepository){
+        return new UpdateProfilePictureUseCase(profilePictureRepository);
     }
 }

@@ -56,6 +56,14 @@ public class User implements Parcelable{
 		this.language = language;
 	}
 
+	public User(String email, String phoneNumber, String firstName, String lastName, String language) {
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.language = language;
+	}
+
 	public String getLanguage() {
 		return language;
 	}

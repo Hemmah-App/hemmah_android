@@ -1,4 +1,4 @@
-package com.google.hemmah.presentation.common.common.volunteer;
+package com.google.hemmah.presentation.helprequests;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -32,6 +34,7 @@ import com.google.hemmah.R;
 import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.domain.model.HelpRequest;
 import com.google.hemmah.domain.model.User;
+import com.google.hemmah.presentation.common.common.MainViewModel;
 import com.google.hemmah.presentation.common.common.RecyclerVIewListeners;
 import com.google.hemmah.data.VolunteerCallService;
 import com.google.hemmah.presentation.common.common.AppAdapter;
@@ -54,6 +57,7 @@ import io.reactivex.schedulers.Schedulers;
 public class PostsFragment extends Fragment implements RecyclerVIewListeners {
     @Inject
     HelpRequestsViewModel mHelpRequestsViewModel;
+    MainViewModel mMainViewModel;
     private RecyclerView mRecyclerView;
     private AppAdapter mPostAdapter;
     private SwitchMaterial mStatusSwitchable;
@@ -63,7 +67,6 @@ public class PostsFragment extends Fragment implements RecyclerVIewListeners {
     public static final String PROFILE_FRAGMENT_TAG = "PROFILE_FRAGMENT";
     public static final String NOTIFICATION_FRAGMENT_TAG = "NOTIFICATION_FRAGMENT";
     private ImageView mNotificationBellImageView;
-    private User mUser;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ProgressBar mProgressBar;
     private LinearLayout mEmptyHelpRequests;
@@ -74,11 +77,6 @@ public class PostsFragment extends Fragment implements RecyclerVIewListeners {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_posts, container, false);
     }
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        receiveUser();
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -86,9 +84,9 @@ public class PostsFragment extends Fragment implements RecyclerVIewListeners {
         intializeViews(view);
         showHelpRequestsFeed(mProgressBar);
         handleButtonsClick();
-        if(mUser!=null){
-            commonhome_welcome_TV.append(mUser.getFirstName());
-        }
+//        if(mUser!=null){
+//            commonhome_welcome_TV.append(mUser.getFirstName());
+//        }
 
 
     }
@@ -142,6 +140,12 @@ public class PostsFragment extends Fragment implements RecyclerVIewListeners {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        receiveUser();
     }
 
     private void handleButtonsClick() {
@@ -236,8 +240,9 @@ public class PostsFragment extends Fragment implements RecyclerVIewListeners {
     }
 
     private void receiveUser() {
-        Bundle bundle = getActivity().getIntent().getExtras();
-        if(bundle!=null)
-            mUser = bundle.getParcelable("USER");
+        mMainViewModel = new ViewModelProviders().of(getActivity()).get(MainViewModel.class);
+        mMainViewModel.getUserLiveData().observe(getViewLifecycleOwner(), user -> {
+                commonhome_welcome_TV.append(user.getFirstName());
+            });
     }
 }

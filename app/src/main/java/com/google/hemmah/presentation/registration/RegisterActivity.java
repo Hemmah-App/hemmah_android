@@ -1,6 +1,7 @@
 package com.google.hemmah.presentation.registration;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,12 +15,14 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.GsonBuilder;
 import com.google.hemmah.R;
+import com.google.hemmah.Utils.Constants;
 import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.Utils.Validator;
 import com.google.hemmah.domain.model.User;
 import com.google.hemmah.data.remote.dto.ApiResponse;
 import com.google.hemmah.domain.model.enums.UserType;
 import com.google.hemmah.presentation.common.common.DisabledActivity;
+import com.google.hemmah.presentation.common.common.MainViewModel;
 import com.google.hemmah.presentation.common.common.volunteer.VolunteerActivity;
 
 import javax.inject.Inject;
@@ -34,8 +37,8 @@ public class RegisterActivity extends AppCompatActivity {
     @Inject
     RegisterViewModel mRegisterViewModel;
     private TextInputLayout mUserNameTextInput,mEmailTextInput,
-            mPhoneNumberTextInput ,mFirstNameTextInput ,
-            mLastNameTextInput, mPasswordTextInput;
+    mPhoneNumberTextInput ,mFirstNameTextInput ,
+    mLastNameTextInput, mPasswordTextInput;
     private ProgressBar mLogInProgressBar;
     private Button mCreateAccountVolunteer_Bt,mCreateAccountDisabled_Bt;
     private SharedPreferences mSharedPreferences;
@@ -211,6 +214,7 @@ public class RegisterActivity extends AppCompatActivity {
                 SharedPrefUtils.saveToShared(mSharedPreferences, SharedPrefUtils.TOKEN_KEY, mRegisterViewModel.getToken());
                 //got to the needed activity volunteer or disabled
                 Intent intent = new Intent(RegisterActivity.this, intentedClass);
+                intent.putExtra(Constants.USER_INTENT_TAG, user);
                 startActivity(intent);
                 Toast.makeText(RegisterActivity.this, R.string.signup_toastmessage, Toast.LENGTH_SHORT).show();
             } else {

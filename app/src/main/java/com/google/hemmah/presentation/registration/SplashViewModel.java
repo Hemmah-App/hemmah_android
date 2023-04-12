@@ -23,15 +23,18 @@ public class SplashViewModel extends AndroidViewModel {
     private GetUserUseCase mGetUserUseCase;
     private User user;
     private MutableLiveData<Observable<Response<ApiResponse>>> mUserResponse = new MutableLiveData<>();
+
     @Inject
-    public SplashViewModel(@NotNull Application application, GetUserUseCase getUserUseCase){
+    public SplashViewModel(@NotNull Application application, GetUserUseCase getUserUseCase) {
         super(application);
         this.mGetUserUseCase = getUserUseCase;
     }
-    public void loadUser(String token){
+
+    public void loadUser(String token) {
         mUserResponse.setValue(mGetUserUseCase.execute(token));
     }
-    public LiveData<Observable<Response<ApiResponse>>>getUserResponse(){
+
+    public LiveData<Observable<Response<ApiResponse>>> getUserResponse() {
         return mUserResponse;
     }
 

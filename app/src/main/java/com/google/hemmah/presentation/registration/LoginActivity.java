@@ -11,17 +11,21 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.hemmah.R;
+import com.google.hemmah.Utils.BasicUtils;
+import com.google.hemmah.Utils.Constants;
 import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.Utils.Validator;
 import com.google.hemmah.domain.model.User;
 import com.google.hemmah.data.remote.dto.ApiResponse;
 import com.google.hemmah.domain.model.enums.UserType;
 import com.google.hemmah.presentation.common.common.DisabledActivity;
+import com.google.hemmah.presentation.common.common.MainViewModel;
 import com.google.hemmah.presentation.common.common.volunteer.VolunteerActivity;
 
 import javax.inject.Inject;
@@ -132,8 +136,9 @@ public class LoginActivity extends AppCompatActivity {
         return valid;
     }
 
-    private void toActivity(Class activity) {
+    private void toActivity(Class activity,User user) {
         Intent intent = new Intent(getApplicationContext(), activity);
+        intent.putExtra(Constants.USER_INTENT_TAG, user);
         startActivity(intent);
     }
 
@@ -146,9 +151,10 @@ public class LoginActivity extends AppCompatActivity {
                         User user = res.body().getData().getUser();
                         Timber.d("This token is valid with user's info : \n " + user.toString());
                         if (user.getUserType().equals(UserType.DISABLED)) {
-                            toActivity(DisabledActivity.class);
+                            toActivity(DisabledActivity.class,user);
+
                         } else {
-                            toActivity(VolunteerActivity.class);
+                            toActivity(VolunteerActivity.class,user);
                         }
                     } else {
                         //no message on error here

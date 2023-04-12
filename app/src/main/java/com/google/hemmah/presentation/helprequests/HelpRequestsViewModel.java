@@ -1,6 +1,8 @@
 package com.google.hemmah.presentation.helprequests;
 
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.hemmah.data.remote.dto.ApiResponse;
@@ -19,7 +21,7 @@ import retrofit2.Response;
 public class HelpRequestsViewModel extends ViewModel {
     private ArrayList<HelpRequestResponse> mHelpRequestResponses;
     private GetHelpRequestsFeedUseCase mGetHelpRequestsFeedUseCase;
-    private User mUserInfo;
+    private MutableLiveData<User> mUserInfo;
 
     @Inject
     public HelpRequestsViewModel(GetHelpRequestsFeedUseCase getHelpRequestsFeedUseCase) {
@@ -27,13 +29,6 @@ public class HelpRequestsViewModel extends ViewModel {
     }
     public Observable<Response<ApiResponse>> getHelpRequestsFeed(String token){
         return mGetHelpRequestsFeedUseCase.execute(token);
-    }
-    public User getUserInfo() {
-        return mUserInfo;
-    }
-
-    public void setUserInfo(User user) {
-        mUserInfo = user;
     }
 
     public ArrayList<HelpRequestResponse> getHelpRequestResponses() {

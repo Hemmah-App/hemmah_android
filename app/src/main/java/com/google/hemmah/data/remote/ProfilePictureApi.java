@@ -18,8 +18,11 @@ import retrofit2.http.Part;
 public interface ProfilePictureApi {
     @GET(getProfilePicturePath)
     Observable<Response<ApiResponse>> getProfilePicture(@Header("Authorization") String token);
+
     @Multipart
     @POST(updateProfilePicturePath)
-    Observable<Response<ApiResponse>> updateProfilePicture(@Part MultipartBody.Part image);
+    Observable<Response<ApiResponse>> updateProfilePicture(
+            @Header("Authorization") String token,
+            @Part MultipartBody.Part image);
 
 }

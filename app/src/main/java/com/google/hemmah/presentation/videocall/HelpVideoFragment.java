@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ import com.google.hemmah.R;
 import com.google.hemmah.Utils.SharedPrefUtils;
 import com.google.hemmah.data.StompClientManager;
 import com.google.hemmah.domain.model.User;
+import com.google.hemmah.presentation.common.common.MainViewModel;
 
 import org.w3c.dom.Text;
 
@@ -38,17 +40,16 @@ import lombok.ToString;
 import timber.log.Timber;
 
 public class HelpVideoFragment extends Fragment {
+    private MainViewModel mMainViewModel;
     private Button callForHelpButton;
     private StompClientManager mStompClientManager;
     private ActivityResultLauncher<String[]> requestPermissionLauncher;
     private TextView commonhome_welcome_TV;
-    User mUser;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         handleAudioVideoPermissionResult(requireActivity());
-        receiveUser();
 
     }
 
@@ -67,10 +68,6 @@ public class HelpVideoFragment extends Fragment {
         mStompClientManager = new StompClientManager(requireContext(),
                 SharedPrefUtils.loadFromShared(sharedPreferences, SharedPrefUtils.TOKEN_KEY));
         handleButtonClicks();
-        if(mUser!=null){
-            commonhome_welcome_TV.append(mUser.getFirstName());
-        }
-
     }
 
     @Override
@@ -79,6 +76,7 @@ public class HelpVideoFragment extends Fragment {
         if (mStompClientManager != null) {
             mStompClientManager.discconectStomp();
         }
+
     }
 
     private void handleButtonClicks() {
@@ -111,6 +109,13 @@ public class HelpVideoFragment extends Fragment {
                         });
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        receiveUser();
+
+    }
+
     private void makeVideoRequest() {
         mStompClientManager.sendToStomp(DISABLED_SEND_TOPIC, "");
         mStompClientManager.subscribeOnTopic(DISABLED_SUBSCRIBE_TOPIC, message -> {
@@ -131,10 +136,12 @@ public class HelpVideoFragment extends Fragment {
         callForHelpButton = view.findViewById(R.id.callforhelp_BT);
         commonhome_welcome_TV = view.findViewById(R.id.commonhome_welcome_TV);
     }
+
     private void receiveUser() {
-        Bundle bundle = getActivity().getIntent().getExtras();
-        if(bundle!=null)
-            mUser = bundle.getParcelable("USER");
+        mMainViewModel = new ViewModelProviders().of(getActivity()).get(MainViewModel.class);
+        mMainViewModel.getUserLiveData().observe(getViewLifecycleOwner(),user->{
+            commonhome_welcome_TV.append(user.getFirstName());
+        });
     }
 }
 

@@ -23,4 +23,5 @@ public class Constants {
     public static final String CHANNEL_1_NAME = "Call Notification";
     public static final String CHANNEL_1_DESCRIPTION = "This notification appears when a" +
             " disabled needs a video call help";
+    public static final String USER_INTENT_TAG = "USER";
 }

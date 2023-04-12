@@ -2,9 +2,12 @@ package com.google.hemmah.di;
 
 import com.google.hemmah.data.remote.AuthApi;
 import com.google.hemmah.data.remote.HelpRequestsApi;
+import com.google.hemmah.data.remote.ProfilePictureApi;
 import com.google.hemmah.data.repository.HelpRequestsRepositoryImpl;
+import com.google.hemmah.data.repository.ProfilePictureRepositoryImpl;
 import com.google.hemmah.data.repository.UserRepositoryImpl;
 import com.google.hemmah.domain.repository.HelpRequestsRepository;
+import com.google.hemmah.domain.repository.ProfilePictureRepository;
 import com.google.hemmah.domain.repository.UserRepository;
 
 import javax.inject.Singleton;
@@ -24,5 +27,9 @@ public class RepoModule {
     @Provides
     public UserRepository getUserRepo(AuthApi authApi){
         return new UserRepositoryImpl(authApi);
+    }
+    @Provides
+    public ProfilePictureRepository getProfilePictureRepo(ProfilePictureApi profilePictureApi){
+        return new ProfilePictureRepositoryImpl(profilePictureApi);
     }
 }

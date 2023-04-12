@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import okhttp3.ResponseBody;
 
 
 public class ApiResponse {
@@ -36,6 +37,15 @@ public class ApiResponse {
         private ArrayList<HelpRequestResponse> requests;
         private String token;
         private int requestId;
+        private ResponseBody responseBody;
+
+        public ResponseBody getResponseBody() {
+            return responseBody;
+        }
+
+        public void setResponseBody(ResponseBody responseBody) {
+            this.responseBody = responseBody;
+        }
 
         public User getUser() {
             return user;
@@ -61,12 +71,13 @@ public class ApiResponse {
             return requestId;
         }
 
-        public data(User user, ArrayList<HelpRequestResponse> myRequests, String token, int requestId) {
+        public data(User user, ArrayList<HelpRequestResponse> myRequests, String token, int requestId,ResponseBody responseBody) {
             this.user = user;
             this.myRequests = myRequests;
             this.requests = myRequests;
             this.token = token;
             this.requestId = requestId;
+            this.responseBody = responseBody;
 
         }
     }

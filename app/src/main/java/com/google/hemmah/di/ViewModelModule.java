@@ -6,15 +6,21 @@ import com.google.hemmah.domain.usecase.CreateHelpRequestsUseCase;
 import com.google.hemmah.domain.usecase.DeleteHelpRequestUseCase;
 import com.google.hemmah.domain.usecase.GetHelpRequestsFeedUseCase;
 import com.google.hemmah.domain.usecase.GetMyHelpRequestsUseCase;
+import com.google.hemmah.domain.usecase.GetProfilePictureUseCase;
 import com.google.hemmah.domain.usecase.GetUserUseCase;
 import com.google.hemmah.domain.usecase.LoginUserUseCase;
 import com.google.hemmah.domain.usecase.MarkHelpRequestUseCase;
 import com.google.hemmah.domain.usecase.RegisterUserUseCase;
+import com.google.hemmah.domain.usecase.UpdateProfilePictureUseCase;
+import com.google.hemmah.presentation.common.common.MainViewModel;
 import com.google.hemmah.presentation.helprequest.HelpRequestDialogeViewModel;
 import com.google.hemmah.presentation.helprequests.HelpRequestsViewModel;
+import com.google.hemmah.presentation.profile.ProfileViewModel;
 import com.google.hemmah.presentation.registration.LoginViewModel;
 import com.google.hemmah.presentation.registration.RegisterViewModel;
 import com.google.hemmah.presentation.registration.SplashViewModel;
+
+import org.openjdk.tools.javac.Main;
 
 import dagger.Module;
 import dagger.Provides;
@@ -50,5 +56,12 @@ public class ViewModelModule {
     RegisterViewModel provideRegisterViewModel(RegisterUserUseCase registerUserUseCase){
         return new RegisterViewModel(registerUserUseCase);
     }
+    @Provides
+    ProfileViewModel provideProfileViewModel(GetProfilePictureUseCase getProfilePictureUseCase,
+                                             UpdateProfilePictureUseCase updateProfilePictureUseCase){
+        return new ProfileViewModel(getProfilePictureUseCase,updateProfilePictureUseCase);
+    }
+
+
 
 }
