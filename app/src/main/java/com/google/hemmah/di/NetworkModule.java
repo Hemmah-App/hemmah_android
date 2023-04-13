@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.hemmah.data.remote.AuthApi;
 import com.google.hemmah.data.remote.HelpRequestsApi;
+import com.google.hemmah.data.remote.PreferencesApi;
 import com.google.hemmah.data.remote.ProfilePictureApi;
 
 import java.io.IOException;
@@ -56,6 +57,11 @@ public class NetworkModule {
     @Singleton
     public ProfilePictureApi getProfilePictureApi(Retrofit retrofit){
         return retrofit.create(ProfilePictureApi.class);
+    }
+    @Provides
+    @Singleton
+    public PreferencesApi getPreferenceApi(Retrofit retrofit){
+        return retrofit.create(PreferencesApi.class);
     }
 
 }

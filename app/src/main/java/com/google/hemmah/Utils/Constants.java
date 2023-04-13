@@ -19,6 +19,9 @@ public class Constants {
 
     public static final String getProfilePicturePath = "/v1/user/profile-pic";
     public static final String updateProfilePicturePath = "/v1/user/profile-pic";
+
+    public static final String CHANGE_PASSWORD_PATH = "/v1/user/change_password";
+    public static final String CHANGE_LANGUAGE_PATH = "/v1/user/change_language";
     public static final String CHANNEL_1_ID = "call notification";
     public static final String CHANNEL_1_NAME = "Call Notification";
     public static final String CHANNEL_1_DESCRIPTION = "This notification appears when a" +

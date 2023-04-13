@@ -2,6 +2,8 @@ package com.google.hemmah.di;
 
 import android.app.Application;
 
+import com.google.hemmah.domain.usecase.ChangeLanguageUseCase;
+import com.google.hemmah.domain.usecase.ChangePasswordUseCase;
 import com.google.hemmah.domain.usecase.CreateHelpRequestsUseCase;
 import com.google.hemmah.domain.usecase.DeleteHelpRequestUseCase;
 import com.google.hemmah.domain.usecase.GetHelpRequestsFeedUseCase;
@@ -13,6 +15,7 @@ import com.google.hemmah.domain.usecase.MarkHelpRequestUseCase;
 import com.google.hemmah.domain.usecase.RegisterUserUseCase;
 import com.google.hemmah.domain.usecase.UpdateProfilePictureUseCase;
 import com.google.hemmah.presentation.common.common.MainViewModel;
+import com.google.hemmah.presentation.common.common.PreferencesViewModel;
 import com.google.hemmah.presentation.helprequest.HelpRequestDialogeViewModel;
 import com.google.hemmah.presentation.helprequests.HelpRequestsViewModel;
 import com.google.hemmah.presentation.profile.ProfileViewModel;
@@ -60,6 +63,10 @@ public class ViewModelModule {
     ProfileViewModel provideProfileViewModel(GetProfilePictureUseCase getProfilePictureUseCase,
                                              UpdateProfilePictureUseCase updateProfilePictureUseCase){
         return new ProfileViewModel(getProfilePictureUseCase,updateProfilePictureUseCase);
+    }
+    @Provides
+    PreferencesViewModel providePreferenceViewModel(ChangeLanguageUseCase changeLanguageUseCase, ChangePasswordUseCase changePasswordUseCase){
+        return new PreferencesViewModel(changeLanguageUseCase,changePasswordUseCase);
     }
 
 

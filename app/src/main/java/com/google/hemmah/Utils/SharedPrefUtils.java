@@ -21,5 +21,10 @@ public class SharedPrefUtils {
     public static boolean haveToken(SharedPreferences sharedPreferences){
         return !sharedPreferences.getString(TOKEN_KEY,"").isEmpty();
     }
+    public static void deleteToken(SharedPreferences sharedPreferences,String key){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(key);
+        editor.commit();
+    }
 
 }

@@ -1,8 +1,11 @@
 package com.google.hemmah.di;
 
 import com.google.hemmah.domain.repository.HelpRequestsRepository;
+import com.google.hemmah.domain.repository.PreferenceRepository;
 import com.google.hemmah.domain.repository.ProfilePictureRepository;
 import com.google.hemmah.domain.repository.UserRepository;
+import com.google.hemmah.domain.usecase.ChangeLanguageUseCase;
+import com.google.hemmah.domain.usecase.ChangePasswordUseCase;
 import com.google.hemmah.domain.usecase.CreateHelpRequestsUseCase;
 import com.google.hemmah.domain.usecase.DeleteHelpRequestUseCase;
 import com.google.hemmah.domain.usecase.GetHelpRequestsFeedUseCase;
@@ -68,5 +71,13 @@ public class UserCaseModule {
     @Provides
     UpdateProfilePictureUseCase getUpdateProfilePictureUseCase(ProfilePictureRepository profilePictureRepository){
         return new UpdateProfilePictureUseCase(profilePictureRepository);
+    }
+    @Provides
+    ChangeLanguageUseCase getChangeLanguageUseCase(PreferenceRepository preferenceRepository){
+        return new ChangeLanguageUseCase(preferenceRepository);
+    }
+    @Provides
+    ChangePasswordUseCase getChangePasswordUseCase(PreferenceRepository preferenceRepository){
+        return new ChangePasswordUseCase(preferenceRepository);
     }
 }

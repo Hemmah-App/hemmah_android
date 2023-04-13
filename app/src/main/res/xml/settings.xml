@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<PreferenceScreen
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
         app:title="Profile"
         app:iconSpaceReserved="false">
@@ -10,10 +10,13 @@
             app:title="Change Password"
             app:iconSpaceReserved="false"/>
     </PreferenceCategory>
-
     <ListPreference
         app:key="language"
         app:title="Language"
+        android:dialogTitle="Select Language"
+        android:defaultValue="EN"
+        android:entries="@array/language_options"
+        android:entryValues="@array/language_values"
         app:summary="@string/prefrence_temporary_lang_describtion"
         app:allowDividerAbove="true"
         app:allowDividerBelow="true"
@@ -24,6 +27,7 @@
         app:iconSpaceReserved="false">
         <SwitchPreferenceCompat
             app:key="darkmode"
+            app:defaultValue="false"
             app:title="Dark Mode"
             app:summary="Enable dark mode "
             app:allowDividerBelow="true"
@@ -43,5 +47,4 @@
         app:key="logout"
         app:layout="@layout/logout_prefrence_item"
         />
-
 </PreferenceScreen>
